@@ -1,7 +1,7 @@
 A primeira versão do método Melhor Estimador Linear Não Enviesado (BEst Linear Blue Estimador - BLUE 1) tem o objetivo de encontrar um vetor de parâmetro estimados, cujos componetnes são respectivamente: amplitude, amplitude vezes a fase e pedestal.
 Nesse repositório, o algoritmo foi desenvolvido para o cálculo individual do erro de estimação desses parãmetros pela técnica de validação cruzada K-Fold.
 Comentários sobre os resultados: de acordo com a análise estatística notou-se que não há um janelamento ideal para amplitude visto que o dresvio padrão não se estabiliza para um certo valor de janelamento adotado. 
-Ademais para a fase os resultados não forma satisfatório devido ao faot da sipersão dos dados em relação a média ser exorbidante. Portanto, novas estrátegias para o cálculo da fase devem ser avaliadas.
+Ademais para a fase os resultados não forma satisfatório devido ao fato da dispersão dos dados em relação a média ser exorbidante. Portanto, novas estrátegias para o cálculo da fase devem ser avaliadas.
 Obs.: nesse algorimtmo, a fase estimada é calculada pela divisão entre o temo da amplitude versus a fase dividida pela amplitude estimada.
 
 A seguir são listadas as pastas e também os arquivos contidos nesse repositório, assim como suas respectivas funções:
