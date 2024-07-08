@@ -81,7 +81,7 @@ def leitura_dados_estatisticos_desempenho_BLUE1(parametro, n_janelamento_ideal, 
 ### ---------- 2) FUNÇÃO PARA O PLOTE DO GRÁFICO DO DADO ESTATÍSTICO DO DESEMPENHO AO LONGO DAS OCUPAÇÕES PARA O JANELAMENTO IDEAL ------------ ###
 
 # Definição da função para o plote do gráfico do dado estatístico do desempenho ao longo das ocupações para o janelamento ideal.
-def grafico_dado_estatistico_desempenho_BLUE1(opcao_avaliacao_desempenho, Matriz_Dados_Desempenho):
+def grafico_dado_estatistico_desempenho_BLUE1(parametro, opcao_avaliacao_desempenho, Matriz_Dados_Desempenho):
     
     # Definição da variável indice_coluna_ocupacoes que armazena o valor do índice da coluna das ocupações.
     indice_coluna_ocupacoes = 0
@@ -112,31 +112,56 @@ def grafico_dado_estatistico_desempenho_BLUE1(opcao_avaliacao_desempenho, Matriz
     if opcao_avaliacao_desempenho == 1:
               
         # Comando para o nome do eixo das ordenadas de acordo com o erro médio de estimação.
-        plt.ylabel(r"Média do erro médio de estimação (ADC Count)", fontsize = 18)
-    
+        plt.ylabel("Média do erro médio de estimação (ADC Count)", fontsize = 18)
+        
+        # Caso o parâmetro seja a fase.
+        if parametro == "fase":
+           
+           # Comando para o nome do eixo das ordenadas de acordo com o erro médio de estimação para a fase.
+           plt.ylabel("Média do erro médio de estimação (ns)", fontsize = 18) 
+            
     # Caso a variável opcao_avaliacao_desempenho seja 2.
     if opcao_avaliacao_desempenho == 2:
               
         # Comando para o nome do eixo das ordenadas de acordo com o erro médio quadrático.
-        plt.ylabel(r"Média do erro médio quadrático (ADC Count)^2", fontsize = 18)
+        plt.ylabel("Média do erro médio quadrático (ADC Count)^2", fontsize = 18)
+        
+        # Caso o parâmetro seja a fase.
+        if parametro == "fase":
+           
+           # Comando para o nome do eixo das ordenadas de acordo com o erro médio quadrático para a fase.
+           plt.ylabel("Média do erro médio quadrático (ns)^2", fontsize = 18) 
               
     # Caso a variável opcao_avaliacao_desempenho seja 3.
     elif opcao_avaliacao_desempenho == 3:
             
         # Comando para o nome do eixo das ordenadas de acordo com o erro médio absoluto.
-        plt.ylabel(r"Média do erro médio absoluto (ADC Count)", fontsize = 18)
+        plt.ylabel("Média do erro médio absoluto (ADC Count)", fontsize = 18)
+        
+        # Caso o parâmetro seja a fase.
+        if parametro == "fase":
+           
+           # Comando para o nome do eixo das ordenadas de acordo com o erro médio absoluto para a fase.
+           plt.ylabel("Média do erro médio absoluto (ns)", fontsize = 18) 
         
     # Caso a variável opcao_avaliacao_desempenho seja 4.
     elif opcao_avaliacao_desempenho == 4:
         
         # Comando para o nome do eixo das ordenadas de acordo com a relação Sinal-Ruído (Signal-to-Noise Ratio - SNR).
-        plt.ylabel(r"Média da relação Sinal-Ruído", fontsize = 18)
+        plt.ylabel("Média da relação Sinal-Ruído", fontsize = 18)
+        
         
     # Caso a variável opcao_avaliacao_desempenho seja 5.
     elif opcao_avaliacao_desempenho == 5:
         
         # Comando para o nome do eixo das ordenadas de acordo com a média do desvio padrão.
-        plt.ylabel(r"Média do desvio padrão (ADC Count)", fontsize = 18)
+        plt.ylabel("Média do desvio padrão (ADC Count)", fontsize = 18)
+        
+        # Caso o parâmetro seja a fase.
+        if parametro == "fase":
+           
+           # Comando para o nome do eixo das ordenadas de acordo com a média do desvio padrão para a fase.
+           plt.ylabel("Média do desvio padrão (ns)", fontsize = 18)
         
     # Comando que define o tamanho dos números do eixo das ordenadas.
     plt.yticks(fontsize = 16)
@@ -247,7 +272,7 @@ def principal_grafico_dado_estatistico_desempenho_BLUE1():
         
     # Chamada das funções.
     Matriz_Dados_Desempenho = leitura_dados_estatisticos_desempenho_BLUE1(parametro, n_janelamento_ideal, mecanismo_desempenho)
-    grafico_dado_estatistico_desempenho_BLUE1(opcao_avaliacao_desempenho, Matriz_Dados_Desempenho)
+    grafico_dado_estatistico_desempenho_BLUE1(parametro, opcao_avaliacao_desempenho, Matriz_Dados_Desempenho)
 
 ### -------------------------------------------------------------------------------------------------------------------------------------------- ###
     
