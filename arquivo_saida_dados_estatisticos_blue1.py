@@ -8,8 +8,6 @@
 Organização do Código:
 
 Importação de arquivos.
-Leitura dos dados de ocupação: leitura_dados_ocupacao.py
-Leitura dos dados de ruídos: leitura_dados_ruidos_BLUE1.py
 Método: metodo_BLUE1.py
 
 Funções presentes:
@@ -37,8 +35,6 @@ import time
 from termcolor import colored
 
 # Importação dos arquivos.
-from leitura_dados_ocupacao_BLUE1 import *
-from leitura_dados_ruidos_BLUE1 import *
 from metodo_BLUE1 import * 
 
 # Impressão de uma linha que representa o início do programa.
