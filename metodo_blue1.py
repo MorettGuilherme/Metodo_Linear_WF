@@ -1,6 +1,6 @@
-# Projeto ATLAS - Reconstrução de sinal - Best Linear Unbiased Estimator (BLUE 1).
+# EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE 1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 01 de junho de 2024.
+# Data: 07 de julho de 2024.
 
 # Objetivo do código: Aplicação do método Best Linear Unbiased Estimator (BLUE 1).
 
@@ -31,8 +31,8 @@ Saída: lista com o erro de estimação pelo método BLUE 1
 import numpy as np
 
 # Importação dos arquivos.
-from leitura_dados_ocupacao_blue1 import *
-from leitura_dados_ruidos_blue1 import *
+from leitura_dados_ocupacao_BLUE1 import *
+from leitura_dados_ruidos_BLUE1 import *
 
 ### ------------------------------------------------- 1) FUNÇÃO PARA O PULSO DE REFERÊNCIA ----------------------------------------------------- ###
 
@@ -225,7 +225,6 @@ def metodo_BLUE1(parametro, Matriz_pulsos_sinais_teste, vetor_parametro_referenc
     except np.linalg.LinAlgError:
     # Impressão de mensagem de erro
         print("A matriz da parte do vetor de pesos do método BLUE 1 não é invertível.")
-    
     
     # Para o índice de zero até o número de linhas da matriz Matriz_pulsos_sinais_treino.
     for indice_linha in range(len(Matriz_pulsos_sinais_teste)):

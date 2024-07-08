@@ -1,8 +1,8 @@
-# Projeto ATLAS - Reconstrução de sinal - Best Linear Unbiased Estimator (BLUE 1).
+# EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE 1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 01 de junho de 2024.
+# Data: 07 de julho de 2024.
 
-# Objetivo do código: gráfico dos dados estatíticos ao longo das ocupações de acordo com o janelamento para o método Best Linear Unbiased Estimator (BLUE 1).
+# Objetivo do código: gráfico dos dados estatísticos ao longo das ocupações de acordo com o janelamento para o método Best Linear Unbiased Estimator (BLUE 1).
 
 """ 
 Organização do Código:
@@ -83,7 +83,7 @@ def leitura_dados_estatisticos_janelamento(parametro, n_janelamento):
 # Definição da função para o plote do gráfico do dado estatístico ao longo das ocupações para um determinado janelamento.
 def grafico_dado_estatistico_janelamento(parametro, dado_estatistico, Matriz_Dados_Estatisticos_Janelamento):
     
-    # Definição da variável indice_coluna_ocupações que armazena o valor do índice da coluna das ocupações.
+    # Definição da variável indice_coluna_ocupacoes que armazena o valor do índice da coluna das ocupações.
     indice_coluna_ocupacoes = 0
     
     # Definição da variável indice_coluna_media que armazena o valor do índice da coluna das médias.
@@ -92,7 +92,7 @@ def grafico_dado_estatistico_janelamento(parametro, dado_estatistico, Matriz_Dad
     # Definição da variável indice_coluna_var que armazena o valor do índice da coluna das variâncias.
     indice_coluna_var = 2
     
-    # Definição da variável indice_coluna_DP que armazena o valor do índice da coluna dos desvios padrões.
+    # Definição da variável indice_coluna_DP que armazena o valor do índice da coluna dos desvios padrão.
     indice_coluna_DP = 3
     
     # Definição do eixo das abscissas.
@@ -102,7 +102,7 @@ def grafico_dado_estatistico_janelamento(parametro, dado_estatistico, Matriz_Dad
     plt.xlabel("Ocupação (OC.)", fontsize = 18)
     plt.xticks(fontsize = 16)
     
-    # Caso a variável dado_estatatístico seja 1 (média).
+    # Caso a variável dado_estatístico seja 1 (média).
     if dado_estatistico == 1:
         
         # Definição do vetor dos dados estatísticos.
@@ -167,9 +167,9 @@ def grafico_dado_estatistico_janelamento(parametro, dado_estatistico, Matriz_Dad
         
 ### -------------------------------------------------------------------------------------------------------------------------------------------- ###        
         
-### ---------------------------------------------------- 3) FUNÇÃO PRINCIPAL DO CÓDIGO (MAIN) -------------------------------------------------- ###
+### ---------------------------------------------------- 3) INSTRUÇÃO PRINCIPAL DO CÓDIGO (MAIN) -------------------------------------------------- ###
 
-# Definição da função principal (main) para esse código.
+# Definição da instrução principal (main) para esse código.
 def principal_grafico_dado_estatistico_janelamento_blue1():
     
     # Impressão de mensagem no terminal.
@@ -187,7 +187,7 @@ def principal_grafico_dado_estatistico_janelamento_blue1():
     # A variável valores_dados é uma lista com os valores aceitáveis para opcao.
     valores_dados = list(range(1,4,1))
 
-    # Caso o valor digitado armazenado na variável dado_estatistico não estiver presente na lista valores_dados.
+    # Caso o valor digitado armazenado na variável dado_estatistico e parametro não estiverem presente na lista valores_dados.
     if dado_estatistico and parametro not in valores_dados:
     
         # Exibição de uma mensagem de alerta de que a opção solicitada é inválida.
@@ -217,7 +217,7 @@ def principal_grafico_dado_estatistico_janelamento_blue1():
     # A variável n_janelamento armazena a quantidade de janelamento especificada no terminal pelo usuário.
     n_janelamento = int(input("Digite a quantidade de janelamento: "))
 
-    # A variável valores_janelamento é uma lista com os valores aceitáveis do janelamento de 7 até 19 com incremento de dois.
+    # A variável valores_janelamento é uma lista com os valores aceitáveis do janelamento de 7 até 19 com incremento de 2.
     valores_janelamento = list(range(7,20,2))
 
     # Caso o valor digitado armazenado na variável n_janelamento não estiver presente na lista valores_janelamento.
@@ -234,7 +234,7 @@ def principal_grafico_dado_estatistico_janelamento_blue1():
     Matriz_Dados_Estatisticos_Janelamento = leitura_dados_estatisticos_janelamento(parametro, n_janelamento)
     grafico_dado_estatistico_janelamento(parametro, dado_estatistico, Matriz_Dados_Estatisticos_Janelamento)
     
-# Chamada da função principal do código.
+# Chamada da instrução principal do código.
 principal_grafico_dado_estatistico_janelamento_blue1()
 
 # Impressão de uma linha que representa o fim do programa.

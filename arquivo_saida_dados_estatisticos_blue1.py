@@ -1,6 +1,6 @@
-# Projeto ATLAS - Reconstrução de sinal - Best Linear Unbiased Estimator (BLUE 1).
+# EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE 1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 01 de junho de 2024.
+# Data: 07 de julho de 2024.
 
 # Objetivo do código: geração de arquivos de saída baseados nos dados estatísticos dos histogramas do erro de estimação pelo método Best Linear Unbiased Estimator (BLUE 1).
 
@@ -9,8 +9,8 @@ Organização do Código:
 
 Importação de arquivos.
 Leitura dos dados de ocupação: leitura_dados_ocupacao.py
-Leitura dos dados de ruídos: leitura_dados_ruidos_blue1.py
-Método: metodo_blue1.py
+Leitura dos dados de ruídos: leitura_dados_ruidos_BLUE1.py
+Método: metodo_BLUE1.py
 
 Funções presentes:
 
@@ -37,9 +37,9 @@ import time
 from termcolor import colored
 
 # Importação dos arquivos.
-from leitura_dados_ocupacao_blue1 import *
-from leitura_dados_ruidos_blue1 import *
-from metodo_blue1 import * 
+from leitura_dados_ocupacao_BLUE1 import *
+from leitura_dados_ruidos_BLUE1 import *
+from metodo_BLUE1 import * 
 
 # Impressão de uma linha que representa o início do programa.
 print("\n---------------------------------------------------------------------------------------------------------------------------------------\n")
@@ -123,10 +123,10 @@ def arquivo_saida_dados_estatisticos_erro_parametro(parametro, n_ocupacao, n_jan
 
 ### -------------------------------------------------------------------------------------------------------------------------------------------- ###
 
-### ---------------------------------------- 3) FUNÇÃO PRINCIPAL DO CÓDIGO (MAIN) -------------------------------------------------------------- ###
+### ---------------------------------------- 3) INSTRUÇÃO PRINCIPAL DO CÓDIGO (MAIN) -------------------------------------------------------------- ###
 
-# Definição da função principal (main) para esse código.
-def principal_arquivo_saida_dados_estatisticos_blue1():
+# Definição da instrução principal (main) para esse código.
+def principal_arquivo_saida_dados_estatisticos_BLUE1():
     
     # A variável valor_pedestal_referencia armazena a quantidade de referência do pedestal.
     valor_pedestal_referencia = 30
@@ -168,27 +168,27 @@ def principal_arquivo_saida_dados_estatisticos_blue1():
     
             Matriz_Dados_OC = leitura_dados_ocupacao(n_ocupacao)
             
-            Matriz_Dados_OC_sem_pedestal = retirada_pedestal(Matriz_Dados_OC)
+            Matriz_Dados_OC_Sem_Pedestal = retirada_pedestal(Matriz_Dados_OC)
     
-            vetor_amostras_pulsos, vetor_amplitude_referencia, vetor_fase_referencia = amostras_pulsos_e_referencia(Matriz_Dados_OC_sem_pedestal)
+            vetor_amostras_pulsos, vetor_amplitude_referencia, vetor_fase_referencia = amostras_pulsos_e_referencia(Matriz_Dados_OC_Sem_Pedestal)
             
-            Matriz_dados_pulsos, vetor_amplitude_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_amplitude_referencia, n_janelamento)
-            Matriz_dados_pulsos, vetor_fase_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_fase_referencia, n_janelamento)
+            Matriz_Dados_Pulsos, vetor_amplitude_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_amplitude_referencia, n_janelamento)
+            Matriz_Dados_Pulsos, vetor_fase_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_fase_referencia, n_janelamento)
             vetor_pedestal_referencia = valor_pedestal_referencia*np.ones(len(Matriz_Dados_OC)-n_janelamento+1)
             
-            Matriz_dados_pulsos_treino, Matriz_dados_pulsos_teste, vetor_amplitude_referencia_treino, vetor_amplitude_referencia_teste = dados_treino_teste_histograma(Matriz_dados_pulsos, vetor_amplitude_referencia)
-            Matriz_dados_pulsos_treino, Matriz_dados_pulsos_teste, vetor_fase_referencia_treino, vetor_fase_referencia_teste = dados_treino_teste_histograma(Matriz_dados_pulsos, vetor_fase_referencia)
-            Matriz_dados_pulsos_treino, Matriz_dados_teste, vetor_pedestal_referencia_treino, vetor_pedestal_referencia_teste = dados_treino_teste_histograma(Matriz_dados_pulsos, vetor_pedestal_referencia)
+            Matriz_Dados_Pulsos_Treino, Matriz_Dados_Pulsos_Teste, vetor_amplitude_referencia_treino, vetor_amplitude_referencia_teste = dados_treino_teste_histograma(Matriz_Dados_Pulsos, vetor_amplitude_referencia)
+            Matriz_Dados_Pulsos_Treino, Matriz_Dados_Pulsos_Teste, vetor_fase_referencia_treino, vetor_fase_referencia_teste = dados_treino_teste_histograma(Matriz_Dados_Pulsos, vetor_fase_referencia)
+            Matriz_Dados_Pulsos_Treino, Matriz_Dados_Pulsos_Teste, vetor_pedestal_referencia_treino, vetor_pedestal_referencia_teste = dados_treino_teste_histograma(Matriz_Dados_Pulsos, vetor_pedestal_referencia)
     
             vetor_dados_ruidos = leitura_dados_ruidos(n_ocupacao)
             
-            Matriz_dados_ruidos = amostras_ruidos_janelamento(vetor_dados_ruidos, n_janelamento) 
+            Matriz_Dados_Ruidos = amostras_ruidos_janelamento(vetor_dados_ruidos, n_janelamento) 
             
-            Matriz_covariancia = matriz_covariancia(Matriz_dados_ruidos)
+            Matriz_Covariancia = matriz_covariancia(Matriz_Dados_Ruidos)
     
-            lista_erro_amplitude = metodo_BLUE1(parametro_amplitude, Matriz_dados_pulsos_teste, vetor_amplitude_referencia_teste, Matriz_covariancia, n_janelamento)
-            lista_erro_fase = metodo_BLUE1(parametro_fase, Matriz_dados_pulsos_teste, vetor_fase_referencia_teste, Matriz_covariancia, n_janelamento)
-            lista_erro_pedestal = metodo_BLUE1(parametro_pedestal, Matriz_dados_pulsos_teste, vetor_pedestal_referencia_teste, Matriz_covariancia, n_janelamento)
+            lista_erro_amplitude = metodo_BLUE1(parametro_amplitude, Matriz_Dados_Pulsos_Teste, vetor_amplitude_referencia_teste, Matriz_Covariancia, n_janelamento)
+            lista_erro_fase = metodo_BLUE1(parametro_fase, Matriz_Dados_Pulsos_Teste, vetor_fase_referencia_teste, Matriz_Covariancia, n_janelamento)
+            lista_erro_pedestal = metodo_BLUE1(parametro_pedestal, Matriz_Dados_Pulsos_Teste, vetor_pedestal_referencia_teste, Matriz_Covariancia, n_janelamento)
             
             media_erro_amplitude, var_erro_amplitude, desvio_padrao_erro_amplitude = dados_estatisticos_erro_parametro(lista_erro_amplitude)
             media_erro_fase, var_erro_fase, desvio_padrao_erro_fase = dados_estatisticos_erro_parametro(lista_erro_fase)
@@ -198,8 +198,8 @@ def principal_arquivo_saida_dados_estatisticos_blue1():
             arquivo_saida_dados_estatisticos_erro_parametro(parametro_fase, n_ocupacao, n_janelamento, media_erro_fase, var_erro_fase, desvio_padrao_erro_fase)
             arquivo_saida_dados_estatisticos_erro_parametro(parametro_pedestal, n_ocupacao, n_janelamento, media_erro_pedestal, var_erro_pedestal, desvio_padrao_erro_pedestal)
 
-# Chamada da função principal do código.
-principal_arquivo_saida_dados_estatisticos_blue1()
+# Chamada da instrução principal do código.
+principal_arquivo_saida_dados_estatisticos_BLUE1()
 
 # Impressão de uma linha que representa o fim do programa.
 print("\n---------------------------------------------------------------------------------------------------------------------------------------\n")   

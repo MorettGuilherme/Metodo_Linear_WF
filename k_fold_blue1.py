@@ -1,6 +1,6 @@
-# Projeto ATLAS - Reconstrução de sinal - Best Linear Unbiased Estimator (BLUE 1).
+# EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE 1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 01 de junho de 2024.
+# Data: 07 de julho de 2024.
 
 # Objetivo do código: implementação da validação cruzada K-Fold para o método Best Linear Unbiased Estimator (BLUE 1).
 
@@ -8,9 +8,9 @@
 Organização do código:
 
 Importação de arquivos.
-Leitura dos dados de ocupação: leitura_dados_ocupacao_blue1.py
-Leitura dos dados de ruídos: leitura_dados_ruidos_blue1.py
-Método: metodo_blue1.py
+Leitura dos dados de ocupação: leitura_dados_ocupacao_BLUE1.py
+Leitura dos dados de ruídos: leitura_dados_ruidos_BLUE1.py
+Método BLUE 1: metodo_BLUE1.py
 
 Funções presentes:
 
@@ -35,9 +35,9 @@ import time
 from termcolor import colored
 
 # Importação dos arquivos.
-from leitura_dados_ocupacao_blue1 import *
-from leitura_dados_ruidos_blue1 import *
-from metodo_blue1 import *
+from leitura_dados_ocupacao_BLUE1 import *
+from leitura_dados_ruidos_BLUE1 import *
+from metodo_BLUE1 import *
 
 # Impressão de uma linha que representa o início do programa.
 print("\n---------------------------------------------------------------------------------------------------------------------------------------\n")
@@ -69,7 +69,7 @@ def arquivo_saida_dados_estatisticos_k_fold_erro(parametro, n_ocupacao, n_janela
         os.makedirs(pasta_saida)
 
     # Nome do arquivo de saida.
-    arquivo_saida = f"k_fold_{parametro}_{dado}_dados_estatisticos_blue1_OC_{n_ocupacao}.txt"
+    arquivo_saida = f"k_fold_{parametro}_{dado}_dados_estatisticos_BLUE1_OC_{n_ocupacao}.txt"
 
     # Caminho completo para o arquivo de saída.
     caminho_arquivo_saida = os.path.join(pasta_saida, arquivo_saida)
@@ -139,7 +139,7 @@ def K_fold(parametro, n_ocupacao, n_janelamento, Matriz_pulsos_sinais, vetor_par
     # Definição da lista vazia lista_bloco_DP_erro.
     lista_blocos_DP_erro = []
      
-    # Para indice_bloco de 0 até o tamanho da matriz de dados de entrada com incremento igual a quantidade de elementos no bloco.
+    # Para indice_bloco de zero até o tamanho da matriz de dados de entrada com incremento igual a quantidade de elementos no bloco.
     for indice_teste in range(0, len(blocos_pulsos_sinais)):
         
         # Definição do bloco_teste_pulsos_sinais como sendo aquele de índice igual ao indice_teste.
@@ -201,7 +201,7 @@ def K_fold(parametro, n_ocupacao, n_janelamento, Matriz_pulsos_sinais, vetor_par
 
 ### ----------------------------------------- 3) INSTRUÇÃO PARA APLICAR O K-FOLD EM TODAS AS OCUPAÇÕES ----------------------------------------- ###
   
-# Definição da função principal (main) do código.
+# Definição da instrução principal (main) do código.
 def principal_K_fold():
     
     # A variável parametro_amplitude armazena a string "amplitude".

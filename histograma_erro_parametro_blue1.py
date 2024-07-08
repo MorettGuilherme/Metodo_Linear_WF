@@ -1,6 +1,6 @@
-# Projeto Atlas - Reconstrução de sinal - Best Linear Unbiased Estimator (BLUE 1).
+# EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE 1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 01 de junho de 2024.
+# Data: 07 de julho de 2024.
 
 # Objetivo do código: análise do erro absoluto do parâmetro da amplitude, fase ou pedestal pelo método Best Linear Unbiased Estimator (BLUE 1).
 
@@ -8,9 +8,9 @@
 Organização do Código:
 
 Importação de arquivos.
-Leitura dos dados de ocupação: leitura_dados_ocupacao_blue1.py
-Leitura dos dados de ruídos: leitura_dados_ruidos_blue1.py
-Método: metodo_blue1.py
+Leitura dos dados de ocupação: leitura_dados_ocupacao_BLUE1.py
+Leitura dos dados de ruídos: leitura_dados_ruidos_BLUE1.py
+Método BLUE 1: metodo_BLUE1.py
 
 Funções presentes:
 
@@ -35,9 +35,9 @@ import os
 from termcolor import colored
 
 # Importação dos arquivos.
-from leitura_dados_ocupacao_blue1 import *
-from leitura_dados_ruidos_blue1 import *
-from metodo_blue1 import *
+from leitura_dados_ocupacao_BLUE1 import *
+from leitura_dados_ruidos_BLUE1 import *
+from metodo_BLUE1 import *
 
 # Impressão de uma linha que representa o início do programa.
 print("\n---------------------------------------------------------------------------------------------------------------------------------------\n")
@@ -75,7 +75,7 @@ def dados_estatisticos_erro_parametro(lista_erro_parametro):
 ### --------------------- 2) FUNÇÃO PARA A CONSTRUÇÃO DO HISTOGRAMA DO ERRO DE ESTIMAÇÃO DA AMPLITUDE, FASE OU PEDESTAL ------------------------ ###
 
 # Definição de função para o plot do histograma do erro de estimação da amplitude, fase ou pedestal.
-def histograma_erro_parametro(parametro, lista_erro_parametro, media_erro_parametro, var_erro_parametro, desvio_padrao_erro_parametro):
+def histograma_erro_parametro(n_ocupacao, parametro, lista_erro_parametro, media_erro_parametro, var_erro_parametro, desvio_padrao_erro_parametro):
     
     # A lista do erro de estimação do parâmetro é convertida para o tipo numpy array.
     vetor_erro_parametro = np.array(lista_erro_parametro)
@@ -104,6 +104,9 @@ def histograma_erro_parametro(parametro, lista_erro_parametro, media_erro_parame
     # A variável texto recebe uma string com as informações de interesse.
     texto = f"Média: {round(media_erro_parametro, 6)} \n Variância: {round(var_erro_parametro, 6)} \n Desvio padrão: {round(desvio_padrao_erro_parametro, 6)}"
 
+    # Impressão do título do gráfico (recomendável para a apresentação de slides).
+    # plt.title(f"Ocupação {n_ocupacao}", fontsize = 18)
+
     # Definição do histograma a partir do vetor vetor_erro_parametro.
     plt.hist(vetor_erro_parametro, bins = 100, range = [-800, 800], edgecolor = 'black', linewidth = 1.2)
     
@@ -124,7 +127,7 @@ def histograma_erro_parametro(parametro, lista_erro_parametro, media_erro_parame
 
 ### -------------------------------------- 3) INSTRUÇÃO PRINCIPAL DO CÓDIGO (MAIN) ------------------------------------------------------------- ###
 
-# Definição da função principal (main) do código.
+# Definição da instrução principal (main) do código.
 def principal_histograma_erro_parametro():
     
     # Impressão de mensagem no terminal.
@@ -145,7 +148,7 @@ def principal_histograma_erro_parametro():
         # A execução do programa é interrompida.
         exit(1)
     
-    # A variável numero_ocupacao armazena o valor digitado da ocupação desejada no terminal pelo usuário.
+    # A variável n_ocupacao armazena o valor digitado da ocupação desejada no terminal pelo usuário.
     n_ocupacao = float(input("Digite o valor da ocupação desejada: "))
 
     # A variável valores_ocupacao é uma lista com os valores aceitáveis de ocupação de 0 até 100.
@@ -159,14 +162,14 @@ def principal_histograma_erro_parametro():
         # A execução do programa é interrompida.
         exit(1) 
 
-    # O tipo da variável numero_ocupacao é convertida para inteiro.
+    # O tipo da variável n_ocupacao é convertida para inteiro.
     # Obs.: essa conversão possibilita que a leitura do arquivo possa ser feita corretamente.
     n_ocupacao = int(n_ocupacao)
     
     # A variável n_janelamento armazena a quantidade de janelamento especificada no terminal pelo usuário.
     n_janelamento = int(input("Digite a quantidade de janelamento: "))
 
-    # A variável valores_janelamento é uma lista com os valores aceitáveis do janelamento de 7 até 19 com incremento de dois.
+    # A variável valores_janelamento é uma lista com os valores aceitáveis do janelamento de 7 até 19 com incremento de 2.
     valores_janelamento = list(range(7,20,2))
 
     # Caso o valor digitado armazenado na variável n_janelamento não estiver presente na lista valores_janelamento.
@@ -227,9 +230,9 @@ def principal_histograma_erro_parametro():
 
     media_erro_parametro, var_erro_parametro, desvio_padrao_erro_parametro = dados_estatisticos_erro_parametro(lista_erro_parametro)
     
-    histograma_erro_parametro(parametro, lista_erro_parametro, media_erro_parametro, var_erro_parametro, desvio_padrao_erro_parametro)
+    histograma_erro_parametro(n_ocupacao, parametro, lista_erro_parametro, media_erro_parametro, var_erro_parametro, desvio_padrao_erro_parametro)
     
-# Chamada da função principal (main) do código.
+# Chamada da instrução principal (main) do código.
 principal_histograma_erro_parametro()
 
 ### -------------------------------------------------------------------------------------------------------------------------------------------- ###

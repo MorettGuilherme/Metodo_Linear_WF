@@ -1,8 +1,8 @@
-# Projeto ATLAS - Reconstrução de sinal - Best Linear Unbiased Estimator (BLUE 1).
+# EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE 1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 01 de junho de 2024.
+# Data: 07 de julho de 2024.
 
-# Objetivo do código: construção do gráfico da validação cruzada K-Fold.
+# Objetivo do código: construção do gráfico da validação cruzada K-Fold para o método Best Linear Unbiased Estimador (BLUE 1).
 
 """ 
 Organização do código:
@@ -65,8 +65,8 @@ def leitura_dados_estatisticos_k_fold(parametro, n_ocupacao, dado_estatistico):
         # Abre o aquivo de entrada no modo leitura.
         with open(caminho_arquivo_dados_k_fold,"r") as arquivo_entrada_ocupacoes:
         
-            # Armazena os dados na variável Matriz_dados_k_fold.
-            Matriz_dados_k_fold = np.array(np.loadtxt(arquivo_entrada_ocupacoes, skiprows = 1, dtype = 'double', delimiter = ','))
+            # Armazena os dados na variável Matriz_Dados_K_Fold.
+            Matriz_Dados_K_Fold = np.array(np.loadtxt(arquivo_entrada_ocupacoes, skiprows = 1, dtype = 'double', delimiter = ','))
  
     # Caso contrário.       
     else:
@@ -77,15 +77,15 @@ def leitura_dados_estatisticos_k_fold(parametro, n_ocupacao, dado_estatistico):
     # Obs.: da forma que o programa está escrito, os arquivos de entrada devem estar em uma pasta em que está o código do programa.
     # Caso deseja-se alterar isso basta mudar o endereço do arquivo.
     
-    # A função retorna a matriz Matriz_dados_k_fold.
-    return Matriz_dados_k_fold
+    # A função retorna a matriz Matriz_Dados_K_Fold.
+    return Matriz_Dados_K_Fold
 
 ### -------------------------------------------------------------------------------------------------------------------------------------------- ###
 
 ### ------------------------------ 2) INSTRUÇÃO PARA A CONSTRUÇÃO DO GRÁFICO DO TIPO A DA VALIDAÇÃO CRUZADA K-FOLD ----------------------------- ###
 
-# Definição da função para a construção do gráfico tipo A pela validação cruzada K-Fold.
-def grafico_A_k_fold(parametro, opcao, Matriz_dados_k_fold_OC_0, Matriz_dados_k_fold_OC_10, Matriz_dados_k_fold_OC_20, Matriz_dados_k_fold_OC_30, Matriz_dados_k_fold_OC_40, Matriz_dados_k_fold_OC_50, Matriz_dados_k_fold_OC_60, Matriz_dados_k_fold_OC_70, Matriz_dados_k_fold_OC_80, Matriz_dados_k_fold_OC_90, Matriz_dados_k_fold_OC_100):
+# Definição da instrução para a construção do gráfico tipo A pela validação cruzada K-Fold.
+def grafico_A_k_fold(parametro, opcao, Matriz_Dados_K_Fold_OC_0, Matriz_Dados_K_Fold_OC_10, Matriz_Dados_K_Fold_OC_20, Matriz_Dados_K_Fold_OC_30, Matriz_Dados_K_Fold_OC_40, Matriz_Dados_K_Fold_OC_50, Matriz_Dados_K_Fold_OC_60, Matriz_Dados_K_Fold_OC_70, Matriz_Dados_K_Fold_OC_80, Matriz_Dados_K_Fold_OC_90, Matriz_Dados_K_Fold_OC_100):
     
     # Definição da variável indice_coluna_janelamento que armazena o índice da coluna do janelamento.
     indice_coluna_janelamento = 0
@@ -93,11 +93,11 @@ def grafico_A_k_fold(parametro, opcao, Matriz_dados_k_fold_OC_0, Matriz_dados_k_
     # Definição da variável indice_coluna_media que armazena o índice da coluna das médias do dado estatístico.
     indice_coluna_medias = 1
     
-    # Definição da variável indice_coluna_DP que armazena o índice da coluna dos desvios padrões do dado estatístico.
+    # Definição da variável indice_coluna_DP que armazena o índice da coluna dos desvios padrão do dado estatístico.
     indice_coluna_DP = 3
     
     # Definição do vetor do eixo das abscissas.
-    janelamento = Matriz_dados_k_fold_OC_0[:, indice_coluna_janelamento]
+    janelamento = Matriz_Dados_K_Fold_OC_0[:, indice_coluna_janelamento]
     
     # Nomeação do eixo das abscissas.
     plt.xlabel("Quantidade de janelamento", fontsize = 18)
@@ -154,61 +154,61 @@ def grafico_A_k_fold(parametro, opcao, Matriz_dados_k_fold_OC_0, Matriz_dados_k_
             plt.ylabel(f"DP. pelo K-Fold do erro de estimação (ADC Count)", fontsize = 18)
         
     # Armazenamento dos dados referentes a ocupação 0.
-    Matriz_dados_medias_k_fold_OC_0 = Matriz_dados_k_fold_OC_0[: , indice_coluna_medias]
-    Matriz_dados_erros_k_fold_OC_0 = Matriz_dados_k_fold_OC_0[: , indice_coluna_DP]
+    Matriz_Dados_Medias_K_Fold_OC_0 = Matriz_Dados_K_Fold_OC_0[: , indice_coluna_medias]
+    Matriz_Dados_Erros_K_Fold_OC_0 = Matriz_Dados_K_Fold_OC_0[: , indice_coluna_DP]
     
     # Armazenamento dos dados referentes a ocupação 10.
-    Matriz_dados_medias_k_fold_OC_10 = Matriz_dados_k_fold_OC_10[: , indice_coluna_medias]
-    Matriz_dados_erros_k_fold_OC_10 = Matriz_dados_k_fold_OC_10[: , indice_coluna_DP]
+    Matriz_Dados_Medias_K_Fold_OC_10 = Matriz_Dados_K_Fold_OC_10[: , indice_coluna_medias]
+    Matriz_Dados_Erros_K_Fold_OC_10 = Matriz_Dados_K_Fold_OC_10[: , indice_coluna_DP]
     
     # Armazenamento dos dados referentes a ocupação 20.
-    Matriz_dados_medias_k_fold_OC_20 = Matriz_dados_k_fold_OC_20[: , indice_coluna_medias]
-    Matriz_dados_erros_k_fold_OC_20 = Matriz_dados_k_fold_OC_20[: , indice_coluna_DP]
+    Matriz_Dados_Medias_K_Fold_OC_20 = Matriz_Dados_K_Fold_OC_20[: , indice_coluna_medias]
+    Matriz_Dados_Erros_K_Fold_OC_20 = Matriz_Dados_K_Fold_OC_20[: , indice_coluna_DP]
     
     # Armazenamento dos dados referentes a ocupação 30.
-    Matriz_dados_medias_k_fold_OC_30 = Matriz_dados_k_fold_OC_30[: , indice_coluna_medias]
-    Matriz_dados_erros_k_fold_OC_30 = Matriz_dados_k_fold_OC_30[: , indice_coluna_DP]
+    Matriz_Dados_Medias_K_Fold_OC_30 = Matriz_Dados_K_Fold_OC_30[: , indice_coluna_medias]
+    Matriz_Dados_Erros_K_Fold_OC_30 = Matriz_Dados_K_Fold_OC_30[: , indice_coluna_DP]
     
     # Armazenamento dos dados referentes a ocupação 40.
-    Matriz_dados_medias_k_fold_OC_40 = Matriz_dados_k_fold_OC_40[: , indice_coluna_medias]
-    Matriz_dados_erros_k_fold_OC_40 = Matriz_dados_k_fold_OC_40[: , indice_coluna_DP]
+    Matriz_Dados_Medias_K_Fold_OC_40 = Matriz_Dados_K_Fold_OC_40[: , indice_coluna_medias]
+    Matriz_Dados_Erros_K_Fold_OC_40 = Matriz_Dados_K_Fold_OC_40[: , indice_coluna_DP]
     
     # Armazenamento dos dados referentes a ocupação 50.
-    Matriz_dados_medias_k_fold_OC_50 = Matriz_dados_k_fold_OC_50[: , indice_coluna_medias]
-    Matriz_dados_erros_k_fold_OC_50 = Matriz_dados_k_fold_OC_50[: , indice_coluna_DP]
+    Matriz_Dados_Medias_K_Fold_OC_50 = Matriz_Dados_K_Fold_OC_50[: , indice_coluna_medias]
+    Matriz_Dados_Erros_K_Fold_OC_50 = Matriz_Dados_K_Fold_OC_50[: , indice_coluna_DP]
     
     # Armazenamento dos dados referentes a ocupação 60.
-    Matriz_dados_medias_k_fold_OC_60 = Matriz_dados_k_fold_OC_60[: , indice_coluna_medias]
-    Matriz_dados_erros_k_fold_OC_60 = Matriz_dados_k_fold_OC_60[: , indice_coluna_DP]
+    Matriz_Dados_Medias_K_Fold_OC_60 = Matriz_Dados_K_Fold_OC_60[: , indice_coluna_medias]
+    Matriz_Dados_Erros_K_Fold_OC_60 = Matriz_Dados_K_Fold_OC_60[: , indice_coluna_DP]
     
     # Armazenamento dos dados referentes a ocupação 70.
-    Matriz_dados_medias_k_fold_OC_70 = Matriz_dados_k_fold_OC_70[: , indice_coluna_medias]
-    Matriz_dados_erros_k_fold_OC_70 = Matriz_dados_k_fold_OC_70[: , indice_coluna_DP]
+    Matriz_Dados_Medias_K_Fold_OC_70 = Matriz_Dados_K_Fold_OC_70[: , indice_coluna_medias]
+    Matriz_Dados_Erros_K_Fold_OC_70 = Matriz_Dados_K_Fold_OC_70[: , indice_coluna_DP]
     
     # Armazenamento dos dados referentes a ocupação 80.
-    Matriz_dados_medias_k_fold_OC_80 = Matriz_dados_k_fold_OC_80[: , indice_coluna_medias]
-    Matriz_dados_erros_k_fold_OC_80 = Matriz_dados_k_fold_OC_80[: , indice_coluna_DP]
+    Matriz_Dados_Medias_K_Fold_OC_80 = Matriz_Dados_K_Fold_OC_80[: , indice_coluna_medias]
+    Matriz_Dados_Erros_K_Fold_OC_80 = Matriz_Dados_K_Fold_OC_80[: , indice_coluna_DP]
     
     # Armazenamento dos dados referentes a ocupação 90.
-    Matriz_dados_medias_k_fold_OC_90 = Matriz_dados_k_fold_OC_90[: , indice_coluna_medias]
-    Matriz_dados_erros_k_fold_OC_90 = Matriz_dados_k_fold_OC_90[: , indice_coluna_DP]
+    Matriz_Dados_Medias_K_Fold_OC_90 = Matriz_Dados_K_Fold_OC_90[: , indice_coluna_medias]
+    Matriz_Dados_Erros_K_Fold_OC_90 = Matriz_Dados_K_Fold_OC_90[: , indice_coluna_DP]
     
     # Armazenamento dos dados referentes a ocupação 100.
-    Matriz_dados_medias_k_fold_OC_100 = Matriz_dados_k_fold_OC_100[: , indice_coluna_medias]
-    Matriz_dados_erros_k_fold_OC_100 = Matriz_dados_k_fold_OC_100[: , indice_coluna_DP]
+    Matriz_Dados_Medias_K_Fold_OC_100 = Matriz_Dados_K_Fold_OC_100[: , indice_coluna_medias]
+    Matriz_Dados_Erros_K_Fold_OC_100 = Matriz_Dados_K_Fold_OC_100[: , indice_coluna_DP]
 
     # Plote dos dados.
-    plt.errorbar(janelamento, Matriz_dados_medias_k_fold_OC_0, yerr = Matriz_dados_erros_k_fold_OC_0, color = 'darkviolet', linestyle = '--', marker = 'o', markersize = 3, label = '0')
-    plt.errorbar(janelamento, Matriz_dados_medias_k_fold_OC_10, yerr = Matriz_dados_erros_k_fold_OC_10, color = 'violet', linestyle = '--', marker = 'o', markersize = 3, label = '10')
-    plt.errorbar(janelamento, Matriz_dados_medias_k_fold_OC_20, yerr = Matriz_dados_erros_k_fold_OC_20, color = 'blue', linestyle = '--', marker = 'o', markersize = 3, label = '20')
-    plt.errorbar(janelamento, Matriz_dados_medias_k_fold_OC_30, yerr = Matriz_dados_erros_k_fold_OC_30, color = 'slateblue', linestyle = '--', marker = 'o', markersize = 3, label = '30')
-    plt.errorbar(janelamento, Matriz_dados_medias_k_fold_OC_40, yerr = Matriz_dados_erros_k_fold_OC_40, color = 'cyan', linestyle = '--', marker = 'o', markersize = 3, label = '40')
-    plt.errorbar(janelamento, Matriz_dados_medias_k_fold_OC_50, yerr = Matriz_dados_erros_k_fold_OC_50, color = 'green', linestyle = '--', marker = 'o', markersize = 3, label = '50')
-    plt.errorbar(janelamento, Matriz_dados_medias_k_fold_OC_60, yerr = Matriz_dados_erros_k_fold_OC_60, color = 'greenyellow', linestyle = '--', marker = 'o', markersize = 3, label = '60')
-    plt.errorbar(janelamento, Matriz_dados_medias_k_fold_OC_70, yerr = Matriz_dados_erros_k_fold_OC_70, color = 'yellow', linestyle = '--', marker = 'o', markersize = 3, label = '70')
-    plt.errorbar(janelamento, Matriz_dados_medias_k_fold_OC_80, yerr = Matriz_dados_erros_k_fold_OC_80, color = 'gold', linestyle = '--', marker = 'o', markersize = 3, label = '80')
-    plt.errorbar(janelamento, Matriz_dados_medias_k_fold_OC_90, yerr = Matriz_dados_erros_k_fold_OC_90, color = 'orange', linestyle = '--', marker = 'o', markersize = 3, label = '90')
-    plt.errorbar(janelamento, Matriz_dados_medias_k_fold_OC_100, yerr = Matriz_dados_erros_k_fold_OC_100, color = 'red', linestyle = '--', marker = 'o', markersize = 3, label = '100')
+    plt.errorbar(janelamento, Matriz_Dados_Medias_K_Fold_OC_0, yerr = Matriz_Dados_Erros_K_Fold_OC_0, color = 'darkviolet', linestyle = '--', marker = 'o', markersize = 3, label = '0')
+    plt.errorbar(janelamento, Matriz_Dados_Medias_K_Fold_OC_10, yerr = Matriz_Dados_Erros_K_Fold_OC_10, color = 'violet', linestyle = '--', marker = 'o', markersize = 3, label = '10')
+    plt.errorbar(janelamento, Matriz_Dados_Medias_K_Fold_OC_20, yerr = Matriz_Dados_Erros_K_Fold_OC_20, color = 'blue', linestyle = '--', marker = 'o', markersize = 3, label = '20')
+    plt.errorbar(janelamento, Matriz_Dados_Medias_K_Fold_OC_30, yerr = Matriz_Dados_Erros_K_Fold_OC_30, color = 'slateblue', linestyle = '--', marker = 'o', markersize = 3, label = '30')
+    plt.errorbar(janelamento, Matriz_Dados_Medias_K_Fold_OC_40, yerr = Matriz_Dados_Erros_K_Fold_OC_40, color = 'cyan', linestyle = '--', marker = 'o', markersize = 3, label = '40')
+    plt.errorbar(janelamento, Matriz_Dados_Medias_K_Fold_OC_50, yerr = Matriz_Dados_Erros_K_Fold_OC_50, color = 'green', linestyle = '--', marker = 'o', markersize = 3, label = '50')
+    plt.errorbar(janelamento, Matriz_Dados_Medias_K_Fold_OC_60, yerr = Matriz_Dados_Erros_K_Fold_OC_60, color = 'greenyellow', linestyle = '--', marker = 'o', markersize = 3, label = '60')
+    plt.errorbar(janelamento, Matriz_Dados_Medias_K_Fold_OC_70, yerr = Matriz_Dados_Erros_K_Fold_OC_70, color = 'yellow', linestyle = '--', marker = 'o', markersize = 3, label = '70')
+    plt.errorbar(janelamento, Matriz_Dados_Medias_K_Fold_OC_80, yerr = Matriz_Dados_Erros_K_Fold_OC_80, color = 'gold', linestyle = '--', marker = 'o', markersize = 3, label = '80')
+    plt.errorbar(janelamento, Matriz_Dados_Medias_K_Fold_OC_90, yerr = Matriz_Dados_Erros_K_Fold_OC_90, color = 'orange', linestyle = '--', marker = 'o', markersize = 3, label = '90')
+    plt.errorbar(janelamento, Matriz_Dados_Medias_K_Fold_OC_100, yerr = Matriz_Dados_Erros_K_Fold_OC_100, color = 'red', linestyle = '--', marker = 'o', markersize = 3, label = '100')
     
     # Comando para o grid do gráfico.
     plt.grid()
@@ -224,7 +224,7 @@ def grafico_A_k_fold(parametro, opcao, Matriz_dados_k_fold_OC_0, Matriz_dados_k_
 ### -------------------------------- 2) INSTRUÇÃO PARA A CONSTRUÇÃO DO GRÁFICO DO TIPO B DA VALIDAÇÃO CRUZADA K-FOLD --------------------------- ###
 
 # Definição da função para a construção do gráfico do tipo B pela validação cruzada K-Fold.
-def grafico_B_k_fold(parametro, opcao, Matriz_dados_k_fold_OC_0, Matriz_dados_k_fold_OC_10, Matriz_dados_k_fold_OC_20, Matriz_dados_k_fold_OC_30, Matriz_dados_k_fold_OC_40, Matriz_dados_k_fold_OC_50, Matriz_dados_k_fold_OC_60, Matriz_dados_k_fold_OC_70, Matriz_dados_k_fold_OC_80, Matriz_dados_k_fold_OC_90, Matriz_dados_k_fold_OC_100):
+def grafico_B_k_fold(parametro, opcao, Matriz_Dados_K_Fold_OC_0, Matriz_Dados_K_Fold_OC_10, Matriz_Dados_K_Fold_OC_20, Matriz_Dados_K_Fold_OC_30, Matriz_Dados_K_Fold_OC_40, Matriz_Dados_K_Fold_OC_50, Matriz_Dados_K_Fold_OC_60, Matriz_Dados_K_Fold_OC_70, Matriz_Dados_K_Fold_OC_80, Matriz_Dados_K_Fold_OC_90, Matriz_Dados_K_Fold_OC_100):
     
     # Definição do vetor das ocupações.
     ocupacoes = np.arange(0, 101, 10)
@@ -299,41 +299,41 @@ def grafico_B_k_fold(parametro, opcao, Matriz_dados_k_fold_OC_0, Matriz_dados_k_
     indice_J19 = 6
         
     # Armazenamentos dos dados referentes ao janelamento 7.
-    Matriz_dados_k_fold_J7_OC = [Matriz_dados_k_fold_OC_0[indice_J7, indice_coluna_medias], Matriz_dados_k_fold_OC_10[indice_J7, indice_coluna_medias], Matriz_dados_k_fold_OC_20[indice_J7, indice_coluna_medias], Matriz_dados_k_fold_OC_30[indice_J7, indice_coluna_medias], Matriz_dados_k_fold_OC_40[indice_J7, indice_coluna_medias], Matriz_dados_k_fold_OC_50[indice_J7, indice_coluna_medias], Matriz_dados_k_fold_OC_60[indice_J7, indice_coluna_medias], Matriz_dados_k_fold_OC_70[indice_J7, indice_coluna_medias], Matriz_dados_k_fold_OC_80[indice_J7, indice_coluna_medias], Matriz_dados_k_fold_OC_90[indice_J7, indice_coluna_medias], Matriz_dados_k_fold_OC_100[indice_J7, indice_coluna_medias]]
-    Matriz_dados_k_fold_erros_J7_OC = [Matriz_dados_k_fold_OC_0[indice_J7, indice_coluna_DP], Matriz_dados_k_fold_OC_10[indice_J7, indice_coluna_DP], Matriz_dados_k_fold_OC_20[indice_J7, indice_coluna_DP], Matriz_dados_k_fold_OC_30[indice_J7, indice_coluna_DP], Matriz_dados_k_fold_OC_40[indice_J7, indice_coluna_DP], Matriz_dados_k_fold_OC_50[indice_J7, indice_coluna_DP], Matriz_dados_k_fold_OC_60[indice_J7, indice_coluna_DP], Matriz_dados_k_fold_OC_70[indice_J7, indice_coluna_DP], Matriz_dados_k_fold_OC_80[indice_J7, indice_coluna_DP], Matriz_dados_k_fold_OC_90[indice_J7, indice_coluna_DP], Matriz_dados_k_fold_OC_100[indice_J7, indice_coluna_DP]]
+    Matriz_Dados_K_Fold_J7_OC = [Matriz_Dados_K_Fold_OC_0[indice_J7, indice_coluna_medias], Matriz_Dados_K_Fold_OC_10[indice_J7, indice_coluna_medias], Matriz_Dados_K_Fold_OC_20[indice_J7, indice_coluna_medias], Matriz_Dados_K_Fold_OC_30[indice_J7, indice_coluna_medias], Matriz_Dados_K_Fold_OC_40[indice_J7, indice_coluna_medias], Matriz_Dados_K_Fold_OC_50[indice_J7, indice_coluna_medias], Matriz_Dados_K_Fold_OC_60[indice_J7, indice_coluna_medias], Matriz_Dados_K_Fold_OC_70[indice_J7, indice_coluna_medias], Matriz_Dados_K_Fold_OC_80[indice_J7, indice_coluna_medias], Matriz_Dados_K_Fold_OC_90[indice_J7, indice_coluna_medias], Matriz_Dados_K_Fold_OC_100[indice_J7, indice_coluna_medias]]
+    Matriz_Dados_K_Fold_Erros_J7_OC = [Matriz_Dados_K_Fold_OC_0[indice_J7, indice_coluna_DP], Matriz_Dados_K_Fold_OC_10[indice_J7, indice_coluna_DP], Matriz_Dados_K_Fold_OC_20[indice_J7, indice_coluna_DP], Matriz_Dados_K_Fold_OC_30[indice_J7, indice_coluna_DP], Matriz_Dados_K_Fold_OC_40[indice_J7, indice_coluna_DP], Matriz_Dados_K_Fold_OC_50[indice_J7, indice_coluna_DP], Matriz_Dados_K_Fold_OC_60[indice_J7, indice_coluna_DP], Matriz_Dados_K_Fold_OC_70[indice_J7, indice_coluna_DP], Matriz_Dados_K_Fold_OC_80[indice_J7, indice_coluna_DP], Matriz_Dados_K_Fold_OC_90[indice_J7, indice_coluna_DP], Matriz_Dados_K_Fold_OC_100[indice_J7, indice_coluna_DP]]
 
     # Armazenamentos dos dados referentes ao janelamento 9.
-    Matriz_dados_k_fold_J9_OC = [Matriz_dados_k_fold_OC_0[indice_J9, indice_coluna_medias], Matriz_dados_k_fold_OC_10[indice_J9, indice_coluna_medias], Matriz_dados_k_fold_OC_20[indice_J9, indice_coluna_medias], Matriz_dados_k_fold_OC_30[indice_J9, indice_coluna_medias], Matriz_dados_k_fold_OC_40[indice_J9, indice_coluna_medias], Matriz_dados_k_fold_OC_50[indice_J9, indice_coluna_medias], Matriz_dados_k_fold_OC_60[indice_J9, indice_coluna_medias], Matriz_dados_k_fold_OC_70[indice_J9, indice_coluna_medias], Matriz_dados_k_fold_OC_80[indice_J9, indice_coluna_medias], Matriz_dados_k_fold_OC_90[indice_J9, indice_coluna_medias], Matriz_dados_k_fold_OC_100[indice_J9, indice_coluna_medias]]
-    Matriz_dados_k_fold_erros_J9_OC = [Matriz_dados_k_fold_OC_0[indice_J9, indice_coluna_DP], Matriz_dados_k_fold_OC_10[indice_J9, indice_coluna_DP], Matriz_dados_k_fold_OC_20[indice_J9, indice_coluna_DP], Matriz_dados_k_fold_OC_30[indice_J9, indice_coluna_DP], Matriz_dados_k_fold_OC_40[indice_J9, indice_coluna_DP], Matriz_dados_k_fold_OC_50[indice_J9, indice_coluna_DP], Matriz_dados_k_fold_OC_60[indice_J9, indice_coluna_DP], Matriz_dados_k_fold_OC_70[indice_J9, indice_coluna_DP], Matriz_dados_k_fold_OC_80[indice_J9, indice_coluna_DP], Matriz_dados_k_fold_OC_90[indice_J9, indice_coluna_DP], Matriz_dados_k_fold_OC_100[indice_J9, indice_coluna_DP]]
+    Matriz_Dados_K_Fold_J9_OC = [Matriz_Dados_K_Fold_OC_0[indice_J9, indice_coluna_medias], Matriz_Dados_K_Fold_OC_10[indice_J9, indice_coluna_medias], Matriz_Dados_K_Fold_OC_20[indice_J9, indice_coluna_medias], Matriz_Dados_K_Fold_OC_30[indice_J9, indice_coluna_medias], Matriz_Dados_K_Fold_OC_40[indice_J9, indice_coluna_medias], Matriz_Dados_K_Fold_OC_50[indice_J9, indice_coluna_medias], Matriz_Dados_K_Fold_OC_60[indice_J9, indice_coluna_medias], Matriz_Dados_K_Fold_OC_70[indice_J9, indice_coluna_medias], Matriz_Dados_K_Fold_OC_80[indice_J9, indice_coluna_medias], Matriz_Dados_K_Fold_OC_90[indice_J9, indice_coluna_medias], Matriz_Dados_K_Fold_OC_100[indice_J9, indice_coluna_medias]]
+    Matriz_Dados_K_Fold_Erros_J9_OC = [Matriz_Dados_K_Fold_OC_0[indice_J9, indice_coluna_DP], Matriz_Dados_K_Fold_OC_10[indice_J9, indice_coluna_DP], Matriz_Dados_K_Fold_OC_20[indice_J9, indice_coluna_DP], Matriz_Dados_K_Fold_OC_30[indice_J9, indice_coluna_DP], Matriz_Dados_K_Fold_OC_40[indice_J9, indice_coluna_DP], Matriz_Dados_K_Fold_OC_50[indice_J9, indice_coluna_DP], Matriz_Dados_K_Fold_OC_60[indice_J9, indice_coluna_DP], Matriz_Dados_K_Fold_OC_70[indice_J9, indice_coluna_DP], Matriz_Dados_K_Fold_OC_80[indice_J9, indice_coluna_DP], Matriz_Dados_K_Fold_OC_90[indice_J9, indice_coluna_DP], Matriz_Dados_K_Fold_OC_100[indice_J9, indice_coluna_DP]]
 
     # Armazenamentos dos dados referentes ao janelamento 11.
-    Matriz_dados_k_fold_J11_OC = [Matriz_dados_k_fold_OC_0[indice_J11, indice_coluna_medias], Matriz_dados_k_fold_OC_10[indice_J11, indice_coluna_medias], Matriz_dados_k_fold_OC_20[indice_J11, indice_coluna_medias], Matriz_dados_k_fold_OC_30[indice_J11, indice_coluna_medias], Matriz_dados_k_fold_OC_40[indice_J11, indice_coluna_medias], Matriz_dados_k_fold_OC_50[indice_J11, indice_coluna_medias], Matriz_dados_k_fold_OC_60[indice_J11, indice_coluna_medias], Matriz_dados_k_fold_OC_70[indice_J11, indice_coluna_medias], Matriz_dados_k_fold_OC_80[indice_J11, indice_coluna_medias], Matriz_dados_k_fold_OC_90[indice_J11, indice_coluna_medias], Matriz_dados_k_fold_OC_100[indice_J11, indice_coluna_medias]]
-    Matriz_dados_k_fold_erros_J11_OC = [Matriz_dados_k_fold_OC_0[indice_J11, indice_coluna_DP], Matriz_dados_k_fold_OC_10[indice_J11, indice_coluna_DP], Matriz_dados_k_fold_OC_20[indice_J11, indice_coluna_DP], Matriz_dados_k_fold_OC_30[indice_J11, indice_coluna_DP], Matriz_dados_k_fold_OC_40[indice_J11, indice_coluna_DP], Matriz_dados_k_fold_OC_50[indice_J11, indice_coluna_DP], Matriz_dados_k_fold_OC_60[indice_J11, indice_coluna_DP], Matriz_dados_k_fold_OC_70[indice_J11, indice_coluna_DP], Matriz_dados_k_fold_OC_80[indice_J11, indice_coluna_DP], Matriz_dados_k_fold_OC_90[indice_J11, indice_coluna_DP], Matriz_dados_k_fold_OC_100[indice_J11, indice_coluna_DP]]
+    Matriz_Dados_K_Fold_J11_OC = [Matriz_Dados_K_Fold_OC_0[indice_J11, indice_coluna_medias], Matriz_Dados_K_Fold_OC_10[indice_J11, indice_coluna_medias], Matriz_Dados_K_Fold_OC_20[indice_J11, indice_coluna_medias], Matriz_Dados_K_Fold_OC_30[indice_J11, indice_coluna_medias], Matriz_Dados_K_Fold_OC_40[indice_J11, indice_coluna_medias], Matriz_Dados_K_Fold_OC_50[indice_J11, indice_coluna_medias], Matriz_Dados_K_Fold_OC_60[indice_J11, indice_coluna_medias], Matriz_Dados_K_Fold_OC_70[indice_J11, indice_coluna_medias], Matriz_Dados_K_Fold_OC_80[indice_J11, indice_coluna_medias], Matriz_Dados_K_Fold_OC_90[indice_J11, indice_coluna_medias], Matriz_Dados_K_Fold_OC_100[indice_J11, indice_coluna_medias]]
+    Matriz_Dados_K_Fold_Erros_J11_OC = [Matriz_Dados_K_Fold_OC_0[indice_J11, indice_coluna_DP], Matriz_Dados_K_Fold_OC_10[indice_J11, indice_coluna_DP], Matriz_Dados_K_Fold_OC_20[indice_J11, indice_coluna_DP], Matriz_Dados_K_Fold_OC_30[indice_J11, indice_coluna_DP], Matriz_Dados_K_Fold_OC_40[indice_J11, indice_coluna_DP], Matriz_Dados_K_Fold_OC_50[indice_J11, indice_coluna_DP], Matriz_Dados_K_Fold_OC_60[indice_J11, indice_coluna_DP], Matriz_Dados_K_Fold_OC_70[indice_J11, indice_coluna_DP], Matriz_Dados_K_Fold_OC_80[indice_J11, indice_coluna_DP], Matriz_Dados_K_Fold_OC_90[indice_J11, indice_coluna_DP], Matriz_Dados_K_Fold_OC_100[indice_J11, indice_coluna_DP]]
 
     # Armazenamentos dos dados referentes ao janelamento 13.
-    Matriz_dados_k_fold_J13_OC = [Matriz_dados_k_fold_OC_0[indice_J13, indice_coluna_medias], Matriz_dados_k_fold_OC_10[indice_J13, indice_coluna_medias], Matriz_dados_k_fold_OC_20[indice_J13, indice_coluna_medias], Matriz_dados_k_fold_OC_30[indice_J13, indice_coluna_medias], Matriz_dados_k_fold_OC_40[indice_J13, indice_coluna_medias], Matriz_dados_k_fold_OC_50[indice_J13, indice_coluna_medias], Matriz_dados_k_fold_OC_60[indice_J13, indice_coluna_medias], Matriz_dados_k_fold_OC_70[indice_J13, indice_coluna_medias], Matriz_dados_k_fold_OC_80[indice_J13, indice_coluna_medias], Matriz_dados_k_fold_OC_90[indice_J13, indice_coluna_medias], Matriz_dados_k_fold_OC_100[indice_J13, indice_coluna_medias]]
-    Matriz_dados_k_fold_erros_J13_OC = [Matriz_dados_k_fold_OC_0[indice_J13, indice_coluna_DP], Matriz_dados_k_fold_OC_10[indice_J13, indice_coluna_DP], Matriz_dados_k_fold_OC_20[indice_J13, indice_coluna_DP], Matriz_dados_k_fold_OC_30[indice_J13, indice_coluna_DP], Matriz_dados_k_fold_OC_40[indice_J13, indice_coluna_DP], Matriz_dados_k_fold_OC_50[indice_J13, indice_coluna_DP], Matriz_dados_k_fold_OC_60[indice_J13, indice_coluna_DP], Matriz_dados_k_fold_OC_70[indice_J13, indice_coluna_DP], Matriz_dados_k_fold_OC_80[indice_J13, indice_coluna_DP], Matriz_dados_k_fold_OC_90[indice_J13, indice_coluna_DP], Matriz_dados_k_fold_OC_100[indice_J13, indice_coluna_DP]]
+    Matriz_Dados_K_Fold_J13_OC = [Matriz_Dados_K_Fold_OC_0[indice_J13, indice_coluna_medias], Matriz_Dados_K_Fold_OC_10[indice_J13, indice_coluna_medias], Matriz_Dados_K_Fold_OC_20[indice_J13, indice_coluna_medias], Matriz_Dados_K_Fold_OC_30[indice_J13, indice_coluna_medias], Matriz_Dados_K_Fold_OC_40[indice_J13, indice_coluna_medias], Matriz_Dados_K_Fold_OC_50[indice_J13, indice_coluna_medias], Matriz_Dados_K_Fold_OC_60[indice_J13, indice_coluna_medias], Matriz_Dados_K_Fold_OC_70[indice_J13, indice_coluna_medias], Matriz_Dados_K_Fold_OC_80[indice_J13, indice_coluna_medias], Matriz_Dados_K_Fold_OC_90[indice_J13, indice_coluna_medias], Matriz_Dados_K_Fold_OC_100[indice_J13, indice_coluna_medias]]
+    Matriz_Dados_K_Fold_Erros_J13_OC = [Matriz_Dados_K_Fold_OC_0[indice_J13, indice_coluna_DP], Matriz_Dados_K_Fold_OC_10[indice_J13, indice_coluna_DP], Matriz_Dados_K_Fold_OC_20[indice_J13, indice_coluna_DP], Matriz_Dados_K_Fold_OC_30[indice_J13, indice_coluna_DP], Matriz_Dados_K_Fold_OC_40[indice_J13, indice_coluna_DP], Matriz_Dados_K_Fold_OC_50[indice_J13, indice_coluna_DP], Matriz_Dados_K_Fold_OC_60[indice_J13, indice_coluna_DP], Matriz_Dados_K_Fold_OC_70[indice_J13, indice_coluna_DP], Matriz_Dados_K_Fold_OC_80[indice_J13, indice_coluna_DP], Matriz_Dados_K_Fold_OC_90[indice_J13, indice_coluna_DP], Matriz_Dados_K_Fold_OC_100[indice_J13, indice_coluna_DP]]
 
     # Armazenamentos dos dados referentes ao janelamento 15.
-    Matriz_dados_k_fold_J15_OC = [Matriz_dados_k_fold_OC_0[indice_J15, indice_coluna_medias], Matriz_dados_k_fold_OC_10[indice_J15, indice_coluna_medias], Matriz_dados_k_fold_OC_20[indice_J15, indice_coluna_medias], Matriz_dados_k_fold_OC_30[indice_J15, indice_coluna_medias], Matriz_dados_k_fold_OC_40[indice_J15, indice_coluna_medias], Matriz_dados_k_fold_OC_50[indice_J15, indice_coluna_medias], Matriz_dados_k_fold_OC_60[indice_J15, indice_coluna_medias], Matriz_dados_k_fold_OC_70[indice_J15, indice_coluna_medias], Matriz_dados_k_fold_OC_80[indice_J15, indice_coluna_medias], Matriz_dados_k_fold_OC_90[indice_J15, indice_coluna_medias], Matriz_dados_k_fold_OC_100[indice_J15, indice_coluna_medias]]
-    Matriz_dados_k_fold_erros_J15_OC = [Matriz_dados_k_fold_OC_0[indice_J15, indice_coluna_DP], Matriz_dados_k_fold_OC_10[indice_J15, indice_coluna_DP], Matriz_dados_k_fold_OC_20[indice_J15, indice_coluna_DP], Matriz_dados_k_fold_OC_30[indice_J15, indice_coluna_DP], Matriz_dados_k_fold_OC_40[indice_J15, indice_coluna_DP], Matriz_dados_k_fold_OC_50[indice_J15, indice_coluna_DP], Matriz_dados_k_fold_OC_60[indice_J15, indice_coluna_DP], Matriz_dados_k_fold_OC_70[indice_J15, indice_coluna_DP], Matriz_dados_k_fold_OC_80[indice_J15, indice_coluna_DP], Matriz_dados_k_fold_OC_90[indice_J15, indice_coluna_DP], Matriz_dados_k_fold_OC_100[indice_J15, indice_coluna_DP]]
+    Matriz_Dados_K_Fold_J15_OC = [Matriz_Dados_K_Fold_OC_0[indice_J15, indice_coluna_medias], Matriz_Dados_K_Fold_OC_10[indice_J15, indice_coluna_medias], Matriz_Dados_K_Fold_OC_20[indice_J15, indice_coluna_medias], Matriz_Dados_K_Fold_OC_30[indice_J15, indice_coluna_medias], Matriz_Dados_K_Fold_OC_40[indice_J15, indice_coluna_medias], Matriz_Dados_K_Fold_OC_50[indice_J15, indice_coluna_medias], Matriz_Dados_K_Fold_OC_60[indice_J15, indice_coluna_medias], Matriz_Dados_K_Fold_OC_70[indice_J15, indice_coluna_medias], Matriz_Dados_K_Fold_OC_80[indice_J15, indice_coluna_medias], Matriz_Dados_K_Fold_OC_90[indice_J15, indice_coluna_medias], Matriz_Dados_K_Fold_OC_100[indice_J15, indice_coluna_medias]]
+    Matriz_Dados_K_Fold_Erros_J15_OC = [Matriz_Dados_K_Fold_OC_0[indice_J15, indice_coluna_DP], Matriz_Dados_K_Fold_OC_10[indice_J15, indice_coluna_DP], Matriz_Dados_K_Fold_OC_20[indice_J15, indice_coluna_DP], Matriz_Dados_K_Fold_OC_30[indice_J15, indice_coluna_DP], Matriz_Dados_K_Fold_OC_40[indice_J15, indice_coluna_DP], Matriz_Dados_K_Fold_OC_50[indice_J15, indice_coluna_DP], Matriz_Dados_K_Fold_OC_60[indice_J15, indice_coluna_DP], Matriz_Dados_K_Fold_OC_70[indice_J15, indice_coluna_DP], Matriz_Dados_K_Fold_OC_80[indice_J15, indice_coluna_DP], Matriz_Dados_K_Fold_OC_90[indice_J15, indice_coluna_DP], Matriz_Dados_K_Fold_OC_100[indice_J15, indice_coluna_DP]]
 
     # Armazenamentos dos dados referentes ao janelamento 17.
-    Matriz_dados_k_fold_J17_OC = [Matriz_dados_k_fold_OC_0[indice_J17, indice_coluna_medias], Matriz_dados_k_fold_OC_10[indice_J17, indice_coluna_medias], Matriz_dados_k_fold_OC_20[indice_J17, indice_coluna_medias], Matriz_dados_k_fold_OC_30[indice_J17, indice_coluna_medias], Matriz_dados_k_fold_OC_40[indice_J17, indice_coluna_medias], Matriz_dados_k_fold_OC_50[indice_J17, indice_coluna_medias], Matriz_dados_k_fold_OC_60[indice_J17, indice_coluna_medias], Matriz_dados_k_fold_OC_70[indice_J17, indice_coluna_medias], Matriz_dados_k_fold_OC_80[indice_J17, indice_coluna_medias], Matriz_dados_k_fold_OC_90[indice_J17, indice_coluna_medias], Matriz_dados_k_fold_OC_100[indice_J17, indice_coluna_medias]]
-    Matriz_dados_k_fold_erros_J17_OC = [Matriz_dados_k_fold_OC_0[indice_J17, indice_coluna_DP], Matriz_dados_k_fold_OC_10[indice_J17, indice_coluna_DP], Matriz_dados_k_fold_OC_20[indice_J17, indice_coluna_DP], Matriz_dados_k_fold_OC_30[indice_J17, indice_coluna_DP], Matriz_dados_k_fold_OC_40[indice_J17, indice_coluna_DP], Matriz_dados_k_fold_OC_50[indice_J17, indice_coluna_DP], Matriz_dados_k_fold_OC_60[indice_J17, indice_coluna_DP], Matriz_dados_k_fold_OC_70[indice_J17, indice_coluna_DP], Matriz_dados_k_fold_OC_80[indice_J17, indice_coluna_DP], Matriz_dados_k_fold_OC_90[indice_J17, indice_coluna_DP], Matriz_dados_k_fold_OC_100[indice_J17, indice_coluna_DP]]
+    Matriz_Dados_K_Fold_J17_OC = [Matriz_Dados_K_Fold_OC_0[indice_J17, indice_coluna_medias], Matriz_Dados_K_Fold_OC_10[indice_J17, indice_coluna_medias], Matriz_Dados_K_Fold_OC_20[indice_J17, indice_coluna_medias], Matriz_Dados_K_Fold_OC_30[indice_J17, indice_coluna_medias], Matriz_Dados_K_Fold_OC_40[indice_J17, indice_coluna_medias], Matriz_Dados_K_Fold_OC_50[indice_J17, indice_coluna_medias], Matriz_Dados_K_Fold_OC_60[indice_J17, indice_coluna_medias], Matriz_Dados_K_Fold_OC_70[indice_J17, indice_coluna_medias], Matriz_Dados_K_Fold_OC_80[indice_J17, indice_coluna_medias], Matriz_Dados_K_Fold_OC_90[indice_J17, indice_coluna_medias], Matriz_Dados_K_Fold_OC_100[indice_J17, indice_coluna_medias]]
+    Matriz_Dados_K_Fold_Erros_J17_OC = [Matriz_Dados_K_Fold_OC_0[indice_J17, indice_coluna_DP], Matriz_Dados_K_Fold_OC_10[indice_J17, indice_coluna_DP], Matriz_Dados_K_Fold_OC_20[indice_J17, indice_coluna_DP], Matriz_Dados_K_Fold_OC_30[indice_J17, indice_coluna_DP], Matriz_Dados_K_Fold_OC_40[indice_J17, indice_coluna_DP], Matriz_Dados_K_Fold_OC_50[indice_J17, indice_coluna_DP], Matriz_Dados_K_Fold_OC_60[indice_J17, indice_coluna_DP], Matriz_Dados_K_Fold_OC_70[indice_J17, indice_coluna_DP], Matriz_Dados_K_Fold_OC_80[indice_J17, indice_coluna_DP], Matriz_Dados_K_Fold_OC_90[indice_J17, indice_coluna_DP], Matriz_Dados_K_Fold_OC_100[indice_J17, indice_coluna_DP]]
 
     # Armazenamentos dos dados referentes ao janelamento 19.
-    Matriz_dados_k_fold_J19_OC = [Matriz_dados_k_fold_OC_0[indice_J19, indice_coluna_medias], Matriz_dados_k_fold_OC_10[indice_J19, indice_coluna_medias], Matriz_dados_k_fold_OC_20[indice_J19, indice_coluna_medias], Matriz_dados_k_fold_OC_30[indice_J19, indice_coluna_medias], Matriz_dados_k_fold_OC_40[indice_J19, indice_coluna_medias], Matriz_dados_k_fold_OC_50[indice_J19, indice_coluna_medias], Matriz_dados_k_fold_OC_60[indice_J19, indice_coluna_medias], Matriz_dados_k_fold_OC_70[indice_J19, indice_coluna_medias], Matriz_dados_k_fold_OC_80[indice_J19, indice_coluna_medias], Matriz_dados_k_fold_OC_90[indice_J19, indice_coluna_medias], Matriz_dados_k_fold_OC_100[indice_J19, indice_coluna_medias]]
-    Matriz_dados_k_fold_erros_J19_OC = [Matriz_dados_k_fold_OC_0[indice_J19, indice_coluna_DP], Matriz_dados_k_fold_OC_10[indice_J19, indice_coluna_DP], Matriz_dados_k_fold_OC_20[indice_J19, indice_coluna_DP], Matriz_dados_k_fold_OC_30[indice_J19, indice_coluna_DP], Matriz_dados_k_fold_OC_40[indice_J19, indice_coluna_DP], Matriz_dados_k_fold_OC_50[indice_J19, indice_coluna_DP], Matriz_dados_k_fold_OC_60[indice_J19, indice_coluna_DP], Matriz_dados_k_fold_OC_70[indice_J19, indice_coluna_DP], Matriz_dados_k_fold_OC_80[indice_J19, indice_coluna_DP], Matriz_dados_k_fold_OC_90[indice_J19, indice_coluna_DP], Matriz_dados_k_fold_OC_100[indice_J19, indice_coluna_DP]]
+    Matriz_Dados_K_Fold_J19_OC = [Matriz_Dados_K_Fold_OC_0[indice_J19, indice_coluna_medias], Matriz_Dados_K_Fold_OC_10[indice_J19, indice_coluna_medias], Matriz_Dados_K_Fold_OC_20[indice_J19, indice_coluna_medias], Matriz_Dados_K_Fold_OC_30[indice_J19, indice_coluna_medias], Matriz_Dados_K_Fold_OC_40[indice_J19, indice_coluna_medias], Matriz_Dados_K_Fold_OC_50[indice_J19, indice_coluna_medias], Matriz_Dados_K_Fold_OC_60[indice_J19, indice_coluna_medias], Matriz_Dados_K_Fold_OC_70[indice_J19, indice_coluna_medias], Matriz_Dados_K_Fold_OC_80[indice_J19, indice_coluna_medias], Matriz_Dados_K_Fold_OC_90[indice_J19, indice_coluna_medias], Matriz_Dados_K_Fold_OC_100[indice_J19, indice_coluna_medias]]
+    Matriz_Dados_K_Fold_Erros_J19_OC = [Matriz_Dados_K_Fold_OC_0[indice_J19, indice_coluna_DP], Matriz_Dados_K_Fold_OC_10[indice_J19, indice_coluna_DP], Matriz_Dados_K_Fold_OC_20[indice_J19, indice_coluna_DP], Matriz_Dados_K_Fold_OC_30[indice_J19, indice_coluna_DP], Matriz_Dados_K_Fold_OC_40[indice_J19, indice_coluna_DP], Matriz_Dados_K_Fold_OC_50[indice_J19, indice_coluna_DP], Matriz_Dados_K_Fold_OC_60[indice_J19, indice_coluna_DP], Matriz_Dados_K_Fold_OC_70[indice_J19, indice_coluna_DP], Matriz_Dados_K_Fold_OC_80[indice_J19, indice_coluna_DP], Matriz_Dados_K_Fold_OC_90[indice_J19, indice_coluna_DP], Matriz_Dados_K_Fold_OC_100[indice_J19, indice_coluna_DP]]
 
     # Plote dos dados.
-    plt.errorbar(ocupacoes, Matriz_dados_k_fold_J7_OC, yerr = Matriz_dados_k_fold_erros_J7_OC, color = 'violet', linestyle = '--', marker = 'o', markersize = 3, label = '7')
-    plt.errorbar(ocupacoes, Matriz_dados_k_fold_J9_OC, yerr = Matriz_dados_k_fold_erros_J9_OC, color = 'blue', linestyle = '--', marker = 'o', markersize = 3, label = '9')
-    plt.errorbar(ocupacoes, Matriz_dados_k_fold_J11_OC, yerr = Matriz_dados_k_fold_erros_J11_OC, color = 'cyan', linestyle = '--', marker = 'o', markersize=3, label = '11')
-    plt.errorbar(ocupacoes, Matriz_dados_k_fold_J13_OC, yerr = Matriz_dados_k_fold_erros_J13_OC, color = 'green', linestyle = '--', marker = 'o', markersize=3, label = '13')
-    plt.errorbar(ocupacoes, Matriz_dados_k_fold_J15_OC, yerr = Matriz_dados_k_fold_erros_J15_OC, color = 'yellow', linestyle = '--', marker = 'o', markersize=3, label = '15')
-    plt.errorbar(ocupacoes, Matriz_dados_k_fold_J17_OC, yerr = Matriz_dados_k_fold_erros_J17_OC, color = 'orange', linestyle = '--', marker = 'o', markersize=3, label = '17')
-    plt.errorbar(ocupacoes, Matriz_dados_k_fold_J19_OC, yerr = Matriz_dados_k_fold_erros_J19_OC, color = 'red', linestyle = '--', marker = 'o', markersize=3, label = '19')
+    plt.errorbar(ocupacoes, Matriz_Dados_K_Fold_J7_OC, yerr = Matriz_Dados_K_Fold_Erros_J7_OC, color = 'violet', linestyle = '--', marker = 'o', markersize = 3, label = '7')
+    plt.errorbar(ocupacoes, Matriz_Dados_K_Fold_J9_OC, yerr = Matriz_Dados_K_Fold_Erros_J9_OC, color = 'blue', linestyle = '--', marker = 'o', markersize = 3, label = '9')
+    plt.errorbar(ocupacoes, Matriz_Dados_K_Fold_J11_OC, yerr = Matriz_Dados_K_Fold_Erros_J11_OC, color = 'cyan', linestyle = '--', marker = 'o', markersize=3, label = '11')
+    plt.errorbar(ocupacoes, Matriz_Dados_K_Fold_J13_OC, yerr = Matriz_Dados_K_Fold_Erros_J13_OC, color = 'green', linestyle = '--', marker = 'o', markersize=3, label = '13')
+    plt.errorbar(ocupacoes, Matriz_Dados_K_Fold_J15_OC, yerr = Matriz_Dados_K_Fold_Erros_J15_OC, color = 'yellow', linestyle = '--', marker = 'o', markersize=3, label = '15')
+    plt.errorbar(ocupacoes, Matriz_Dados_K_Fold_J17_OC, yerr = Matriz_Dados_K_Fold_Erros_J17_OC, color = 'orange', linestyle = '--', marker = 'o', markersize=3, label = '17')
+    plt.errorbar(ocupacoes, Matriz_Dados_K_Fold_J19_OC, yerr = Matriz_Dados_K_Fold_Erros_J19_OC, color = 'red', linestyle = '--', marker = 'o', markersize=3, label = '19')
     
     # Comando para o grid do gráfico.
     plt.grid()
@@ -355,13 +355,13 @@ def principal_grafico_k_fold():
     print("Opções de parâmetros:\nAmplitude: 1\nFase: 2\nPedestal: 3\n")
     
     # A variável parametro armazena o número do tipo inteiro digitado pelo usuário via terminal.
-    parametro = int(input("Digite o número do parâmetro desejado: "))
+    opcao_parametro = int(input("Digite o número do parâmetro desejado: "))
     
-    # A variável valores_dados é uma lista com os valores aceitáveis para opcao.
-    valores_parametro = list(range(1,4,1))
+    # A variável valores_parametro é uma lista com os valores aceitáveis para opcao.
+    lista_valores_parametro = list(range(1,4,1))
 
-    # Caso o valor digitado armazenado na variável dado_estatistico não estiver presente na lista valores_dados.
-    if parametro not in valores_parametro:
+    # Caso o valor digitado armazenado na variável opcao_parametro não estiver presente na lista lista_valores_parametro.
+    if opcao_parametro not in lista_valores_parametro:
     
         # Exibição de uma mensagem de alerta de que a opcao solicitada é inválida.
         print("Essa opção é inválida!")
@@ -390,14 +390,14 @@ def principal_grafico_k_fold():
     # Impressão de mensagem no terminal.
     print("\nOpções de análise:\nMédia: 1\nVariância: 2\nDesvio padrão: 3\n")
 
-    # A variável opcao armazena o número do tipo inteiro digitado pelo usuário via terminal.
-    opcao = int(input("Digite o número da opção desejada: "))
+    # A variável opcao_dado_estatistico armazena o número do tipo inteiro digitado pelo usuário via terminal.
+    opcao_dado_estatistico = int(input("Digite o número da opção desejada: "))
 
-    # A variável valores_opcao é uma lista com os valores aceitáveis para opcao.
-    valores_opcao = list(range(1,4,1))
+    # A variável lista_valores_dado_estatistico é uma lista com os valores aceitáveis para opcao.
+    lista_valores_dado_estatistico = list(range(1,4,1))
 
-    # Caso o valor digitado armazenado na variável opcao não estiver presente na lista valores_opcao.
-    if opcao not in valores_opcao:
+    # Caso o valor digitado armazenado na variável opcao_dado_estatistico não estiver presente na lista valores_dado_estatistico.
+    if opcao_dado_estatistico not in lista_valores_dado_estatistico:
     
         # Exibição de uma mensagem de alerta de que a opção solicitada é inválida.
         print("Essa opção é inválida!")
@@ -405,70 +405,70 @@ def principal_grafico_k_fold():
         # A execução do programa é interrompida.
         exit(1)
         
-    # Caso a variável parametro seja igual a 1.
-    if parametro == 1:
+    # Caso a variável opcao_parametro seja igual a 1.
+    if opcao_parametro == 1:
         
         # A variável parametro recebe a string "amplitude".
         parametro = "amplitude"
         
-    # Caso a variável parametro seja igual a 2.
-    elif parametro == 2:
+    # Caso a variável opcao_parametro seja igual a 2.
+    elif opcao_parametro == 2:
     
         # A variável parametro recebe a string "fase".
         parametro = "fase"
         
-    # Caso a variável parametro seja igual a 3.
-    elif parametro == 3:
+    # Caso a variável opcao_parametro seja igual a 3.
+    elif opcao_parametro == 3:
         
         # A variável parametro recebe a string "pedestal".
         parametro = "pedestal" 
         
-    # Caso opcao seja 1.
-    if opcao == 1:
+    # Caso opcao_dado_estatistico seja 1.
+    if opcao_dado_estatistico == 1:
         
         # A variável dado_estatistico recebe a string "media".
         dado_estatistico = "media"
         
-    # Caso opcao seja 2.
-    elif opcao == 2:
+    # Caso opcao_dado_estatistico seja 2.
+    elif opcao_dado_estatistico == 2:
         
         # A variável dado_estatistico recebe a string "var".
         dado_estatistico = "var"
         
-    # Caso a opcao seja 3.
-    elif opcao == 3:
+    # Caso a opcao_dado_estatistico seja 3.
+    elif opcao_dado_estatistico == 3:
         
         # A variável dado_estatistico recebe a string "DP".
         dado_estatistico = "DP"
         
     # Chamada ordenada das funções.    
-    Matriz_dados_k_fold_OC_0 = leitura_dados_estatisticos_k_fold(parametro, 0, dado_estatistico)
-    Matriz_dados_k_fold_OC_10 = leitura_dados_estatisticos_k_fold(parametro, 10, dado_estatistico)
-    Matriz_dados_k_fold_OC_20 = leitura_dados_estatisticos_k_fold(parametro, 20, dado_estatistico)
-    Matriz_dados_k_fold_OC_30 = leitura_dados_estatisticos_k_fold(parametro, 30, dado_estatistico)
-    Matriz_dados_k_fold_OC_40 = leitura_dados_estatisticos_k_fold(parametro, 40, dado_estatistico)
-    Matriz_dados_k_fold_OC_50 = leitura_dados_estatisticos_k_fold(parametro, 50, dado_estatistico)
-    Matriz_dados_k_fold_OC_60 = leitura_dados_estatisticos_k_fold(parametro, 60, dado_estatistico)
-    Matriz_dados_k_fold_OC_70 = leitura_dados_estatisticos_k_fold(parametro, 70, dado_estatistico)
-    Matriz_dados_k_fold_OC_80 = leitura_dados_estatisticos_k_fold(parametro, 80, dado_estatistico)
-    Matriz_dados_k_fold_OC_90 = leitura_dados_estatisticos_k_fold(parametro, 90, dado_estatistico)
-    Matriz_dados_k_fold_OC_100 = leitura_dados_estatisticos_k_fold(parametro, 100, dado_estatistico)
+    Matriz_Dados_K_Fold_OC_0 = leitura_dados_estatisticos_k_fold(parametro, 0, dado_estatistico)
+    Matriz_Dados_K_Fold_OC_10 = leitura_dados_estatisticos_k_fold(parametro, 10, dado_estatistico)
+    Matriz_Dados_K_Fold_OC_20 = leitura_dados_estatisticos_k_fold(parametro, 20, dado_estatistico)
+    Matriz_Dados_K_Fold_OC_30 = leitura_dados_estatisticos_k_fold(parametro, 30, dado_estatistico)
+    Matriz_Dados_K_Fold_OC_40 = leitura_dados_estatisticos_k_fold(parametro, 40, dado_estatistico)
+    Matriz_Dados_K_Fold_OC_50 = leitura_dados_estatisticos_k_fold(parametro, 50, dado_estatistico)
+    Matriz_Dados_K_Fold_OC_60 = leitura_dados_estatisticos_k_fold(parametro, 60, dado_estatistico)
+    Matriz_Dados_K_Fold_OC_70 = leitura_dados_estatisticos_k_fold(parametro, 70, dado_estatistico)
+    Matriz_Dados_K_Fold_OC_80 = leitura_dados_estatisticos_k_fold(parametro, 80, dado_estatistico)
+    Matriz_Dados_K_Fold_OC_90 = leitura_dados_estatisticos_k_fold(parametro, 90, dado_estatistico)
+    Matriz_Dados_K_Fold_OC_100 = leitura_dados_estatisticos_k_fold(parametro, 100, dado_estatistico)
     
     # Caso a variável tipo_grafico seja "A".
     if tipo_grafico == "A":
         
         # Chamada da função grafico_A_k_fold.
-        grafico_A_k_fold(parametro, opcao, Matriz_dados_k_fold_OC_0, Matriz_dados_k_fold_OC_10, Matriz_dados_k_fold_OC_20, Matriz_dados_k_fold_OC_30, Matriz_dados_k_fold_OC_40, Matriz_dados_k_fold_OC_50, Matriz_dados_k_fold_OC_60, Matriz_dados_k_fold_OC_70, Matriz_dados_k_fold_OC_80, Matriz_dados_k_fold_OC_90, Matriz_dados_k_fold_OC_100)
+        grafico_A_k_fold(parametro, opcao_dado_estatistico, Matriz_Dados_K_Fold_OC_0, Matriz_Dados_K_Fold_OC_10, Matriz_Dados_K_Fold_OC_20, Matriz_Dados_K_Fold_OC_30, Matriz_Dados_K_Fold_OC_40, Matriz_Dados_K_Fold_OC_50, Matriz_Dados_K_Fold_OC_60, Matriz_Dados_K_Fold_OC_70, Matriz_Dados_K_Fold_OC_80, Matriz_Dados_K_Fold_OC_90, Matriz_Dados_K_Fold_OC_100)
       
     # Caso a variável tipo_grafico seja "B".  
     elif tipo_grafico == "B":
     
         # Chamada da função grafico_B_k_fold.
-        grafico_B_k_fold(parametro, opcao, Matriz_dados_k_fold_OC_0, Matriz_dados_k_fold_OC_10, Matriz_dados_k_fold_OC_20, Matriz_dados_k_fold_OC_30, Matriz_dados_k_fold_OC_40, Matriz_dados_k_fold_OC_50, Matriz_dados_k_fold_OC_60, Matriz_dados_k_fold_OC_70, Matriz_dados_k_fold_OC_80, Matriz_dados_k_fold_OC_90, Matriz_dados_k_fold_OC_100)
+        grafico_B_k_fold(parametro, opcao_dado_estatistico, Matriz_Dados_K_Fold_OC_0, Matriz_Dados_K_Fold_OC_10, Matriz_Dados_K_Fold_OC_20, Matriz_Dados_K_Fold_OC_30, Matriz_Dados_K_Fold_OC_40, Matriz_Dados_K_Fold_OC_50, Matriz_Dados_K_Fold_OC_60, Matriz_Dados_K_Fold_OC_70, Matriz_Dados_K_Fold_OC_80, Matriz_Dados_K_Fold_OC_90, Matriz_Dados_K_Fold_OC_100)
     
 ### -------------------------------------------------------------------------------------------------------------------------------------------- ###
 
-# Chamada da função principal do código.
+# Chamada da instrução principal do código.
 principal_grafico_k_fold()
 
 # Impressão de uma linha que representa o fim do programa.
