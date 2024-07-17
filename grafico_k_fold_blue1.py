@@ -1,8 +1,8 @@
 # EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE 1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 07 de julho de 2024.
+# Data: 15 de julho de 2024.
 
-# Objetivo do código: construção do gráfico da validação cruzada K-Fold para o método Best Linear Unbiased Estimador (BLUE 1).
+# Objetivo do código: construção do gráfico da validação cruzada K-Fold para o método Best Linear Unbiased Estimador (BLUE 1) para a estimação da amplitude, fase ou pedestal.
 
 """ 
 Organização do código:
@@ -40,15 +40,15 @@ print("\n-----------------------------------------------------------------------
 # Título do programa.
 
 # A variável titulo_programa armazena o título em negrito.
-titulo_programa = colored("Plote do gráfico da validação cruzada K-Fold para o método Best Linear Unbiased Estimator (BLUE 1):\n", attrs=["bold"])
+titulo_programa = colored("Plote do gráfico da validação cruzada K-Fold para o método Best Linear Unbiased Estimator (BLUE 1) para a estimação da amplitude, fase ou pedestal:\n", attrs=["bold"])
 
 # Impressão do título do programa.
 print(titulo_programa)
 
 ### --------------------------- 1) FUNÇÃO PARA A LEITURA DOS DADOS ESTATÍSTICOS DA VALIDAÇÃO CRUZADA K-FOLD ------------------------------------ ###
 
-# Definição da função para a leitura dos dados estatísticos do K-Fold.
-def leitura_dados_estatisticos_k_fold(parametro, n_ocupacao, dado_estatistico):
+# Definição da função para a leitura dos dados estatísticos do K-Fold pelo método BLUE 1.
+def leitura_dados_estatisticos_k_fold_BLUE1(parametro, n_ocupacao, dado_estatistico):
     
     # Nome da pasta em que se encontra o arquivo de entrada dos dados estatísticos do K-Fold.
     pasta_dados_k_fold = f"K_Fold_{parametro}_{dado_estatistico}_Dados_Estatisticos_BLUE1_OC"
@@ -84,8 +84,8 @@ def leitura_dados_estatisticos_k_fold(parametro, n_ocupacao, dado_estatistico):
 
 ### ------------------------------ 2) INSTRUÇÃO PARA A CONSTRUÇÃO DO GRÁFICO DO TIPO A DA VALIDAÇÃO CRUZADA K-FOLD ----------------------------- ###
 
-# Definição da instrução para a construção do gráfico tipo A pela validação cruzada K-Fold.
-def grafico_A_k_fold(parametro, opcao, Matriz_Dados_K_Fold_OC_0, Matriz_Dados_K_Fold_OC_10, Matriz_Dados_K_Fold_OC_20, Matriz_Dados_K_Fold_OC_30, Matriz_Dados_K_Fold_OC_40, Matriz_Dados_K_Fold_OC_50, Matriz_Dados_K_Fold_OC_60, Matriz_Dados_K_Fold_OC_70, Matriz_Dados_K_Fold_OC_80, Matriz_Dados_K_Fold_OC_90, Matriz_Dados_K_Fold_OC_100):
+# Definição da instrução para a construção do gráfico tipo A pela validação cruzada K-Fold para o método BLUE 1.
+def grafico_A_k_fold_BLUE1(parametro, opcao, Matriz_Dados_K_Fold_OC_0, Matriz_Dados_K_Fold_OC_10, Matriz_Dados_K_Fold_OC_20, Matriz_Dados_K_Fold_OC_30, Matriz_Dados_K_Fold_OC_40, Matriz_Dados_K_Fold_OC_50, Matriz_Dados_K_Fold_OC_60, Matriz_Dados_K_Fold_OC_70, Matriz_Dados_K_Fold_OC_80, Matriz_Dados_K_Fold_OC_90, Matriz_Dados_K_Fold_OC_100):
     
     # Definição da variável indice_coluna_janelamento que armazena o índice da coluna do janelamento.
     indice_coluna_janelamento = 0
@@ -102,7 +102,7 @@ def grafico_A_k_fold(parametro, opcao, Matriz_Dados_K_Fold_OC_0, Matriz_Dados_K_
     # Nomeação do eixo das abscissas.
     plt.xlabel("Quantidade de janelamento", fontsize = 18)
     
-    # COmando para o tamanho dos números do eixo das abscissas.
+    # Comando para o tamanho dos números do eixo das abscissas.
     plt.xticks(fontsize = 16)
     
     # Comando para o tamanho dos números do eixo das ordenadas.
@@ -223,8 +223,8 @@ def grafico_A_k_fold(parametro, opcao, Matriz_Dados_K_Fold_OC_0, Matriz_Dados_K_
 
 ### -------------------------------- 2) INSTRUÇÃO PARA A CONSTRUÇÃO DO GRÁFICO DO TIPO B DA VALIDAÇÃO CRUZADA K-FOLD --------------------------- ###
 
-# Definição da função para a construção do gráfico do tipo B pela validação cruzada K-Fold.
-def grafico_B_k_fold(parametro, opcao, Matriz_Dados_K_Fold_OC_0, Matriz_Dados_K_Fold_OC_10, Matriz_Dados_K_Fold_OC_20, Matriz_Dados_K_Fold_OC_30, Matriz_Dados_K_Fold_OC_40, Matriz_Dados_K_Fold_OC_50, Matriz_Dados_K_Fold_OC_60, Matriz_Dados_K_Fold_OC_70, Matriz_Dados_K_Fold_OC_80, Matriz_Dados_K_Fold_OC_90, Matriz_Dados_K_Fold_OC_100):
+# Definição da função para a construção do gráfico do tipo B pela validação cruzada K-Fold para o método BLUE 1.
+def grafico_B_k_fold_BLUE1(parametro, opcao, Matriz_Dados_K_Fold_OC_0, Matriz_Dados_K_Fold_OC_10, Matriz_Dados_K_Fold_OC_20, Matriz_Dados_K_Fold_OC_30, Matriz_Dados_K_Fold_OC_40, Matriz_Dados_K_Fold_OC_50, Matriz_Dados_K_Fold_OC_60, Matriz_Dados_K_Fold_OC_70, Matriz_Dados_K_Fold_OC_80, Matriz_Dados_K_Fold_OC_90, Matriz_Dados_K_Fold_OC_100):
     
     # Definição do vetor das ocupações.
     ocupacoes = np.arange(0, 101, 10)
@@ -232,7 +232,7 @@ def grafico_B_k_fold(parametro, opcao, Matriz_Dados_K_Fold_OC_0, Matriz_Dados_K_
     # Definição da variável indice_coluna_media que armazena o índice da coluna das médias do dado estatístico.
     indice_coluna_medias = 1
     
-    # Definição da variável indice_coluna_DP que armazena o índice da coluna dos desvios padrões do dado estatístico.
+    # Definição da variável indice_coluna_DP que armazena o índice da coluna dos desvios padrão do dado estatístico.
     indice_coluna_DP = 3
     
     # Comando para o nome do eixo das abscissas.
@@ -349,7 +349,7 @@ def grafico_B_k_fold(parametro, opcao, Matriz_Dados_K_Fold_OC_0, Matriz_Dados_K_
 ### ---------------------------------------------------- 4) INSTRUÇÃO PRINCIPAL DO CÓDIGO (MAIN) ----------------------------------------------- ###
 
 # Definição da instrução principal (main) do código.
-def principal_grafico_k_fold():
+def principal_grafico_k_fold_BLUE1():
     
     # Impressão de mensagem no terminal.
     print("Opções de parâmetros:\nAmplitude: 1\nFase: 2\nPedestal: 3\n")
@@ -441,35 +441,36 @@ def principal_grafico_k_fold():
         # A variável dado_estatistico recebe a string "DP".
         dado_estatistico = "DP"
         
-    # Chamada ordenada das funções.    
-    Matriz_Dados_K_Fold_OC_0 = leitura_dados_estatisticos_k_fold(parametro, 0, dado_estatistico)
-    Matriz_Dados_K_Fold_OC_10 = leitura_dados_estatisticos_k_fold(parametro, 10, dado_estatistico)
-    Matriz_Dados_K_Fold_OC_20 = leitura_dados_estatisticos_k_fold(parametro, 20, dado_estatistico)
-    Matriz_Dados_K_Fold_OC_30 = leitura_dados_estatisticos_k_fold(parametro, 30, dado_estatistico)
-    Matriz_Dados_K_Fold_OC_40 = leitura_dados_estatisticos_k_fold(parametro, 40, dado_estatistico)
-    Matriz_Dados_K_Fold_OC_50 = leitura_dados_estatisticos_k_fold(parametro, 50, dado_estatistico)
-    Matriz_Dados_K_Fold_OC_60 = leitura_dados_estatisticos_k_fold(parametro, 60, dado_estatistico)
-    Matriz_Dados_K_Fold_OC_70 = leitura_dados_estatisticos_k_fold(parametro, 70, dado_estatistico)
-    Matriz_Dados_K_Fold_OC_80 = leitura_dados_estatisticos_k_fold(parametro, 80, dado_estatistico)
-    Matriz_Dados_K_Fold_OC_90 = leitura_dados_estatisticos_k_fold(parametro, 90, dado_estatistico)
-    Matriz_Dados_K_Fold_OC_100 = leitura_dados_estatisticos_k_fold(parametro, 100, dado_estatistico)
+    # Chamada ordenada das funções.  
+      
+    Matriz_Dados_K_Fold_OC_0 = leitura_dados_estatisticos_k_fold_BLUE1(parametro, 0, dado_estatistico)
+    Matriz_Dados_K_Fold_OC_10 = leitura_dados_estatisticos_k_fold_BLUE1(parametro, 10, dado_estatistico)
+    Matriz_Dados_K_Fold_OC_20 = leitura_dados_estatisticos_k_fold_BLUE1(parametro, 20, dado_estatistico)
+    Matriz_Dados_K_Fold_OC_30 = leitura_dados_estatisticos_k_fold_BLUE1(parametro, 30, dado_estatistico)
+    Matriz_Dados_K_Fold_OC_40 = leitura_dados_estatisticos_k_fold_BLUE1(parametro, 40, dado_estatistico)
+    Matriz_Dados_K_Fold_OC_50 = leitura_dados_estatisticos_k_fold_BLUE1(parametro, 50, dado_estatistico)
+    Matriz_Dados_K_Fold_OC_60 = leitura_dados_estatisticos_k_fold_BLUE1(parametro, 60, dado_estatistico)
+    Matriz_Dados_K_Fold_OC_70 = leitura_dados_estatisticos_k_fold_BLUE1(parametro, 70, dado_estatistico)
+    Matriz_Dados_K_Fold_OC_80 = leitura_dados_estatisticos_k_fold_BLUE1(parametro, 80, dado_estatistico)
+    Matriz_Dados_K_Fold_OC_90 = leitura_dados_estatisticos_k_fold_BLUE1(parametro, 90, dado_estatistico)
+    Matriz_Dados_K_Fold_OC_100 = leitura_dados_estatisticos_k_fold_BLUE1(parametro, 100, dado_estatistico)
     
     # Caso a variável tipo_grafico seja "A".
     if tipo_grafico == "A":
         
-        # Chamada da função grafico_A_k_fold.
-        grafico_A_k_fold(parametro, opcao_dado_estatistico, Matriz_Dados_K_Fold_OC_0, Matriz_Dados_K_Fold_OC_10, Matriz_Dados_K_Fold_OC_20, Matriz_Dados_K_Fold_OC_30, Matriz_Dados_K_Fold_OC_40, Matriz_Dados_K_Fold_OC_50, Matriz_Dados_K_Fold_OC_60, Matriz_Dados_K_Fold_OC_70, Matriz_Dados_K_Fold_OC_80, Matriz_Dados_K_Fold_OC_90, Matriz_Dados_K_Fold_OC_100)
+        # Chamada da função grafico_A_k_fold_BLUE1.
+        grafico_A_k_fold_BLUE1(parametro, opcao_dado_estatistico, Matriz_Dados_K_Fold_OC_0, Matriz_Dados_K_Fold_OC_10, Matriz_Dados_K_Fold_OC_20, Matriz_Dados_K_Fold_OC_30, Matriz_Dados_K_Fold_OC_40, Matriz_Dados_K_Fold_OC_50, Matriz_Dados_K_Fold_OC_60, Matriz_Dados_K_Fold_OC_70, Matriz_Dados_K_Fold_OC_80, Matriz_Dados_K_Fold_OC_90, Matriz_Dados_K_Fold_OC_100)
       
     # Caso a variável tipo_grafico seja "B".  
     elif tipo_grafico == "B":
     
-        # Chamada da função grafico_B_k_fold.
-        grafico_B_k_fold(parametro, opcao_dado_estatistico, Matriz_Dados_K_Fold_OC_0, Matriz_Dados_K_Fold_OC_10, Matriz_Dados_K_Fold_OC_20, Matriz_Dados_K_Fold_OC_30, Matriz_Dados_K_Fold_OC_40, Matriz_Dados_K_Fold_OC_50, Matriz_Dados_K_Fold_OC_60, Matriz_Dados_K_Fold_OC_70, Matriz_Dados_K_Fold_OC_80, Matriz_Dados_K_Fold_OC_90, Matriz_Dados_K_Fold_OC_100)
+        # Chamada da função grafico_B_k_fold_BLUE1.
+        grafico_B_k_fold_BLUE1(parametro, opcao_dado_estatistico, Matriz_Dados_K_Fold_OC_0, Matriz_Dados_K_Fold_OC_10, Matriz_Dados_K_Fold_OC_20, Matriz_Dados_K_Fold_OC_30, Matriz_Dados_K_Fold_OC_40, Matriz_Dados_K_Fold_OC_50, Matriz_Dados_K_Fold_OC_60, Matriz_Dados_K_Fold_OC_70, Matriz_Dados_K_Fold_OC_80, Matriz_Dados_K_Fold_OC_90, Matriz_Dados_K_Fold_OC_100)
     
 ### -------------------------------------------------------------------------------------------------------------------------------------------- ###
 
 # Chamada da instrução principal do código.
-principal_grafico_k_fold()
+principal_grafico_k_fold_BLUE1()
 
 # Impressão de uma linha que representa o fim do programa.
 print("\n---------------------------------------------------------------------------------------------------------------------------------------\n")   

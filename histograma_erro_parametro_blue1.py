@@ -1,14 +1,14 @@
 # EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE 1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 07 de julho de 2024.
+# Data: 16 de julho de 2024.
 
-# Objetivo do código: análise do erro absoluto do parâmetro da amplitude, fase ou pedestal pelo método Best Linear Unbiased Estimator (BLUE 1).
+# Objetivo do código: análise do erro de estimação do parâmetro da amplitude, fase ou pedestal pelo método Best Linear Unbiased Estimator (BLUE 1).
 
 """
 Organização do Código:
 
 Importação de arquivos.
-Método BLUE 1: metodo_BLUE1.py
+Método BLUE 1 para a estimação da amplitude, fase ou pedestal: metodo_BLUE1.py
 
 Funções presentes:
 
@@ -49,38 +49,44 @@ print(titulo_programa)
 ### ------------------ 1) FUNÇÃO PARA O CÁLCULO DOS DADOS ESTATÍSTICOS DO ERRO DE ESTIMAÇÃO DA AMPLITUDE, FASE OU PEDESTAL --------------------- ###
 
 # Definição da função para o cálculo dos dados estatísticos do erro de estimação da amplitude, fase ou pedestal.
-def dados_estatisticos_erro_parametro(lista_erro_parametro):
+def dados_estatisticos_erro_estimacao_parametro_BLUE1(lista_erro_estimacao_parametro):
     
     # A lista do erro de estimação da amplitude, fase ou pedestal é convertida para o tipo numpy array.
-    vetor_erro_parametro = np.array(lista_erro_parametro)
+    vetor_erro_estimacao_parametro = np.array(lista_erro_estimacao_parametro)
 
     # Cálculo da média do erro de estimação da amplitude, fase ou pedestal.
-    media_erro_parametro = np.mean(vetor_erro_parametro)
+    media_erro_estimacao_parametro = np.mean(vetor_erro_estimacao_parametro)
 
     # Cálculo da variância do erro de estimação da amplitude, fase ou pedestal.
-    var_erro_parametro = np.var(vetor_erro_parametro)
+    var_erro_estimacao_parametro = np.var(vetor_erro_estimacao_parametro)
 
     # Cálculo do desvio padrão do erro de estimação da amplitude, fase ou pedestal.
-    desvio_padrao_erro_parametro = np.std(vetor_erro_parametro)
+    desvio_padrao_erro_estimacao_parametro = np.std(vetor_erro_estimacao_parametro)
     
     # A função retorna a média, a variância e o desvio padrão dos dados do erro de estimação da amplitude, fase ou pedestal.
-    return media_erro_parametro, var_erro_parametro, desvio_padrao_erro_parametro
+    return media_erro_estimacao_parametro, var_erro_estimacao_parametro, desvio_padrao_erro_estimacao_parametro
     
 ### -------------------------------------------------------------------------------------------------------------------------------------------- ###
 
 ### --------------------- 2) FUNÇÃO PARA A CONSTRUÇÃO DO HISTOGRAMA DO ERRO DE ESTIMAÇÃO DA AMPLITUDE, FASE OU PEDESTAL ------------------------ ###
 
 # Definição de função para o plot do histograma do erro de estimação da amplitude, fase ou pedestal.
-def histograma_erro_parametro(n_ocupacao, parametro, lista_erro_parametro, media_erro_parametro, var_erro_parametro, desvio_padrao_erro_parametro):
+def histograma_erro_estimacao_parametro_BLUE1(n_ocupacao, parametro, lista_erro_estimacao_parametro, media_erro_estimacao_parametro, var_erro_estimacao_parametro, desvio_padrao_erro_estimacao_parametro):
     
     # A lista do erro de estimação do parâmetro é convertida para o tipo numpy array.
-    vetor_erro_parametro = np.array(lista_erro_parametro)
+    vetor_erro_estimacao_parametro = np.array(lista_erro_estimacao_parametro)
 
     # Se a variável parametro for igual a string "fase".
     if parametro == "fase":
         
         # Nomeação do eixo x de acordo com o parâmetro da fase.
         plt.xlabel(f'Erro de estimação da {parametro} (ns)', fontsize = 18)
+    
+    # Se a variável parametro for igual a string "pedestal".
+    elif parametro == "pedestal":
+        
+        # Nomeação do eixo x de acordo com o parâmetro do pedestal.
+        plt.xlabel(f'Erro de estimação do {parametro} (ADC Count)', fontsize = 18)
      
     # Caso contrário.   
     else:
@@ -98,13 +104,13 @@ def histograma_erro_parametro(n_ocupacao, parametro, lista_erro_parametro, media
     plt.yticks(fontsize = 16)
 
     # A variável texto recebe uma string com as informações de interesse.
-    texto = f"Média: {round(media_erro_parametro, 6)} \n Variância: {round(var_erro_parametro, 6)} \n Desvio padrão: {round(desvio_padrao_erro_parametro, 6)}"
+    texto = f"Média: {round(media_erro_estimacao_parametro, 6)} \n Variância: {round(var_erro_estimacao_parametro, 6)} \n Desvio padrão: {round(desvio_padrao_erro_estimacao_parametro, 6)}"
 
     # Impressão do título do gráfico (recomendável para a apresentação de slides).
     # plt.title(f"Ocupação {n_ocupacao}", fontsize = 18)
 
     # Definição do histograma a partir do vetor vetor_erro_parametro.
-    plt.hist(vetor_erro_parametro, bins = 100, range = [-800, 800], edgecolor = 'black', linewidth = 1.2)
+    plt.hist(vetor_erro_estimacao_parametro, bins = 100, range = [-800, 800], edgecolor = 'black', linewidth = 1.2)
     
     # Posicionamento do texto no gráfico.
     plt.text(0.99, 0.98, texto, horizontalalignment = 'right',
@@ -124,7 +130,7 @@ def histograma_erro_parametro(n_ocupacao, parametro, lista_erro_parametro, media
 ### -------------------------------------- 3) INSTRUÇÃO PRINCIPAL DO CÓDIGO (MAIN) ------------------------------------------------------------- ###
 
 # Definição da instrução principal (main) do código.
-def principal_histograma_erro_parametro():
+def principal_histograma_erro_estimacao_parametro_BLUE1():
     
     # Impressão de mensagem no terminal.
     print("Opções de parâmetros:\nAmplitude: 1\nFase: 2\nPedestal: 3\n")
@@ -184,9 +190,9 @@ def principal_histograma_erro_parametro():
     
     Matriz_Dados_OC = leitura_dados_ocupacao(n_ocupacao) 
     
-    Matriz_Dados_OC_sem_pedestal = retirada_pedestal(Matriz_Dados_OC)
+    Matriz_Dados_OC_Sem_Pedestal = retirada_pedestal(Matriz_Dados_OC)
     
-    vetor_amostras_pulsos, vetor_amplitude_referencia, vetor_fase_referencia = amostras_pulsos_e_referencia(Matriz_Dados_OC_sem_pedestal)
+    vetor_amostras_pulsos, vetor_amplitude_referencia, vetor_fase_referencia = amostras_pulsos_e_referencia(Matriz_Dados_OC_Sem_Pedestal)
     
     # Caso a variável parametro seja igual a 1.
     if parametro == 1:
@@ -194,7 +200,7 @@ def principal_histograma_erro_parametro():
         # A variável parametro recebe a string "amplitude".
         parametro = "amplitude"
         
-        Matriz_dados_pulsos, vetor_parametro_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_amplitude_referencia, n_janelamento)
+        Matriz_Dados_Pulsos, vetor_parametro_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_amplitude_referencia, n_janelamento)
         
     # Caso a variável parametro seja igual a 2.
     elif parametro == 2:
@@ -202,7 +208,7 @@ def principal_histograma_erro_parametro():
         # A variável parametro recebe a string "fase".
         parametro = "fase"
         
-        Matriz_dados_pulsos, vetor_parametro_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_fase_referencia, n_janelamento)
+        Matriz_Dados_Pulsos, vetor_parametro_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_fase_referencia, n_janelamento)
         
     # Caso a variável parametro seja igual a 3.
     elif parametro == 3:
@@ -212,24 +218,18 @@ def principal_histograma_erro_parametro():
         
         vetor_pedestal_referencia = valor_pedestal_referencia*np.ones(len(Matriz_Dados_OC))
         
-        Matriz_dados_pulsos, vetor_parametro_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_pedestal_referencia, n_janelamento)    
+        Matriz_Dados_Pulsos, vetor_parametro_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_pedestal_referencia, n_janelamento)    
     
-    Matriz_dados_pulsos_treino, Matriz_dados_pulsos_teste, vetor_parametro_referencia_treino, vetor_parametro_referencia_teste = dados_treino_teste_histograma(Matriz_dados_pulsos, vetor_parametro_referencia)
-    
-    vetor_dados_ruidos = leitura_dados_ruidos(n_ocupacao)
-    
-    Matriz_dados_ruidos = amostras_ruidos_janelamento(vetor_dados_ruidos, n_janelamento)
-    
-    Matriz_Covariancia = matriz_covariancia(Matriz_dados_ruidos)
+    Matriz_Pulsos_Sinais_Treino, Matriz_Pulsos_Sinais_Teste, vetor_parametro_referencia_treino, vetor_parametro_referencia_teste = dados_treino_teste_histograma(Matriz_Dados_Pulsos, vetor_parametro_referencia)
        
-    lista_erro_parametro = metodo_BLUE1(parametro, Matriz_dados_pulsos_teste, vetor_parametro_referencia_teste, Matriz_Covariancia, n_janelamento)
+    lista_erro_estimacao_parametro = metodo_BLUE1(parametro, Matriz_Pulsos_Sinais_Treino, Matriz_Pulsos_Sinais_Teste, vetor_parametro_referencia_teste, n_janelamento)
 
-    media_erro_parametro, var_erro_parametro, desvio_padrao_erro_parametro = dados_estatisticos_erro_parametro(lista_erro_parametro)
+    media_erro_estimacao_parametro, var_erro_estimacao_parametro, desvio_padrao_erro_estimacao_parametro = dados_estatisticos_erro_estimacao_parametro_BLUE1(lista_erro_estimacao_parametro)
     
-    histograma_erro_parametro(n_ocupacao, parametro, lista_erro_parametro, media_erro_parametro, var_erro_parametro, desvio_padrao_erro_parametro)
+    histograma_erro_estimacao_parametro_BLUE1(n_ocupacao, parametro, lista_erro_estimacao_parametro, media_erro_estimacao_parametro, var_erro_estimacao_parametro, desvio_padrao_erro_estimacao_parametro)
     
 # Chamada da instrução principal (main) do código.
-principal_histograma_erro_parametro()
+principal_histograma_erro_estimacao_parametro_BLUE1()
 
 ### -------------------------------------------------------------------------------------------------------------------------------------------- ###
 # Impressão de uma linha que representa o fim do programa.

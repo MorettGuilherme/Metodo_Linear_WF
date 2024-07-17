@@ -1,6 +1,6 @@
 # EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE 1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 07 de julho de 2024.
+# Data: 16 de julho de 2024.
 
 # Objetivo do código: cálculo do desempenho do método Best Linear Unbiased Estimator (BLUE 1) para a estimação da amplitude, fase ou pedestal pela validação cruzada K-Fold.
 
@@ -8,7 +8,7 @@
 Organização do código:
 
 Importação de arquivos.
-Método BLUE 1: metodo_BLUE1.py
+Método BLUE 1 para a estimação da amplitude, fase ou pedestal: metodo_BLUE1.py
 
 Funções presentes:
 
@@ -17,23 +17,23 @@ Entrada: parâmetro, número de ocupação, número do janelamento ideal, média
 Saída: nada.
 
 2) Função para o cálculo do desempenho do método BLUE 1 pelo Erro Médio de Estimação (EME).
-Entrada: número de elementos presentes em cada bloco e lista dos erros de estimação para cada bloco do K-Fold.
+Entrada: número de elementos presentes em cada bloco e lista do erro de estimação para cada bloco do K-Fold.
 Saída: média do EME, variância do EME e desvio padrão do EME.
 
 3) Função para o cálculo do desempenho do método BLUE 1 pelo Erro Médio Quadrático (Mean Squared Error - MSE).
-Entrada: número de elementos presentes em cada bloco e lista dos erros de estimação para cada bloco do K-Fold.
+Entrada: número de elementos presentes em cada bloco e lista do erro de estimação para cada bloco do K-Fold.
 Saída: média do MSE, variância do MSE e desvio padrão do MSE.
 
 4) Função para o cálculo do desempenho do método BLUE 1 pelo Erro Médio Absoluto (Mean Absolute Error - MAE).
-Entrada: número de elementos presentes em cada bloco e lista dos erros de estimação para cada bloco do K-Fold.
+Entrada: número de elementos presentes em cada bloco e lista do erro de estimação para cada bloco do K-Fold.
 Saída: média do MAE, variância do MAE e desvio padrão do MAE.
 
 5) Função para o cálculo do desempenho do método BLUE 1 pela Relação Sinal-Ruído (Signal-to-Noise Ratio - SNR).
-Entrada: lista dos parâmetros de referência e lista dos erros de estimação para cada bloco do K-Fold.
+Entrada: lista do parâmetro de referência e lista do erro de estimação para cada bloco do K-Fold.
 Saída: média do SNR, variância do SNR e desvio padrão do SNR.
 
 6) Função para o cálculo do desempenho do método BLUE 1 pelo desvio padrão (DP).
-Entrada: número de elementos presentes em cada bloco e lista dos erros de estimação para cada bloco do K-Fold.
+Entrada: número de elementos presentes em cada bloco e lista do erro de estimação para cada bloco do K-Fold.
 Saída: valor do desvio padrão de cada bloco.
 
 7) Instrução da validação cruzada K-Fold adaptada para o cálculo do desempenho do método BLUE 1.
@@ -198,7 +198,7 @@ def DP(numero_elementos_bloco, bloco_erro_estimacao):
 ### ----------- 7) INSTRUÇÃO PARA A VALIDAÇÃO CRUZADA K-FOLD ADAPTADA PARA O CÁLCULO DO DESEMPENHO DO MÉTODO BLUE 1------------------- --------- ###
 
 # Definição da instrução da técnica de validação cruzada K-Fold para o cálculo do desempenho do método BLUE 1.
-def K_fold_desempenho_BLUE1(parametro, n_ocupacao, n_janelamento_ideal, opcao_avaliacao_desempenho, Matriz_Pulsos_Sinais, vetor_parametro_referencia, Matriz_Covariancia):
+def K_fold_desempenho_BLUE1(parametro, n_ocupacao, n_janelamento_ideal, opcao_avaliacao_desempenho, Matriz_Pulsos_Sinais, vetor_parametro_referencia):
     
     # Caso a variável opcao_avaliacao_desempenho seja igual a 1.
     if opcao_avaliacao_desempenho == 1:
@@ -280,7 +280,7 @@ def K_fold_desempenho_BLUE1(parametro, n_ocupacao, n_janelamento_ideal, opcao_av
         bloco_treino_parametro_referencia = [elemento for sublista in bloco_treino_parametro_referencia for elemento in sublista]
         
         # A variável bloco_lista_erro_parametro recebe o valor de retorno da função metodo_BLUE1.
-        bloco_lista_erro_parametro = metodo_BLUE1(parametro, bloco_teste_pulsos_sinais, bloco_teste_parametro_referencia, Matriz_Covariancia, n_janelamento_ideal)
+        bloco_lista_erro_parametro = metodo_BLUE1(parametro, bloco_treino_pulsos_sinais, bloco_teste_pulsos_sinais, bloco_teste_parametro_referencia, n_janelamento_ideal)
         
         # Caso a variável opcao_avaliacao_desempenho seja igual a 1.
         if opcao_avaliacao_desempenho == 1:
@@ -409,14 +409,14 @@ def principal_desempenho_BLUE1():
         
             parametro = "amplitude"
         
-            Matriz_Dados_Pulsos, vetor_parametro_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_amplitude_referencia, n_janelamento_ideal)
+            Matriz_Pulsos_Sinais, vetor_parametro_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_amplitude_referencia, n_janelamento_ideal)
         
         # Caso a variável parametro seja igual a 2.
         elif opcao_parametro == 2:
     
             parametro = "fase"
         
-            Matriz_Dados_Pulsos, vetor_parametro_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_fase_referencia, n_janelamento_ideal)
+            Matriz_Pulsos_Sinais, vetor_parametro_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_fase_referencia, n_janelamento_ideal)
         
         # Caso a variável parametro seja igual a 3.
         elif opcao_parametro == 3:
@@ -425,15 +425,9 @@ def principal_desempenho_BLUE1():
         
             vetor_pedestal_referencia = valor_pedestal_referencia*np.ones(len(Matriz_Dados_OC))
         
-            Matriz_Dados_Pulsos, vetor_parametro_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_pedestal_referencia, n_janelamento_ideal)
-        
-        vetor_dados_ruidos = leitura_dados_ruidos(n_ocupacao)
+            Matriz_Pulsos_Sinais, vetor_parametro_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_pedestal_referencia, n_janelamento_ideal)
     
-        Matriz_Dados_Ruidos = amostras_ruidos_janelamento(vetor_dados_ruidos, n_janelamento_ideal)
-    
-        Matriz_Covariancia = matriz_covariancia(Matriz_Dados_Ruidos)
-    
-        K_fold_desempenho_BLUE1(parametro, n_ocupacao, n_janelamento_ideal, opcao_avaliacao_desempenho, Matriz_Dados_Pulsos, vetor_parametro_referencia, Matriz_Covariancia)
+        K_fold_desempenho_BLUE1(parametro, n_ocupacao, n_janelamento_ideal, opcao_avaliacao_desempenho, Matriz_Pulsos_Sinais, vetor_parametro_referencia)
     
     # Definição do tempo final.
     tempo_final = time.time()

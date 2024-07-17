@@ -1,8 +1,8 @@
 # EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE 1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 07 de julho de 2024.
+# Data: 15 de julho de 2024.
 
-# Objetivo do código: Aplicação do método Best Linear Unbiased Estimator (BLUE 1).
+# Objetivo do código: Aplicação do método Best Linear Unbiased Estimator (BLUE 1) para a estimação da amplitude, fase ou pedestal.
 
 """
 Organização do código:
@@ -22,7 +22,7 @@ Entrada: número de janelamento.
 Saída: vetor da derivada temporal do pulso de referência para cada instante de tempo de acordo com o janelamento.
 
 3) Função para o método BLUE 1.
-Entrada: parâmetro, matriz com os pulsos de sinais, vetor com o parâmetro de referência, matriz de covariância dos dados de ruídos e o número de janelamento.
+Entrada: parâmetro, matriz com os pulsos de sinais da etapa de treino, matriz com os pulsos de sinais da etapa de teste, vetor do parâmetro de referência e o número de janelamento.
 Saída: lista com o erro de estimação pelo método BLUE 1
 
 """
@@ -183,10 +183,10 @@ def derivada_pulso_referencia(n_janelamento):
 ### ----------------------------------------------- 3) FUNÇÃO PARA O MÉTODO BLUE 1 ------------------------------------------------------------- ###
 
 # Definição da função para o método BLUE 1.
-def metodo_BLUE1(parametro, Matriz_pulsos_sinais_teste, vetor_parametro_referencia_teste, Matriz_covariancia, n_janelamento):
+def metodo_BLUE1(parametro, Matriz_Pulsos_Sinais_Treino, Matriz_Pulsos_Sinais_Teste, vetor_parametro_referencia_teste, n_janelamento):
 
     # Criação da lista vazia para armazenar os erros calculados para o parâmetro. 
-    lista_erro_parametro = []
+    lista_erro_estimacao_parametro = []
     
     # A variável vetor_h recebe o retorno da função pulso_referencia.
     vetor_h = pulso_referencia(n_janelamento)
@@ -199,11 +199,14 @@ def metodo_BLUE1(parametro, Matriz_pulsos_sinais_teste, vetor_parametro_referenc
     
     # Definição da matriz cujas colunas são respectivamente formadas pelo vetor_h, vetor_dh e o vetor_unitario.
     U = np.column_stack((vetor_h, vetor_dh, vetor_unitario))
+    
+    # A variável Matriz_Covariancia recebe o valor de retorno da função matriz_covariancia.
+    Matriz_Covariancia = matriz_covariancia(Matriz_Pulsos_Sinais_Treino)
         
-    # Tenta calcular a inversa da matriz Matriz_covariancia.
+    # Tenta calcular a inversa da matriz Matriz_Covariancia.
     try:
-    # Calcula a inversa da matriz Matriz_covariancia usando numpy.linalg.inv.
-        Inversa_Matriz_covariancia = np.linalg.inv(Matriz_covariancia)
+    # Calcula a inversa da matriz Matriz_Covariancia usando numpy.linalg.inv.
+        Inversa_Matriz_Covariancia = np.linalg.inv(Matriz_Covariancia)
           
     # Caso a matriz Matriz_Covariancia seja singular ou não invertível.  
     except np.linalg.LinAlgError:
@@ -214,7 +217,7 @@ def metodo_BLUE1(parametro, Matriz_pulsos_sinais_teste, vetor_parametro_referenc
     Transposta_U = np.transpose(U)
     
     # Cálculo de uma parte do vetor de pesos pelo método BLUE 1.
-    parte_vetor_blue1 = np.dot(np.dot(Transposta_U, Inversa_Matriz_covariancia), U)
+    parte_vetor_blue1 = np.dot(np.dot(Transposta_U, Inversa_Matriz_Covariancia), U)
     
     # Tenta calcular a inversa da parte_vetor_blue1.
     try:
@@ -226,17 +229,17 @@ def metodo_BLUE1(parametro, Matriz_pulsos_sinais_teste, vetor_parametro_referenc
     # Impressão de mensagem de erro
         print("A matriz da parte do vetor de pesos do método BLUE 1 não é invertível.")
     
-    # Para o índice de zero até o número de linhas da matriz Matriz_pulsos_sinais_treino.
-    for indice_linha in range(len(Matriz_pulsos_sinais_teste)):
+    # Para o índice de zero até o número de linhas da matriz Matriz_Pulsos_Sinais_Treino.
+    for indice_linha in range(len(Matriz_Pulsos_Sinais_Teste)):
         
-        # O vetor vetor_pulsos_sinais corresponde a linha de índice indice_linha da matriz Matriz_pulsos_sinais_treino.    
-        vetor_pulsos_sinais_teste = Matriz_pulsos_sinais_teste[indice_linha]
+        # O vetor vetor_pulsos_sinais corresponde a linha de índice indice_linha da matriz Matriz_Pulsos_Sinais_Treino.    
+        vetor_pulsos_sinais_teste = Matriz_Pulsos_Sinais_Teste[indice_linha]
     
-        # A amplitude de referência é o elemento de índice indice_linha do vetor vetor_amplitude_referencia_teste.
+        # O parâmetro de referência é o elemento de índice indice_linha do vetor vetor_parametro_referencia_teste.
         valor_parametro_referencia_teste = vetor_parametro_referencia_teste[indice_linha]
         
         # Cálculo do vetor de pesos pelo método BLUE 1.
-        vetor_pesos_blue1 = np.dot(np.dot(Inversa_parte_vetor_blue1, Transposta_U), Inversa_Matriz_covariancia)
+        vetor_pesos_blue1 = np.dot(np.dot(Inversa_parte_vetor_blue1, Transposta_U), Inversa_Matriz_Covariancia)
         
         # Cálculo do parâmetro estimado pelo método BLUE 1.
         vetor_parametro_estimado = np.dot(vetor_pesos_blue1, vetor_pulsos_sinais_teste)
@@ -253,7 +256,7 @@ def metodo_BLUE1(parametro, Matriz_pulsos_sinais_teste, vetor_parametro_referenc
             # A variável amplitude_estimada recebe o primeiro elemento do vetor vetor_parametro_estimado.
             amplitude_estimada = vetor_parametro_estimado[0]
             
-            # A variável amolitude_fase_estimada recebe o segundo elemento do vetor vetor_parametro_estimado.
+            # A variável amplitude_fase_estimada recebe o segundo elemento do vetor vetor_parametro_estimado.
             amplitude_fase_estimada = vetor_parametro_estimado[1]
             
             # A variável parametro_estimado é calculada pela divisão entre os valores da amplitude_fase_estimada pela amplitude_estimada.
@@ -265,13 +268,13 @@ def metodo_BLUE1(parametro, Matriz_pulsos_sinais_teste, vetor_parametro_referenc
             # A variável parametro_estimado recebe o terceiro elemento do vetor vetor_parametro_estimado.
             parametro_estimado = vetor_parametro_estimado[2]
         
-        # Cálculo do erro de estimação da amplitude.
-        erro_parametro = valor_parametro_referencia_teste-parametro_estimado
+        # Cálculo do erro de estimação do parâmetro.
+        erro_estimacao_parametro = valor_parametro_referencia_teste-parametro_estimado
     
-        # O elemento erro_amplitude é adicionado na lista correspondente.    
-        lista_erro_parametro.append(erro_parametro)
+        # O elemento erro_estimacao_parametro é adicionado na lista correspondente.    
+        lista_erro_estimacao_parametro.append(erro_estimacao_parametro)
 
-    # A função retorna a lista lista_erro_amplitude.
-    return lista_erro_parametro
+    # A função retorna a lista lista_erro_estimacao_parametro.
+    return lista_erro_estimacao_parametro
  
 ### -------------------------------------------------------------------------------------------------------------------------------------------- ###

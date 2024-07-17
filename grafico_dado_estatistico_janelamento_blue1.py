@@ -1,6 +1,6 @@
 # EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE 1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 07 de julho de 2024.
+# Data: 16 de julho de 2024.
 
 # Objetivo do código: gráfico dos dados estatísticos ao longo das ocupações de acordo com o janelamento para o método Best Linear Unbiased Estimator (BLUE 1).
 
@@ -43,8 +43,8 @@ print(titulo_programa)
 
 ### -------------- 1) FUNÇÃO PARA A LEITURA DOS DADOS ESTATÍSTICOS DE TODAS AS OCUPAÇÕES PARA UM DETERMINADO JANELAMENTO ----------------------- ###
 
-# Definição da função para a leitura dos dados estatísticos de todas as ocupações para um determinado janelamento.
-def leitura_dados_estatisticos_janelamento(parametro, n_janelamento):
+# Definição da função para a leitura dos dados estatísticos de todas as ocupações para um determinado janelamento pelo método BLUE 1.
+def leitura_dados_estatisticos_janelamento_BLUE1(parametro, n_janelamento):
 
     # Nome da pasta em que se encontra o arquivo de entrada dos dados estatísticos de acordo com o janelamento.
     pasta_dados_estatisticos_janelamento = f"Dados_Estatisticos_BLUE1_{parametro}_OC"
@@ -80,8 +80,8 @@ def leitura_dados_estatisticos_janelamento(parametro, n_janelamento):
 
 ### ------------ 2) FUNÇÃO PARA O PLOTE DOS GRÁFICO DO DADO ESTATÍSTICO AO LONGO DAS OCUPAÇÕES PARA UM DETERMINADO JANELAMENTO ----------------- ###
 
-# Definição da função para o plote do gráfico do dado estatístico ao longo das ocupações para um determinado janelamento.
-def grafico_dado_estatistico_janelamento(parametro, dado_estatistico, Matriz_Dados_Estatisticos_Janelamento):
+# Definição da função para o plote do gráfico do dado estatístico ao longo das ocupações para um determinado janelamento pelo método BLUE 1.
+def grafico_dado_estatistico_janelamento_BLUE1(parametro, dado_estatistico, Matriz_Dados_Estatisticos_Janelamento):
     
     # Definição da variável indice_coluna_ocupacoes que armazena o valor do índice da coluna das ocupações.
     indice_coluna_ocupacoes = 0
@@ -147,7 +147,8 @@ def grafico_dado_estatistico_janelamento(parametro, dado_estatistico, Matriz_Dad
             
             # Comando para o nome do eixo das ordenadas de acordo com a fase.
             plt.ylabel(f"DP. do erro de estimação da {parametro} (ns)", fontsize = 18)
-            
+         
+        # Caso contrário.   
         else:
             
             # Comando para o nome do eixo das ordenadas de acordo com os demais parâmetros.
@@ -169,8 +170,8 @@ def grafico_dado_estatistico_janelamento(parametro, dado_estatistico, Matriz_Dad
         
 ### ---------------------------------------------------- 3) INSTRUÇÃO PRINCIPAL DO CÓDIGO (MAIN) -------------------------------------------------- ###
 
-# Definição da instrução principal (main) para esse código.
-def principal_grafico_dado_estatistico_janelamento_blue1():
+# Definição da instrução principal (main) do código.
+def principal_grafico_dado_estatistico_janelamento_BLUE1():
     
     # Impressão de mensagem no terminal.
     print("Opções de parâmetros:\nAmplitude: 1\nFase: 2\nPedestal: 3\n")
@@ -229,13 +230,13 @@ def principal_grafico_dado_estatistico_janelamento_blue1():
         # A execução do programa é interrompida.
         exit(1)
         
-    # Chamada das funções.
+    # Chamada ordenada das funções.
     
-    Matriz_Dados_Estatisticos_Janelamento = leitura_dados_estatisticos_janelamento(parametro, n_janelamento)
-    grafico_dado_estatistico_janelamento(parametro, dado_estatistico, Matriz_Dados_Estatisticos_Janelamento)
+    Matriz_Dados_Estatisticos_Janelamento = leitura_dados_estatisticos_janelamento_BLUE1(parametro, n_janelamento)
+    grafico_dado_estatistico_janelamento_BLUE1(parametro, dado_estatistico, Matriz_Dados_Estatisticos_Janelamento)
     
 # Chamada da instrução principal do código.
-principal_grafico_dado_estatistico_janelamento_blue1()
+principal_grafico_dado_estatistico_janelamento_BLUE1()
 
 # Impressão de uma linha que representa o fim do programa.
 print("\n---------------------------------------------------------------------------------------------------------------------------------------\n")

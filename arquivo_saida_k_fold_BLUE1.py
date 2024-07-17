@@ -1,14 +1,14 @@
 # EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE 1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 07 de julho de 2024.
+# Data: 16 de julho de 2024.
 
-# Objetivo do código: implementação da validação cruzada K-Fold para o método Best Linear Unbiased Estimator (BLUE 1).
+# Objetivo do código: implementação da validação cruzada K-Fold para o método Best Linear Unbiased Estimator (BLUE 1) para a estimação da amplitude, fase ou pedestal.
 
 """ 
 Organização do código:
 
 Importação de arquivos.
-Método BLUE 1: metodo_BLUE1.py
+Método BLUE 1 para a estimação da amplitude, fase ou pedestal: metodo_BLUE1.py
 
 Funções presentes:
 
@@ -46,11 +46,10 @@ titulo_programa = colored("Geração de arquivos de saída pela técnica de vali
 # Impressão do título do programa.
 print(titulo_programa)
 
-
 ### ----------------------------------------- 1) INSTRUÇÃO PARA SALVAR OS DADOS ESTATÍSTICOS DO K-FOLD ----------------------------------------- ###
 
-# Definição da instrução para salvar as médias dos dados estatísticos da validação cruzada K-Fold em arquivo de saída.
-def arquivo_saida_dados_estatisticos_k_fold_erro(parametro, n_ocupacao, n_janelamento, media_dado_erro, var_dado_erro, DP_dado_erro, dado):
+# Definição da instrução para salvar as médias dos dados estatísticos da validação cruzada K-Fold em arquivo de saída para o método BLUE 1.
+def arquivo_saida_dados_estatisticos_k_fold_erro_BLUE1(parametro, n_ocupacao, n_janelamento, media_dado_erro, var_dado_erro, DP_dado_erro, dado):
 
     # Definição do título presente no arquivo de saída.
     titulo_arquivo_saida = f"janelamento,media_{dado}_erro,var_{dado}_erro,DP_{dado}_erro\n"
@@ -98,8 +97,8 @@ def arquivo_saida_dados_estatisticos_k_fold_erro(parametro, n_ocupacao, n_janela
 
 ### ----------------------------------------------- 2) INSTRUÇÃO PARA A VALIDAÇÃO CRUZADA K-FOLD ----------------------------------------------- ###
 
-# Definição da instrução da técnica de validação cruzada K-Fold.
-def K_fold(parametro, n_ocupacao, n_janelamento, Matriz_pulsos_sinais, vetor_parametro_referencia, Matriz_Covariancia):
+# Definição da instrução da técnica de validação cruzada K-Fold para o método BLUE 1.
+def K_fold_BLUE1(parametro, n_ocupacao, n_janelamento, Matriz_pulsos_sinais, vetor_parametro_referencia):
     
     # Criação da lista vazia blocos_pulsos_sinais.
     blocos_pulsos_sinais = []
@@ -126,14 +125,14 @@ def K_fold(parametro, n_ocupacao, n_janelamento, Matriz_pulsos_sinais, vetor_par
         # O bloco do parâmetro de referência é acrescentado a lista dos blocos dos parâmetros de referência.
         blocos_parametro_referencia.append(bloco_parametro_referencia)
     
-    # Definição da lista vazia lista_bloco_media_erro.
-    lista_blocos_media_erro = []
+    # Definição da lista vazia lista_bloco_media_erro_estimacao.
+    lista_blocos_media_erro_estimacao = []
     
-    # Definição da lista vazia lista_bloco_var_erro.
-    lista_blocos_var_erro = []
+    # Definição da lista vazia lista_bloco_var_erro_estimacao.
+    lista_blocos_var_erro_estimacao = []
     
-    # Definição da lista vazia lista_bloco_DP_erro.
-    lista_blocos_DP_erro = []
+    # Definição da lista vazia lista_bloco_DP_erro_estimacao.
+    lista_blocos_DP_erro_estimacao = []
      
     # Para indice_bloco de zero até o tamanho da matriz de dados de entrada com incremento igual a quantidade de elementos no bloco.
     for indice_teste in range(0, len(blocos_pulsos_sinais)):
@@ -156,49 +155,49 @@ def K_fold(parametro, n_ocupacao, n_janelamento, Matriz_pulsos_sinais, vetor_par
         # Reescreve os elementos bloco_treino_parametro_referencia em sequência, uma lista unidimensional.
         bloco_treino_parametro_referencia = [elemento for sublista in bloco_treino_parametro_referencia for elemento in sublista]
         
-        # A variável bloco_lista_erro_parametro recebe o valor de retorno da função metodo_BLUE1.
-        Bloco_lista_erro_parametro = metodo_BLUE1(parametro, bloco_teste_pulsos_sinais, bloco_teste_parametro_referencia, Matriz_Covariancia, n_janelamento)
-        
+        # A variável bloco_lista_erro_estimacao_parametro recebe o valor de retorno da função metodo_BLUE1.
+        Bloco_lista_erro_estimacao_parametro = metodo_BLUE1(parametro, bloco_treino_pulsos_sinais, bloco_teste_pulsos_sinais, bloco_teste_parametro_referencia, n_janelamento)
+
         # Cálculo dos dados estatísticos de cada bloco.
-        bloco_media_erro = np.mean(Bloco_lista_erro_parametro)
-        bloco_var_erro = np.var(Bloco_lista_erro_parametro)
-        bloco_DP_erro = np.std(Bloco_lista_erro_parametro)
+        bloco_media_erro_estimacao = np.mean(Bloco_lista_erro_estimacao_parametro)
+        bloco_var_erro_estimacao = np.var(Bloco_lista_erro_estimacao_parametro)
+        bloco_DP_erro_estimacao = np.std(Bloco_lista_erro_estimacao_parametro)
         
         # Adiciona essas informações em suas respectivas listas.    
-        lista_blocos_media_erro.append(bloco_media_erro)
-        lista_blocos_var_erro.append(bloco_var_erro)
-        lista_blocos_DP_erro.append(bloco_DP_erro)
+        lista_blocos_media_erro_estimacao.append(bloco_media_erro_estimacao)
+        lista_blocos_var_erro_estimacao.append(bloco_var_erro_estimacao)
+        lista_blocos_DP_erro_estimacao.append(bloco_DP_erro_estimacao)
         
     # Cálculo dos dados estatísticos da média.
-    media_media_blocos_erro_parametro = np.mean(lista_blocos_media_erro)
-    var_media_blocos_erro_parametro = np.var(lista_blocos_media_erro)
-    DP_media_blocos_erro_parametro = np.std(lista_blocos_media_erro)
+    media_media_blocos_erro_estimacao_parametro = np.mean(lista_blocos_media_erro_estimacao)
+    var_media_blocos_erro_estimacao_parametro = np.var(lista_blocos_media_erro_estimacao)
+    DP_media_blocos_erro_estimacao_parametro = np.std(lista_blocos_media_erro_estimacao)
      
     # Salva a informação dos dados estatísticos da média do erro de estimação do parâmetro em seus respectivos arquivos de saída.   
-    arquivo_saida_dados_estatisticos_k_fold_erro(parametro, n_ocupacao, n_janelamento, media_media_blocos_erro_parametro, var_media_blocos_erro_parametro, DP_media_blocos_erro_parametro, dado = "media")
+    arquivo_saida_dados_estatisticos_k_fold_erro_BLUE1(parametro, n_ocupacao, n_janelamento, media_media_blocos_erro_estimacao_parametro, var_media_blocos_erro_estimacao_parametro, DP_media_blocos_erro_estimacao_parametro, dado = "media")
         
     # Cálculo dos dados estatísticos da variância.
-    media_var_blocos_erro_parametro = np.mean(lista_blocos_var_erro)
-    var_var_blocos_erro_parametro = np.var(lista_blocos_var_erro)
-    DP_var_blocos_erro_parametro = np.std(lista_blocos_var_erro)
+    media_var_blocos_erro_estimacao_parametro = np.mean(lista_blocos_var_erro_estimacao)
+    var_var_blocos_erro_estimacao_parametro = np.var(lista_blocos_var_erro_estimacao)
+    DP_var_blocos_erro_estimacao_parametro = np.std(lista_blocos_var_erro_estimacao)
       
     # Salva a informação dos dados estatísticos da variância do erro de estimação do parâmetro em seus respectivos arquivos de saída.  
-    arquivo_saida_dados_estatisticos_k_fold_erro(parametro, n_ocupacao, n_janelamento, media_var_blocos_erro_parametro, var_var_blocos_erro_parametro, DP_var_blocos_erro_parametro, dado = "var")
+    arquivo_saida_dados_estatisticos_k_fold_erro_BLUE1(parametro, n_ocupacao, n_janelamento, media_var_blocos_erro_estimacao_parametro, var_var_blocos_erro_estimacao_parametro, DP_var_blocos_erro_estimacao_parametro, dado = "var")
         
     # Cálculo dos dados estatísticos do desvio padrão.
-    media_DP_blocos_erro_parametro = np.mean(lista_blocos_DP_erro)
-    var_DP_blocos_erro_parametro = np.var(lista_blocos_DP_erro)
-    DP_DP_blocos_erro_parametro = np.std(lista_blocos_DP_erro)
+    media_DP_blocos_erro_estimacao_parametro = np.mean(lista_blocos_DP_erro_estimacao)
+    var_DP_blocos_erro_estimacao_parametro = np.var(lista_blocos_DP_erro_estimacao)
+    DP_DP_blocos_erro_estimacao_parametro = np.std(lista_blocos_DP_erro_estimacao)
     
     # Salva a informação dos dados estatísticos do desvio padrão do erro de estimação do parâmetro em seus respectivos arquivos de saída.
-    arquivo_saida_dados_estatisticos_k_fold_erro(parametro, n_ocupacao, n_janelamento, media_DP_blocos_erro_parametro, var_DP_blocos_erro_parametro, DP_DP_blocos_erro_parametro, dado = "DP")
+    arquivo_saida_dados_estatisticos_k_fold_erro_BLUE1(parametro, n_ocupacao, n_janelamento, media_DP_blocos_erro_estimacao_parametro, var_DP_blocos_erro_estimacao_parametro, DP_DP_blocos_erro_estimacao_parametro, dado = "DP")
     
 ### -------------------------------------------------------------------------------------------------------------------------------------------- ### 
 
 ### ----------------------------------------- 3) INSTRUÇÃO PARA APLICAR O K-FOLD EM TODAS AS OCUPAÇÕES ----------------------------------------- ###
   
 # Definição da instrução principal (main) do código.
-def principal_K_fold():
+def principal_K_fold_BLUE1():
     
     # A variável parametro_amplitude armazena a string "amplitude".
     parametro_amplitude = "amplitude"
@@ -240,32 +239,26 @@ def principal_K_fold():
     
             Matriz_Dados_OC = leitura_dados_ocupacao(n_ocupacao)
             
-            Matriz_Dados_OC_sem_pedestal = retirada_pedestal(Matriz_Dados_OC)
+            Matriz_Dados_OC_Sem_Pedestal = retirada_pedestal(Matriz_Dados_OC)
             
-            vetor_amostras_pulsos, vetor_amplitude_referencia, vetor_fase_referencia = amostras_pulsos_e_referencia(Matriz_Dados_OC_sem_pedestal)
+            vetor_amostras_pulsos, vetor_amplitude_referencia, vetor_fase_referencia = amostras_pulsos_e_referencia(Matriz_Dados_OC_Sem_Pedestal)
             
             vetor_pedestal_referencia = valor_pedestal_referencia*np.ones(len(Matriz_Dados_OC))
         
-            Matriz_dados_pulsos_amplitude, vetor_amplitude_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_amplitude_referencia, n_janelamento)
+            Matriz_Pulsos_Sinais_Amplitude, vetor_amplitude_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_amplitude_referencia, n_janelamento)
             
-            Matriz_dados_pulsos_fase, vetor_fase_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_fase_referencia, n_janelamento)
+            Matriz_Pulsos_Sinais_Fase, vetor_fase_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_fase_referencia, n_janelamento)
             
-            Matriz_dados_pulsos_pedestal, vetor_pedestal_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_pedestal_referencia, n_janelamento)
-
-            vetor_dados_ruidos = leitura_dados_ruidos(n_ocupacao)
+            Matriz_Pulsos_Sinais_Pedestal, vetor_pedestal_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_pedestal_referencia, n_janelamento)
     
-            Matriz_dados_ruidos = amostras_ruidos_janelamento(vetor_dados_ruidos, n_janelamento)
-    
-            Matriz_covariancia = matriz_covariancia(Matriz_dados_ruidos)
-    
-            K_fold(parametro_amplitude, n_ocupacao, n_janelamento, Matriz_dados_pulsos_amplitude, vetor_amplitude_referencia, Matriz_covariancia)
+            K_fold_BLUE1(parametro_amplitude, n_ocupacao, n_janelamento, Matriz_Pulsos_Sinais_Amplitude, vetor_amplitude_referencia)
             
-            K_fold(parametro_fase, n_ocupacao, n_janelamento, Matriz_dados_pulsos_fase, vetor_fase_referencia, Matriz_covariancia)
+            K_fold_BLUE1(parametro_fase, n_ocupacao, n_janelamento, Matriz_Pulsos_Sinais_Fase, vetor_fase_referencia)
             
-            K_fold(parametro_pedestal, n_ocupacao, n_janelamento, Matriz_dados_pulsos_pedestal, vetor_pedestal_referencia, Matriz_covariancia)
+            K_fold_BLUE1(parametro_pedestal, n_ocupacao, n_janelamento, Matriz_Pulsos_Sinais_Pedestal, vetor_pedestal_referencia)
      
-# Chamada da função K_fold_OC.
-principal_K_fold()       
+# Chamada da instrução K_fold_OC.
+principal_K_fold_BLUE1()       
 ### -------------------------------------------------------------------------------------------------------------------------------------------- ###
 
 # Impressão de uma linha que representa o fim do programa.

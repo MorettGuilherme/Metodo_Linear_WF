@@ -1,6 +1,6 @@
 # EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE 1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 07 de julho de 2024.
+# Data: 15 de julho de 2024.
 
 # Objetivo do código: gráfico do desempenho (EME, MSE, MAE, SNR E DP) ao longo das ocupações de acordo com o janelamento ideal para o método BLUE 1 para a estimação da amplitude, fase ou pedestal.
 
@@ -150,7 +150,6 @@ def grafico_dado_estatistico_desempenho_BLUE1(parametro, opcao_avaliacao_desempe
         # Comando para o nome do eixo das ordenadas de acordo com a relação Sinal-Ruído (Signal-to-Noise Ratio - SNR).
         plt.ylabel("Média da relação Sinal-Ruído", fontsize = 18)
         
-        
     # Caso a variável opcao_avaliacao_desempenho seja 5.
     elif opcao_avaliacao_desempenho == 5:
         
@@ -179,16 +178,16 @@ def grafico_dado_estatistico_desempenho_BLUE1(parametro, opcao_avaliacao_desempe
         
 ### ---------------------------------------------------- 3) INSTRUÇÃO PRINCIPAL DO CÓDIGO (MAIN) -------------------------------------------------- ###
 
-# Definição da instrução principal (main) para esse código.
+# Definição da instrução principal (main) do código.
 def principal_grafico_dado_estatistico_desempenho_BLUE1():
     
     # Impressão de mensagem no terminal.
     print("Opções de parâmetros:\nAmplitude: 1\nFase: 2\nPedestal: 3\n")
     
-    # A variável parametro armazena o número do tipo inteiro digitado pelo usuário via terminal.
+    # A variável opcao_parametro armazena o número do tipo inteiro digitado pelo usuário via terminal.
     opcao_parametro = int(input("Digite o número do parâmetro desejado: "))
 
-    # A variável valores_dados é uma lista com os valores aceitáveis para opcao.
+    # A variável lista_valores_dados é uma lista com os valores aceitáveis para opcao.
     lista_valores_dados = list(range(1,4,1))
 
     # Caso o valor digitado armazenado na variável opcao_parametro não estiver presente na lista lista_valores_dados.
@@ -201,7 +200,7 @@ def principal_grafico_dado_estatistico_desempenho_BLUE1():
         exit(1)
     
     # Impressão de mensagem no terminal.
-    print("Opções de avalições de desempenho do método:\nErro Médio Estimação (EME) - 1\nErro Médio Quadrático (Mean Squared Error - MSE) - 2\nErro Médio Absoluto (Mean Absolute Erro - MAE) - 3\nRelação Sinal-Ruído (Signal-to-Noise Ratio - SNR) - 4\nDesvio Padrão (DP) - 5")
+    print("Opções de avaliações de desempenho do método:\nErro Médio Estimação (EME) - 1\nErro Médio Quadrático (Mean Squared Error - MSE) - 2\nErro Médio Absoluto (Mean Absolute Erro - MAE) - 3\nRelação Sinal-Ruído (Signal-to-Noise Ratio - SNR) - 4\nDesvio Padrão (DP) - 5")
 
     # A variável opcao_avaliacao_desempenho armazena o número do tipo inteiro digitado pelo usuário via terminal.
     opcao_avaliacao_desempenho = int(input("Digite o número da opção desejada: "))
@@ -270,13 +269,14 @@ def principal_grafico_dado_estatistico_desempenho_BLUE1():
     # Obs.: essa análise deve ser realizada previamento pela interpretação dos gráficos gerados pelo K-Fold (grafico_k_fold_BLUE1).
     n_janelamento_ideal = 19
         
-    # Chamada das funções.
+    # Chamada ordenada das funções.
+    
     Matriz_Dados_Desempenho = leitura_dados_estatisticos_desempenho_BLUE1(parametro, n_janelamento_ideal, mecanismo_desempenho)
     grafico_dado_estatistico_desempenho_BLUE1(parametro, opcao_avaliacao_desempenho, Matriz_Dados_Desempenho)
 
 ### -------------------------------------------------------------------------------------------------------------------------------------------- ###
     
-# Chamada da isntrução principal do código.
+# Chamada da instrução principal do código.
 principal_grafico_dado_estatistico_desempenho_BLUE1()
 
 # Impressão de uma linha que representa o fim do programa.
