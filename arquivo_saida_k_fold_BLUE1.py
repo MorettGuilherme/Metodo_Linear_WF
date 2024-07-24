@@ -1,14 +1,14 @@
-# EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE 1) - Estimação da amplitude, fase ou pedestal.
+# EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
 # Data: 16 de julho de 2024.
 
-# Objetivo do código: implementação da validação cruzada K-Fold para o método Best Linear Unbiased Estimator (BLUE 1) para a estimação da amplitude, fase ou pedestal.
+# Objetivo do código: implementação da validação cruzada K-Fold para o método Best Linear Unbiased Estimator (BLUE1) para a estimação da amplitude, fase ou pedestal.
 
 """ 
 Organização do código:
 
 Importação de arquivos.
-Método BLUE 1 para a estimação da amplitude, fase ou pedestal: metodo_BLUE1.py
+Método BLUE1 para a estimação da amplitude, fase ou pedestal: metodo_BLUE1.py
 
 Funções presentes:
 
@@ -46,7 +46,7 @@ titulo_programa = colored("Geração de arquivos de saída pela técnica de vali
 # Impressão do título do programa.
 print(titulo_programa)
 
-### ----------------------------------------- 1) INSTRUÇÃO PARA SALVAR OS DADOS ESTATÍSTICOS DO K-FOLD ----------------------------------------- ###
+### ------------------------------ 1) INSTRUÇÃO PARA SALVAR OS DADOS ESTATÍSTICOS DO K-FOLD PELO MÉTODO BLUE1 ---------------------------------- ###
 
 # Definição da instrução para salvar as médias dos dados estatísticos da validação cruzada K-Fold em arquivo de saída para o método BLUE 1.
 def arquivo_saida_dados_estatisticos_k_fold_erro_BLUE1(parametro, n_ocupacao, n_janelamento, media_dado_erro, var_dado_erro, DP_dado_erro, dado):
@@ -95,7 +95,7 @@ def arquivo_saida_dados_estatisticos_k_fold_erro_BLUE1(parametro, n_ocupacao, n_
 
 ### -------------------------------------------------------------------------------------------------------------------------------------------- ###
 
-### ----------------------------------------------- 2) INSTRUÇÃO PARA A VALIDAÇÃO CRUZADA K-FOLD ----------------------------------------------- ###
+### ----------------------------------- 2) INSTRUÇÃO PARA A VALIDAÇÃO CRUZADA K-FOLD PELO MÉTODO BLUE1 ----------------------------------------- ###
 
 # Definição da instrução da técnica de validação cruzada K-Fold para o método BLUE 1.
 def K_fold_BLUE1(parametro, n_ocupacao, n_janelamento, Matriz_pulsos_sinais, vetor_parametro_referencia):
@@ -194,7 +194,7 @@ def K_fold_BLUE1(parametro, n_ocupacao, n_janelamento, Matriz_pulsos_sinais, vet
     
 ### -------------------------------------------------------------------------------------------------------------------------------------------- ### 
 
-### ----------------------------------------- 3) INSTRUÇÃO PARA APLICAR O K-FOLD EM TODAS AS OCUPAÇÕES ----------------------------------------- ###
+### ----------------------------------------------------- 3) INSTRUÇÃO PRINCIPAL DO CÓDIGO ----------------------------------------------------- ###
   
 # Definição da instrução principal (main) do código.
 def principal_K_fold_BLUE1():
@@ -245,19 +245,19 @@ def principal_K_fold_BLUE1():
             
             vetor_pedestal_referencia = valor_pedestal_referencia*np.ones(len(Matriz_Dados_OC))
         
-            Matriz_Pulsos_Sinais_Amplitude, vetor_amplitude_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_amplitude_referencia, n_janelamento)
+            Matriz_Pulsos_Sinais_Amplitude_Janelado, vetor_amplitude_referencia_janelado = amostras_janelamento(vetor_amostras_pulsos, vetor_amplitude_referencia, n_janelamento)
             
-            Matriz_Pulsos_Sinais_Fase, vetor_fase_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_fase_referencia, n_janelamento)
+            Matriz_Pulsos_Sinais_Fase_Janelado, vetor_fase_referencia_janelado = amostras_janelamento(vetor_amostras_pulsos, vetor_fase_referencia, n_janelamento)
             
-            Matriz_Pulsos_Sinais_Pedestal, vetor_pedestal_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_pedestal_referencia, n_janelamento)
+            Matriz_Pulsos_Sinais_Pedestal_Janelado, vetor_pedestal_referencia_janelado = amostras_janelamento(vetor_amostras_pulsos, vetor_pedestal_referencia, n_janelamento)
     
-            K_fold_BLUE1(parametro_amplitude, n_ocupacao, n_janelamento, Matriz_Pulsos_Sinais_Amplitude, vetor_amplitude_referencia)
+            K_fold_BLUE1(parametro_amplitude, n_ocupacao, n_janelamento, Matriz_Pulsos_Sinais_Amplitude_Janelado, vetor_amplitude_referencia_janelado)
             
-            K_fold_BLUE1(parametro_fase, n_ocupacao, n_janelamento, Matriz_Pulsos_Sinais_Fase, vetor_fase_referencia)
+            K_fold_BLUE1(parametro_fase, n_ocupacao, n_janelamento, Matriz_Pulsos_Sinais_Fase_Janelado, vetor_fase_referencia_janelado)
             
-            K_fold_BLUE1(parametro_pedestal, n_ocupacao, n_janelamento, Matriz_Pulsos_Sinais_Pedestal, vetor_pedestal_referencia)
+            K_fold_BLUE1(parametro_pedestal, n_ocupacao, n_janelamento, Matriz_Pulsos_Sinais_Pedestal_Janelado, vetor_pedestal_referencia_janelado)
      
-# Chamada da instrução K_fold_OC.
+# Chamada da instrução principal do código.
 principal_K_fold_BLUE1()       
 ### -------------------------------------------------------------------------------------------------------------------------------------------- ###
 

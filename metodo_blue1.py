@@ -1,8 +1,8 @@
-# EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE 1) - Estimação da amplitude, fase ou pedestal.
+# EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 15 de julho de 2024.
+# Data: 23 de julho de 2024.
 
-# Objetivo do código: Aplicação do método Best Linear Unbiased Estimator (BLUE 1) para a estimação da amplitude, fase ou pedestal.
+# Objetivo do código: Aplicação do método Best Linear Unbiased Estimator (BLUE1) para a estimação da amplitude, fase ou pedestal.
 
 """
 Organização do código:
@@ -21,9 +21,9 @@ Saída: vetor pulso de referência para cada instante de tempo de acordo com o j
 Entrada: número de janelamento.
 Saída: vetor da derivada temporal do pulso de referência para cada instante de tempo de acordo com o janelamento.
 
-3) Função para o método BLUE 1.
+3) Função para o método BLUE1.
 Entrada: parâmetro, matriz com os pulsos de sinais da etapa de treino, matriz com os pulsos de sinais da etapa de teste, vetor do parâmetro de referência e o número de janelamento.
-Saída: lista com o erro de estimação pelo método BLUE 1
+Saída: lista com o erro de estimação pelo método BLUE1
 
 """
 
@@ -180,10 +180,10 @@ def derivada_pulso_referencia(n_janelamento):
     
 ### -------------------------------------------------------------------------------------------------------------------------------------------- ###   
 
-### ----------------------------------------------- 3) FUNÇÃO PARA O MÉTODO BLUE 1 ------------------------------------------------------------- ###
+### ----------------------------------------------- 3) FUNÇÃO PARA O MÉTODO BLUE1 ------------------------------------------------------------- ###
 
-# Definição da função para o método BLUE 1.
-def metodo_BLUE1(parametro, Matriz_Pulsos_Sinais_Treino, Matriz_Pulsos_Sinais_Teste, vetor_parametro_referencia_teste, n_janelamento):
+# Definição da função para o método BLUE1.
+def metodo_BLUE1(parametro, n_janelamento, Matriz_Pulsos_Sinais_Treino_Janelado, Matriz_Pulsos_Sinais_Teste_Janelado, vetor_parametro_referencia_teste_janelado):
 
     # Criação da lista vazia para armazenar os erros calculados para o parâmetro. 
     lista_erro_estimacao_parametro = []
@@ -201,7 +201,7 @@ def metodo_BLUE1(parametro, Matriz_Pulsos_Sinais_Treino, Matriz_Pulsos_Sinais_Te
     U = np.column_stack((vetor_h, vetor_dh, vetor_unitario))
     
     # A variável Matriz_Covariancia recebe o valor de retorno da função matriz_covariancia.
-    Matriz_Covariancia = matriz_covariancia(Matriz_Pulsos_Sinais_Treino)
+    Matriz_Covariancia = matriz_covariancia(Matriz_Pulsos_Sinais_Treino_Janelado)
         
     # Tenta calcular a inversa da matriz Matriz_Covariancia.
     try:
@@ -229,14 +229,14 @@ def metodo_BLUE1(parametro, Matriz_Pulsos_Sinais_Treino, Matriz_Pulsos_Sinais_Te
     # Impressão de mensagem de erro
         print("A matriz da parte do vetor de pesos do método BLUE 1 não é invertível.")
     
-    # Para o índice de zero até o número de linhas da matriz Matriz_Pulsos_Sinais_Treino.
-    for indice_linha in range(len(Matriz_Pulsos_Sinais_Teste)):
+    # Para o índice de zero até o número de linhas da matriz Matriz_Pulsos_Sinais_Treino_Janelado.
+    for indice_linha in range(len(Matriz_Pulsos_Sinais_Teste_Janelado)):
         
-        # O vetor vetor_pulsos_sinais corresponde a linha de índice indice_linha da matriz Matriz_Pulsos_Sinais_Treino.    
-        vetor_pulsos_sinais_teste = Matriz_Pulsos_Sinais_Teste[indice_linha]
+        # O vetor vetor_pulsos_sinais corresponde a linha de índice indice_linha da matriz Matriz_Pulsos_Sinais_Treino_Janelado.    
+        vetor_pulsos_sinais_teste = Matriz_Pulsos_Sinais_Teste_Janelado[indice_linha]
     
-        # O parâmetro de referência é o elemento de índice indice_linha do vetor vetor_parametro_referencia_teste.
-        valor_parametro_referencia_teste = vetor_parametro_referencia_teste[indice_linha]
+        # O parâmetro de referência é o elemento de índice indice_linha do vetor vetor_parametro_referencia_teste_janelado.
+        valor_parametro_referencia_teste = vetor_parametro_referencia_teste_janelado[indice_linha]
         
         # Cálculo do vetor de pesos pelo método BLUE 1.
         vetor_pesos_blue1 = np.dot(np.dot(Inversa_parte_vetor_blue1, Transposta_U), Inversa_Matriz_Covariancia)

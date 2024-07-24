@@ -1,8 +1,8 @@
-# EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE 1) - Estimação da amplitude, fase ou pedestal.
+# EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 16 de julho de 2024.
+# Data: 23 de julho de 2024.
 
-# Objetivo do código: gráfico dos dados estatísticos ao longo das ocupações de acordo com o janelamento para o método Best Linear Unbiased Estimator (BLUE 1).
+# Objetivo do código: gráfico dos dados estatísticos ao longo das ocupações de acordo com o janelamento para o método Best Linear Unbiased Estimator (BLUE1).
 
 """ 
 Organização do Código:
@@ -36,12 +36,12 @@ print("\n-----------------------------------------------------------------------
 # Título do programa.
 
 # A variável titulo_programa armazena o título em negrito.
-titulo_programa = colored("Plote do gráfico do dado estatístico do erro de estimação da amplitude, fase ou pedestal ao longo das ocupações para um determinado janelamento pelo método Best Linear Unbiased Estimator (BLUE 1):\n", attrs=["bold"])
+titulo_programa = colored("Plote do gráfico do dado estatístico do erro de estimação da amplitude, fase ou pedestal ao longo das ocupações para um determinado janelamento pelo método Best Linear Unbiased Estimator (BLUE1):\n", attrs=["bold"])
 
 # Impressão do título do programa.
 print(titulo_programa)
 
-### -------------- 1) FUNÇÃO PARA A LEITURA DOS DADOS ESTATÍSTICOS DE TODAS AS OCUPAÇÕES PARA UM DETERMINADO JANELAMENTO ----------------------- ###
+### -------- 1) FUNÇÃO PARA A LEITURA DOS DADOS ESTATÍSTICOS DE TODAS AS OCUPAÇÕES PARA UM DETERMINADO JANELAMENTO PELO MÉTODO BLUE1 ----------- ###
 
 # Definição da função para a leitura dos dados estatísticos de todas as ocupações para um determinado janelamento pelo método BLUE 1.
 def leitura_dados_estatisticos_janelamento_BLUE1(parametro, n_janelamento):
@@ -78,9 +78,9 @@ def leitura_dados_estatisticos_janelamento_BLUE1(parametro, n_janelamento):
 
 ### -------------------------------------------------------------------------------------------------------------------------------------------- ###
 
-### ------------ 2) FUNÇÃO PARA O PLOTE DOS GRÁFICO DO DADO ESTATÍSTICO AO LONGO DAS OCUPAÇÕES PARA UM DETERMINADO JANELAMENTO ----------------- ###
+### ------ 2) FUNÇÃO PARA O PLOTE DOS GRÁFICO DO DADO ESTATÍSTICO AO LONGO DAS OCUPAÇÕES PARA UM DETERMINADO JANELAMENTO PELO MÉTODO BLUE1 ----- ###
 
-# Definição da função para o plote do gráfico do dado estatístico ao longo das ocupações para um determinado janelamento pelo método BLUE 1.
+# Definição da função para o plote do gráfico do dado estatístico ao longo das ocupações para um determinado janelamento pelo método BLUE1.
 def grafico_dado_estatistico_janelamento_BLUE1(parametro, dado_estatistico, Matriz_Dados_Estatisticos_Janelamento):
     
     # Definição da variável indice_coluna_ocupacoes que armazena o valor do índice da coluna das ocupações.

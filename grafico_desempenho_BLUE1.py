@@ -1,8 +1,8 @@
-# EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE 1) - Estimação da amplitude, fase ou pedestal.
+# EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 15 de julho de 2024.
+# Data: 23 de julho de 2024.
 
-# Objetivo do código: gráfico do desempenho (EME, MSE, MAE, SNR E DP) ao longo das ocupações de acordo com o janelamento ideal para o método BLUE 1 para a estimação da amplitude, fase ou pedestal.
+# Objetivo do código: gráfico do desempenho (EME, MSE, MAE, SNR E DP) ao longo das ocupações de acordo com o janelamento ideal para o método BLUE1 para a estimação da amplitude, fase ou pedestal.
 
 """ 
 Organização do Código:
@@ -11,12 +11,12 @@ Leitura dos dados estatísticos de todas as ocupações para um determinado jane
 
 Funções presentes:
 
-1) Função para a leitura dos dados do desempenho do método BLUE 1 de todas as ocupações para o janelamento ideal.
+1) Função para a leitura dos dados do desempenho do método BLUE1 de todas as ocupações para o janelamento ideal.
 Entrada: parâmetro estimado, número do janelamento ideal, opção de avaliação do desempenho.
-Saída: matriz com os dados de entrada organizados de acordo com a coluna (número da ocupação, média, variância e desvio padrão do desempenho do método BLUE 1).
+Saída: matriz com os dados de entrada organizados de acordo com a coluna (número da ocupação, média, variância e desvio padrão do desempenho do método BLUE1).
 
-2) Instrução para o plote do gráfico do desempenho do método BLUE 1 ao longo das ocupações para o janelamento ideal.
-Entrada: matriz dos dados de desempenho do método BLUE 1.
+2) Instrução para o plote do gráfico do desempenho do método BLUE1 ao longo das ocupações para o janelamento ideal.
+Entrada: matriz dos dados de desempenho do método BLUE1.
 Saída: nada.
 
 3) Instrução principal do código.
@@ -36,14 +36,14 @@ print("\n-----------------------------------------------------------------------
 # Título do programa.
 
 # A variável titulo_programa armazena o título em negrito.
-titulo_programa = colored("Plote do gráfico do desempenho (EME, MSE, MAE, SNR ou DP) ao longo das ocupações de acordo com o janelamento ideal para o método BLUE 1:\n", attrs=["bold"])
+titulo_programa = colored("Plote do gráfico do desempenho (EME, MSE, MAE, SNR ou DP) ao longo das ocupações de acordo com o janelamento ideal para o método BLUE1:\n", attrs=["bold"])
 
 # Impressão do título do programa.
 print(titulo_programa)
 
-### ------------------------------ 1) FUNÇÃO PARA A LEITURA DOS DADOS ESTATÍSTICOS DO DESEMPENHO DO MÉTODO BLUE 1 ------------------------------ ###
+### ------------------------------ 1) FUNÇÃO PARA A LEITURA DOS DADOS ESTATÍSTICOS DO DESEMPENHO DO MÉTODO BLUE1 ------------------------------ ###
 
-# Definição da função para a leitura dos dados estatísticos do desempenho do método BLUE 1.
+# Definição da função para a leitura dos dados estatísticos do desempenho do método BLUE1.
 def leitura_dados_estatisticos_desempenho_BLUE1(parametro, n_janelamento_ideal, opcao_avaliacao_desempenho):
 
     # Nome da pasta em que se encontra o arquivo de entrada dos dados estatísticos do desempenho de acordo com o janelamento ideal.
@@ -76,11 +76,11 @@ def leitura_dados_estatisticos_desempenho_BLUE1(parametro, n_janelamento_ideal, 
     # A função retorna a matriz Matriz_Dados_Desempenho.
     return Matriz_Dados_Desempenho
 
-### -------------------------------------------------------------------------------------------------------------------------------------------- ###
+### ---------------------------------------------------------------------------------------------------------------------------------------------- ###
 
-### ---------- 2) FUNÇÃO PARA O PLOTE DO GRÁFICO DO DADO ESTATÍSTICO DO DESEMPENHO AO LONGO DAS OCUPAÇÕES PARA O JANELAMENTO IDEAL ------------ ###
+### ---- 2) FUNÇÃO PARA O PLOTE DO GRÁFICO DO DADO ESTATÍSTICO DO DESEMPENHO AO LONGO DAS OCUPAÇÕES PARA O JANELAMENTO IDEAL PELO MÉTODO BLUE1 --- ###
 
-# Definição da função para o plote do gráfico do dado estatístico do desempenho ao longo das ocupações para o janelamento ideal.
+# Definição da função para o plote do gráfico do dado estatístico do desempenho ao longo das ocupações para o janelamento ideal pelo método BLUE1.
 def grafico_dado_estatistico_desempenho_BLUE1(parametro, opcao_avaliacao_desempenho, Matriz_Dados_Desempenho):
     
     # Definição da variável indice_coluna_ocupacoes que armazena o valor do índice da coluna das ocupações.

@@ -1,22 +1,22 @@
-# EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE 1) - Estimação da amplitude, fase ou pedestal.
+# EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 16 de julho de 2024.
+# Data: 23 de julho de 2024.
 
-# Objetivo do código: geração de arquivos de saída baseados nos dados estatísticos dos histogramas do erro de estimação da amplitude, fase ou pedestal pelo método Best Linear Unbiased Estimator (BLUE 1).
+# Objetivo do código: geração de arquivos de saída baseados nos dados estatísticos dos histogramas do erro de estimação da amplitude, fase ou pedestal pelo método Best Linear Unbiased Estimator (BLUE1).
 
 """ 
 Organização do Código:
 
 Importação de arquivos.
-Método BLUE 1 para a estimação da amplitude, fase ou pedestal: metodo_BLUE1.py
+Método BLUE1 para a estimação da amplitude, fase ou pedestal: metodo_BLUE1.py
 
 Funções presentes:
 
-1) Função para o cálculo dos dados estatísticos do erro de estimação pelo método Best Linear Unbiased Estimator (BLUE 1).
+1) Função para o cálculo dos dados estatísticos do erro de estimação pelo método Best Linear Unbiased Estimator (BLUE1).
 Entrada: lista com o erro de estimação para a amplitude, fase ou pedestal.
 Saída: a média, a variância e o desvio padrão do erro de estimação para a amplitude, fase ou pedestal.
 
-2) Instrução para salvar os dados estatísticos do erro de estimação da amplitude, fase ou pedestal para determinada ocupação em um arquivo de saída.
+2) Instrução para salvar os dados estatísticos do erro de estimação da amplitude, fase ou pedestal para determinada ocupação em um arquivo de saída pelo método Best Linear Unbiased Estimator (BLUE1).
 Entrada: a média, a variância e o desvio padrão do erro de estimação para a amplitude, fase ou pedestal.
 Saída: nada.
 
@@ -43,14 +43,14 @@ print("\n-----------------------------------------------------------------------
 # Título do programa.
 
 # A variável titulo_programa armazena o título em negrito.
-titulo_programa = colored("Geração de arquivos de saída baseados nos dados estatísticos dos histogramas do erro de estimação da amplitude, fase, ou pedestal pelo método Best Linear Unbiased Estimator (BLUE 1):\n", attrs=["bold"])
+titulo_programa = colored("Geração de arquivos de saída baseados nos dados estatísticos dos histogramas do erro de estimação da amplitude, fase, ou pedestal pelo método Best Linear Unbiased Estimator (BLUE1):\n", attrs=["bold"])
 
 # Impressão do título do programa.
 print(titulo_programa)
 
-### ---------------- 1) FUNÇÃO PARA O CÁLCULO DOS DADOS ESTATÍSTICOS DO ERRO DE ESTIMAÇÃO DA AMPLITUDE, FASE OU PEDESTAL ----------------------- ###
+### ------------ 1) FUNÇÃO PARA O CÁLCULO DOS DADOS ESTATÍSTICOS DO ERRO DE ESTIMAÇÃO DA AMPLITUDE, FASE OU PEDESTAL PELO MÉTODO BLUE1 --------- ###
 
-# Definição da função para o cálculo dos dados estatísticos do erro de estimação da amplitude, fase ou pedestal pelo método BLUE 1.
+# Definição da função para o cálculo dos dados estatísticos do erro de estimação da amplitude, fase ou pedestal pelo método BLUE1.
 def dados_estatisticos_erro_estimacao_parametro_BLUE1(lista_erro_estimacao_parametro):
     
     # A lista do erro da amplitude, fase ou pedestal é convertida para o tipo numpy array.
@@ -70,7 +70,7 @@ def dados_estatisticos_erro_estimacao_parametro_BLUE1(lista_erro_estimacao_param
     
 ### -------------------------------------------------------------------------------------------------------------------------------------------- ###
 
-### ------- 2) FUNÇÃO PARA A IMPRESSÃO DOS DADOS ESTATÍSTICOS DO ERRO DE ESTIMAÇÃO DA AMPLITUDE, FASE OU PEDESTAL EM UM ARQUIVO DE SAÍDA ------- ###
+### --- 2) FUNÇÃO PARA A IMPRESSÃO DOS DADOS ESTATÍSTICOS DO ERRO DE ESTIMAÇÃO DA AMPLITUDE, FASE OU PEDESTAL EM UM ARQUIVO DE SAÍDA PELO MÈTODO BLUE1 --- ###
 
 # Definição da função para a impressão em um arquivo de saída, os dados estatísticos do erro de estimação do parâmetro pelo método BLUE 1.
 def arquivo_saida_dados_estatisticos_erro_estimacao_parametro_BLUE1(parametro, n_ocupacao, n_janelamento, media_erro_estimacao_parametro, var_erro_estimacao_parametro, desvio_padrao_erro_estimacao_parametro):
@@ -119,7 +119,7 @@ def arquivo_saida_dados_estatisticos_erro_estimacao_parametro_BLUE1(parametro, n
 
 ### -------------------------------------------------------------------------------------------------------------------------------------------- ###
 
-### ---------------------------------------- 3) INSTRUÇÃO PRINCIPAL DO CÓDIGO (MAIN) -------------------------------------------------------------- ###
+### -------------------------------------- 3) INSTRUÇÃO PRINCIPAL DO CÓDIGO (MAIN) ------------------------------------------------------------- ###
 
 # Definição da instrução principal (main) para esse código.
 def principal_arquivo_saida_dados_estatisticos_BLUE1():
@@ -168,18 +168,17 @@ def principal_arquivo_saida_dados_estatisticos_BLUE1():
     
             vetor_amostras_pulsos, vetor_amplitude_referencia, vetor_fase_referencia = amostras_pulsos_e_referencia(Matriz_Dados_OC_Sem_Pedestal)
             
-            Matriz_Pulsos_Sinais, vetor_amplitude_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_amplitude_referencia, n_janelamento)
-            Matriz_Pulsos_Sinais, vetor_fase_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_fase_referencia, n_janelamento)
-            vetor_pedestal_referencia = valor_pedestal_referencia*np.ones(len(Matriz_Dados_OC)-n_janelamento+1)
+            Matriz_Pulsos_Sinais_Janelado, vetor_amplitude_referencia_janelado = amostras_janelamento(vetor_amostras_pulsos, vetor_amplitude_referencia, n_janelamento)
+            Matriz_Pulsos_Sinais_Janelado, vetor_fase_referencia_janelado = amostras_janelamento(vetor_amostras_pulsos, vetor_fase_referencia, n_janelamento)
+            vetor_pedestal_referencia_janelado = valor_pedestal_referencia*np.ones(len(Matriz_Dados_OC)-n_janelamento+1)
             
-            Matriz_Pulsos_Sinais_Treino, Matriz_Pulsos_Sinais_Teste, vetor_amplitude_referencia_treino, vetor_amplitude_referencia_teste = dados_treino_teste_histograma(Matriz_Pulsos_Sinais, vetor_amplitude_referencia)
-            Matriz_Pulsos_Sinais_Treino, Matriz_Pulsos_Sinais_Teste, vetor_fase_referencia_treino, vetor_fase_referencia_teste = dados_treino_teste_histograma(Matriz_Pulsos_Sinais, vetor_fase_referencia)
-            Matriz_Pulsos_Sinais_Treino, Matriz_Pulsos_Sinais_Teste, vetor_pedestal_referencia_treino, vetor_pedestal_referencia_teste = dados_treino_teste_histograma(Matriz_Pulsos_Sinais, vetor_pedestal_referencia)
+            Matriz_Pulsos_Sinais_Treino_Janelado, Matriz_Pulsos_Sinais_Teste_Janelado, vetor_amplitude_referencia_treino_janelado, vetor_amplitude_referencia_teste_janelado = dados_treino_teste_histograma(Matriz_Pulsos_Sinais_Janelado, vetor_amplitude_referencia_janelado)
+            Matriz_Pulsos_Sinais_Treino_Janelado, Matriz_Pulsos_Sinais_Teste_Janelado, vetor_fase_referencia_treino_janelado, vetor_fase_referencia_teste_janelado = dados_treino_teste_histograma(Matriz_Pulsos_Sinais_Janelado, vetor_fase_referencia_janelado)
+            Matriz_Pulsos_Sinais_Treino_Janelado, Matriz_Pulsos_Sinais_Teste_Janelado, vetor_pedestal_referencia_treino_janelado, vetor_pedestal_referencia_teste_janelado = dados_treino_teste_histograma(Matriz_Pulsos_Sinais_Janelado, vetor_pedestal_referencia_janelado)
     
-    
-            lista_erro_estimacao_amplitude = metodo_BLUE1(parametro_amplitude, Matriz_Pulsos_Sinais_Treino, Matriz_Pulsos_Sinais_Teste, vetor_amplitude_referencia_teste, n_janelamento)
-            lista_erro_estimacao_fase = metodo_BLUE1(parametro_fase, Matriz_Pulsos_Sinais_Treino, Matriz_Pulsos_Sinais_Teste, vetor_fase_referencia_teste, n_janelamento)
-            lista_erro_estimacao_pedestal = metodo_BLUE1(parametro_pedestal, Matriz_Pulsos_Sinais_Treino, Matriz_Pulsos_Sinais_Teste, vetor_pedestal_referencia_teste, n_janelamento)
+            lista_erro_estimacao_amplitude = metodo_BLUE1(parametro_amplitude, n_janelamento, Matriz_Pulsos_Sinais_Treino_Janelado, Matriz_Pulsos_Sinais_Teste_Janelado, vetor_amplitude_referencia_teste_janelado)
+            lista_erro_estimacao_fase = metodo_BLUE1(parametro_fase, n_janelamento, Matriz_Pulsos_Sinais_Treino_Janelado, Matriz_Pulsos_Sinais_Teste_Janelado, vetor_fase_referencia_teste_janelado)
+            lista_erro_estimacao_pedestal = metodo_BLUE1(parametro_pedestal, n_janelamento, Matriz_Pulsos_Sinais_Treino_Janelado, Matriz_Pulsos_Sinais_Teste_Janelado, vetor_pedestal_referencia_teste_janelado)
             
             media_erro_estimacao_amplitude, var_erro_estimacao_amplitude, desvio_padrao_erro_estimacao_amplitude = dados_estatisticos_erro_estimacao_parametro_BLUE1(lista_erro_estimacao_amplitude)
             media_erro_estimacao_fase, var_erro_estimacao_fase, desvio_padrao_erro_estimacao_fase = dados_estatisticos_erro_estimacao_parametro_BLUE1(lista_erro_estimacao_fase)

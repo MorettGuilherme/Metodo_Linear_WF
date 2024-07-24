@@ -137,8 +137,9 @@ A seguir são listadas as pastas e também os arquivos contidos nesse repositór
    
 38. histograma_erro_parametro_BLUE1.py
    * Função para o cálculo da estatística do erro de estimação da amplitude, fase ou pedestal.
-   * Função para o plote do histograma do erro de estimação da amplitude, fase ou pedestal.
-   * Função principal.
+   * Instrução para o plote do histograma do tipo A do erro de estimação da amplitude, fase ou pedestal.
+   * Instrução para o plote do histograma do tipo B do erro de estimação da amplitude, fase ou pedestal.
+   * Instrução principal (main) do código.
    
 39. leitura_dados_ocupacao_BLUE1.py
    * Função para a leitura dos dados de ocupação.

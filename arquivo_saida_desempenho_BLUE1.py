@@ -1,18 +1,18 @@
-# EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE 1) - Estimação da amplitude, fase ou pedestal.
+# EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 16 de julho de 2024.
+# Data: 23 de julho de 2024.
 
-# Objetivo do código: cálculo do desempenho do método Best Linear Unbiased Estimator (BLUE 1) para a estimação da amplitude, fase ou pedestal pela validação cruzada K-Fold.
+# Objetivo do código: cálculo do desempenho do método Best Linear Unbiased Estimator (BLUE1) para a estimação da amplitude, fase ou pedestal pela validação cruzada K-Fold.
 
 """ 
 Organização do código:
 
 Importação de arquivos.
-Método BLUE 1 para a estimação da amplitude, fase ou pedestal: metodo_BLUE1.py
+Método BLUE1 para a estimação da amplitude, fase ou pedestal: metodo_BLUE1.py
 
 Funções presentes:
 
-1) Instrução para salvar em arquivos os dados estatísticos do desempenho do método BLUE 1.
+1) Instrução para salvar em arquivos os dados estatísticos do desempenho do método BLUE1.
 Entrada: parâmetro, número de ocupação, número do janelamento ideal, média do desempenho, variância do desempenho, desvio padrão do desempenho e o mecanismo do desempenho.
 Saída: nada.
 
@@ -66,7 +66,7 @@ titulo_programa = colored("Geração de arquivos de saída pela técnica de vali
 # Impressão do título do programa.
 print(titulo_programa)
 
-### ----------------------------------------- 1) INSTRUÇÃO PARA SALVAR OS DADOS ESTATÍSTICOS DO K-FOLD ----------------------------------------- ###
+### ------------------------------ 1) INSTRUÇÃO PARA SALVAR OS DADOS ESTATÍSTICOS DO K-FOLD PELO MÉTODO BLUE1 ---------------------------------- ###
 
 # Definição da instrução para salvar os dados estatísticos do desempenho do método BLUE 1 em arquivo de saída.
 def arquivo_saida_dados_desempenho_BLUE1(parametro, n_ocupacao, n_janelamento_ideal, media_dado_desempenho, var_dado_desempenho, DP_dado_desempenho, mecanismo_desempenho):
@@ -280,7 +280,7 @@ def K_fold_desempenho_BLUE1(parametro, n_ocupacao, n_janelamento_ideal, opcao_av
         bloco_treino_parametro_referencia = [elemento for sublista in bloco_treino_parametro_referencia for elemento in sublista]
         
         # A variável bloco_lista_erro_parametro recebe o valor de retorno da função metodo_BLUE1.
-        bloco_lista_erro_parametro = metodo_BLUE1(parametro, bloco_treino_pulsos_sinais, bloco_teste_pulsos_sinais, bloco_teste_parametro_referencia, n_janelamento_ideal)
+        bloco_lista_erro_parametro = metodo_BLUE1(parametro, n_janelamento_ideal, bloco_treino_pulsos_sinais, bloco_teste_pulsos_sinais, bloco_teste_parametro_referencia)
         
         # Caso a variável opcao_avaliacao_desempenho seja igual a 1.
         if opcao_avaliacao_desempenho == 1:
@@ -409,14 +409,14 @@ def principal_desempenho_BLUE1():
         
             parametro = "amplitude"
         
-            Matriz_Pulsos_Sinais, vetor_parametro_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_amplitude_referencia, n_janelamento_ideal)
+            Matriz_Pulsos_Sinais_Janelado, vetor_parametro_referencia_janelado = amostras_janelamento(vetor_amostras_pulsos, vetor_amplitude_referencia, n_janelamento_ideal)
         
         # Caso a variável parametro seja igual a 2.
         elif opcao_parametro == 2:
     
             parametro = "fase"
         
-            Matriz_Pulsos_Sinais, vetor_parametro_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_fase_referencia, n_janelamento_ideal)
+            Matriz_Pulsos_Sinais_Janelado, vetor_parametro_referencia_janelado = amostras_janelamento(vetor_amostras_pulsos, vetor_fase_referencia, n_janelamento_ideal)
         
         # Caso a variável parametro seja igual a 3.
         elif opcao_parametro == 3:
@@ -425,9 +425,9 @@ def principal_desempenho_BLUE1():
         
             vetor_pedestal_referencia = valor_pedestal_referencia*np.ones(len(Matriz_Dados_OC))
         
-            Matriz_Pulsos_Sinais, vetor_parametro_referencia = amostras_janelamento(vetor_amostras_pulsos, vetor_pedestal_referencia, n_janelamento_ideal)
+            Matriz_Pulsos_Sinais_Janelado, vetor_parametro_referencia_janelado = amostras_janelamento(vetor_amostras_pulsos, vetor_pedestal_referencia, n_janelamento_ideal)
     
-        K_fold_desempenho_BLUE1(parametro, n_ocupacao, n_janelamento_ideal, opcao_avaliacao_desempenho, Matriz_Pulsos_Sinais, vetor_parametro_referencia)
+        K_fold_desempenho_BLUE1(parametro, n_ocupacao, n_janelamento_ideal, opcao_avaliacao_desempenho, Matriz_Pulsos_Sinais_Janelado, vetor_parametro_referencia_janelado)
     
     # Definição do tempo final.
     tempo_final = time.time()
