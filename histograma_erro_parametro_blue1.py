@@ -308,7 +308,7 @@ def principal_histograma_erro_estimacao_parametro_BLUE1():
             # A variável parametro recebe a string "fase".
             parametro = "fase"
         
-            Matriz_Pulsos_Sinais_Janelado, vetor_parametro_referencia_janelado = amostras_janelamento(vetor_amostras_pulsos, vetor_amplitude_referencia, n_janelamento)
+            Matriz_Pulsos_Sinais_Janelado, vetor_parametro_referencia_janelado = amostras_janelamento(vetor_amostras_pulsos, vetor_fase_referencia, n_janelamento)
         
         # Caso a variável parametro seja igual a 3.
         elif parametro == 3:
