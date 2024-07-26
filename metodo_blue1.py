@@ -194,7 +194,7 @@ def metodo_BLUE1(parametro, n_janelamento, Matriz_Pulsos_Sinais_Treino_Janelado,
     # A variável vetor_dh recebe o retorno da função derivada_pulso_referencia.
     vetor_dh = derivada_pulso_referencia(n_janelamento)
     
-    # A variável vetor_unitario é um vetor formato por uns com dimenção igual a quantidade de janelamento.
+    # A variável vetor_unitario é um vetor formato por uns com dimensão igual a quantidade de janelamento.
     vetor_unitario = np.ones(n_janelamento)
     
     # Definição da matriz cujas colunas são respectivamente formadas pelo vetor_h, vetor_dh e o vetor_unitario.
@@ -247,29 +247,29 @@ def metodo_BLUE1(parametro, n_janelamento, Matriz_Pulsos_Sinais_Treino_Janelado,
         # Caso a variável parametro seja igual a string "amplitude".
         if parametro == "amplitude":
             
-            # A varável parametro_estimado recebe o primeiro elemento do vetor vetor_parametro_estimado.
-            parametro_estimado = vetor_parametro_estimado[0]
+            # A varável valor_parametro_estimado recebe o primeiro elemento do vetor vetor_parametro_estimado.
+            valor_parametro_estimado = vetor_parametro_estimado[0]
         
         # Caso a variável parametro seja igual a string "fase".
         elif parametro == "fase":
             
-            # A variável amplitude_estimada recebe o primeiro elemento do vetor vetor_parametro_estimado.
-            amplitude_estimada = vetor_parametro_estimado[0]
+            # A variável valor_amplitude_estimada recebe o primeiro elemento do vetor vetor_parametro_estimado.
+            valor_amplitude_estimada = vetor_parametro_estimado[0]
             
-            # A variável amplitude_fase_estimada recebe o segundo elemento do vetor vetor_parametro_estimado.
-            amplitude_fase_estimada = vetor_parametro_estimado[1]
+            # A variável valor_amplitude_versus_fase_estimada recebe o segundo elemento do vetor vetor_parametro_estimado.
+            valor_amplitude_versus_fase_estimada = vetor_parametro_estimado[1]
             
-            # A variável parametro_estimado é calculada pela divisão entre os valores da amplitude_fase_estimada pela amplitude_estimada.
-            parametro_estimado = amplitude_fase_estimada / amplitude_estimada
+            # A variável valor_parametro_estimado é calculada pela divisão entre os valores da amplitude_fase_estimada pela amplitude_estimada.
+            valor_parametro_estimado = valor_amplitude_versus_fase_estimada / valor_amplitude_estimada
         
         # Caso a variável parametro seja igual a string "pedestal".
         elif parametro == "pedestal":
             
-            # A variável parametro_estimado recebe o terceiro elemento do vetor vetor_parametro_estimado.
-            parametro_estimado = vetor_parametro_estimado[2]
+            # A variável valor_parametro_estimado recebe o terceiro elemento do vetor vetor_parametro_estimado.
+            valor_parametro_estimado = vetor_parametro_estimado[2]
         
         # Cálculo do erro de estimação do parâmetro.
-        erro_estimacao_parametro = valor_parametro_referencia_teste-parametro_estimado
+        erro_estimacao_parametro = valor_parametro_referencia_teste-valor_parametro_estimado
     
         # O elemento erro_estimacao_parametro é adicionado na lista correspondente.    
         lista_erro_estimacao_parametro.append(erro_estimacao_parametro)
