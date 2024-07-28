@@ -1,8 +1,8 @@
 # EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 23 de julho de 2024.
+# Data: 28 de julho de 2024.
 
-# Objetivo do código: gráfico dos dados estatísticos ao longo das ocupações de acordo com o janelamento para o método Best Linear Unbiased Estimator (BLUE1).
+# Objetivo do código: gráfico dos dados estatísticos ao longo das ocupações de acordo com o janelamento para o método BLUE1.
 
 """ 
 Organização do Código:
@@ -78,9 +78,9 @@ def leitura_dados_estatisticos_janelamento_BLUE1(parametro, n_janelamento):
 
 ### -------------------------------------------------------------------------------------------------------------------------------------------- ###
 
-### ------ 2) FUNÇÃO PARA O PLOTE DOS GRÁFICO DO DADO ESTATÍSTICO AO LONGO DAS OCUPAÇÕES PARA UM DETERMINADO JANELAMENTO PELO MÉTODO BLUE1 ----- ###
+### ------ 2) INSTRUÇÃO PARA O PLOTE DOS GRÁFICO DO DADO ESTATÍSTICO AO LONGO DAS OCUPAÇÕES PARA UM DETERMINADO JANELAMENTO PELO MÉTODO BLUE1 ----- ###
 
-# Definição da função para o plote do gráfico do dado estatístico ao longo das ocupações para um determinado janelamento pelo método BLUE1.
+# Definição da instrução para o plote do gráfico do dado estatístico ao longo das ocupações para um determinado janelamento pelo método BLUE1.
 def grafico_dado_estatistico_janelamento_BLUE1(parametro, dado_estatistico, Matriz_Dados_Estatisticos_Janelamento):
     
     # Definição da variável indice_coluna_ocupacoes que armazena o valor do índice da coluna das ocupações.

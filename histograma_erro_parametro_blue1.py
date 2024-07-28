@@ -1,8 +1,8 @@
 # EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 23 de julho de 2024.
+# Data: 28 de julho de 2024.
 
-# Objetivo do código: análise do erro de estimação do parâmetro da amplitude, fase ou pedestal pelo método Best Linear Unbiased Estimator (BLUE1).
+# Objetivo do código: análise do erro de estimação do parâmetro da amplitude, fase ou pedestal pelo método BLUE1.
 
 """
 Organização do Código:
@@ -244,7 +244,7 @@ def histograma_B_erro_estimacao_parametro_BLUE1(n_ocupacao, parametro, lista_err
 
 ### -------------------------------------- 3) INSTRUÇÃO PRINCIPAL DO CÓDIGO (MAIN) ------------------------------------------------------------- ###
 
-# Definição da função principal (main) do código.
+# Definição da instrução principal (main) do código.
 def principal_histograma_erro_estimacao_parametro_BLUE1():
     
     # Impressão de mensagem no terminal.

@@ -1,8 +1,8 @@
 # EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 23 de julho de 2024.
+# Data: 28 de julho de 2024.
 
-# Objetivo do código: cálculo do desempenho do método Best Linear Unbiased Estimator (BLUE1) para a estimação da amplitude, fase ou pedestal pela validação cruzada K-Fold.
+# Objetivo do código: cálculo do desempenho do método BLUE1 para a estimação da amplitude, fase ou pedestal pela validação cruzada K-Fold.
 
 """ 
 Organização do código:
@@ -16,27 +16,27 @@ Funções presentes:
 Entrada: parâmetro, número de ocupação, número do janelamento ideal, média do desempenho, variância do desempenho, desvio padrão do desempenho e o mecanismo do desempenho.
 Saída: nada.
 
-2) Função para o cálculo do desempenho do método BLUE 1 pelo Erro Médio de Estimação (EME).
+2) Função para o cálculo do desempenho do método BLUE1 pelo Erro Médio de Estimação (EME).
 Entrada: número de elementos presentes em cada bloco e lista do erro de estimação para cada bloco do K-Fold.
 Saída: média do EME, variância do EME e desvio padrão do EME.
 
-3) Função para o cálculo do desempenho do método BLUE 1 pelo Erro Médio Quadrático (Mean Squared Error - MSE).
+3) Função para o cálculo do desempenho do método BLUE1 pelo Erro Médio Quadrático (Mean Squared Error - MSE).
 Entrada: número de elementos presentes em cada bloco e lista do erro de estimação para cada bloco do K-Fold.
 Saída: média do MSE, variância do MSE e desvio padrão do MSE.
 
-4) Função para o cálculo do desempenho do método BLUE 1 pelo Erro Médio Absoluto (Mean Absolute Error - MAE).
+4) Função para o cálculo do desempenho do método BLUE1 pelo Erro Médio Absoluto (Mean Absolute Error - MAE).
 Entrada: número de elementos presentes em cada bloco e lista do erro de estimação para cada bloco do K-Fold.
 Saída: média do MAE, variância do MAE e desvio padrão do MAE.
 
-5) Função para o cálculo do desempenho do método BLUE 1 pela Relação Sinal-Ruído (Signal-to-Noise Ratio - SNR).
+5) Função para o cálculo do desempenho do método BLUE1 pela Relação Sinal-Ruído (Signal-to-Noise Ratio - SNR).
 Entrada: lista do parâmetro de referência e lista do erro de estimação para cada bloco do K-Fold.
 Saída: média do SNR, variância do SNR e desvio padrão do SNR.
 
-6) Função para o cálculo do desempenho do método BLUE 1 pelo desvio padrão (DP).
+6) Função para o cálculo do desempenho do método BLUE1 pelo desvio padrão (DP).
 Entrada: número de elementos presentes em cada bloco e lista do erro de estimação para cada bloco do K-Fold.
 Saída: valor do desvio padrão de cada bloco.
 
-7) Instrução da validação cruzada K-Fold adaptada para o cálculo do desempenho do método BLUE 1.
+7) Instrução da validação cruzada K-Fold adaptada para o cálculo do desempenho do método BLUE1.
 Entrada: parâmetro, número de ocupação, número do janelamento ideal, opção da avaliação do desempenho, matriz com os pulsos de sinais, vetor do parâmetro de referência e a matriz de covariância.
 Saída: nada.
 
