@@ -74,7 +74,7 @@ def dados_estatisticos_erro_estimacao_parametro_BLUE1(lista_erro_estimacao_param
 
 ### ------- 2) INSTRUÇÃO PARA A CONSTRUÇÃO DO HISTOGRAMA DO TIPO A DO ERRO DE ESTIMAÇÃO DA AMPLITUDE, FASE OU PEDESTAL PELO MÉTODO BLUE1 ------- ###
 
-# Definição de função para o plot do histograma do tipo A do erro de estimação da amplitude, fase ou pedestal pelo método BLUE1.
+# Definição de instrução para o plot do histograma do tipo A do erro de estimação da amplitude, fase ou pedestal pelo método BLUE1.
 def histograma_A_erro_estimacao_parametro_BLUE1(n_ocupacao, parametro, lista_erro_estimacao_parametro, media_erro_estimacao_parametro, var_erro_estimacao_parametro, desvio_padrao_erro_estimacao_parametro):
     
     # A lista do erro de estimação do parâmetro é convertida para o tipo numpy array.
@@ -154,7 +154,7 @@ def histograma_A_erro_estimacao_parametro_BLUE1(n_ocupacao, parametro, lista_err
 
 ### ------ 3) INSTRUÇÃO PARA A CONSTRUÇÃO DO HISTOGRAMA DO TIPO B DO ERRO DE ESTIMAÇÃO DA AMPLITUDE, FASE OU PEDESTAL PELO MÉTODO BLUE1 -------- ###
 
-# Definição de função para o plot dos histogramas do tipo B do erro de estimação da amplitude, fase ou pedestal para diferentes janelamentos para uma dada ocupação pelo método BLUE1.
+# Definição de instrução para o plot dos histogramas do tipo B do erro de estimação da amplitude, fase ou pedestal para diferentes janelamentos para uma dada ocupação pelo método BLUE1.
 def histograma_B_erro_estimacao_parametro_BLUE1(n_ocupacao, parametro, lista_erro_estimacao_parametro_J7, media_erro_estimacao_parametro_J7, var_erro_estimacao_parametro_J7, desvio_padrao_erro_estimacao_parametro_J7, lista_erro_estimacao_parametro_J15, media_erro_estimacao_parametro_J15, var_erro_estimacao_parametro_J15, desvio_padrao_erro_estimacao_parametro_J15, lista_erro_estimacao_parametro_J19, media_erro_estimacao_parametro_J19, var_erro_estimacao_parametro_J19, desvio_padrao_erro_estimacao_parametro_J19):
     
     # A lista do erro de estimação do parâmetro para o janelamento 7 é convertida para o tipo numpy array.
