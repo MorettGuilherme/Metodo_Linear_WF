@@ -1,6 +1,6 @@
 # EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 28 de julho de 2024.
+# Data: 23 de agosto de 2024.
 
 # Objetivo do código: construção do gráfico da validação cruzada K-Fold para o método BLUE1 para a estimação da amplitude, fase ou pedestal.
 
@@ -74,7 +74,7 @@ def leitura_dados_estatisticos_k_fold_BLUE1(parametro, n_ocupacao, dado_estatist
         # Impressão de mensagem que o arquivo de entrada não existe.
         print(f"O arquivo {arquivo_dados_k_fold} não existe na pasta {pasta_dados_k_fold}.")
 
-    # Obs.: da forma que o programa está escrito, os arquivos de entrada devem estar em uma pasta em que está o código do programa.
+    # Obs.: da forma que o programa está escrito, os arquivos de entrada devem estar na mesma pasta em que está o código do programa.
     # Caso deseja-se alterar isso basta mudar o endereço do arquivo.
     
     # A função retorna a matriz Matriz_Dados_K_Fold.
@@ -111,8 +111,8 @@ def grafico_A_k_fold_BLUE1(parametro, opcao, Matriz_Dados_K_Fold_OC_0, Matriz_Da
     # Caso opcao seja 1:
     if opcao == 1:
         
-        # Caso a variável parametro seja a igual a "fase".
-        if parametro == "fase":
+        # Caso a variável parametro seja a igual a "fase_amplitude_estimada" ou "fase_amplitude_referencia".
+        if parametro == "fase_amplitude_estimada" or parametro == "fase_amplitude_referencia":
             
             # Comando para o nome do eixo das ordenadas.
             plt.ylabel(f"Média pelo K-Fold do erro de estimação (ns)", fontsize = 18)
@@ -126,8 +126,8 @@ def grafico_A_k_fold_BLUE1(parametro, opcao, Matriz_Dados_K_Fold_OC_0, Matriz_Da
     # Caso opcao seja 2.
     elif opcao == 2:
         
-        # Caso a variável parametro seja a igual a "fase".
-        if parametro == "fase":
+        # Caso a variável parametro seja a igual a "fase_amplitude_estimada" ou "fase_amplitude_referencia".
+        if parametro == "fase_amplitude_estimada" or parametro == "fase_amplitude_referencia":
             
             # Comando para o nome do eixo das ordenadas.
             plt.ylabel(f"Var. pelo K-Fold do erro de estimação (ns)", fontsize = 18)
@@ -141,8 +141,8 @@ def grafico_A_k_fold_BLUE1(parametro, opcao, Matriz_Dados_K_Fold_OC_0, Matriz_Da
     # Caso opcao seja 3.
     elif opcao == 3:
         
-        # Caso a variável parametro seja a igual a "fase".
-        if parametro == "fase":
+        # Caso a variável parametro seja a igual a "fase_amplitude_estimada" ou "fase_amplitude_referencia".
+        if parametro == "fase_amplitude_estimada" or parametro == "fase_amplitude_referencia":
             
             # Comando para o nome do eixo das ordenadas.
             plt.ylabel(f"DP. pelo K-Fold do erro de estimação (ns)", fontsize = 18)
@@ -247,8 +247,8 @@ def grafico_B_k_fold_BLUE1(parametro, opcao, Matriz_Dados_K_Fold_OC_0, Matriz_Da
     # Caso opcao seja 1:
     if opcao == 1:
         
-        # Caso a variável parametro seja a igual a "fase".
-        if parametro == "fase":
+        # Caso a variável parametro seja a igual a "fase_amplitude_estimada" ou "fase_amplitude_referencia".
+        if parametro == "fase_amplitude_estimada" or parametro == "fase_amplitude_referencia":
             
             # Comando para o nome do eixo das ordenadas.
             plt.ylabel(f"Média pelo K-Fold do erro de estimação (ns)", fontsize = 18)
@@ -262,8 +262,8 @@ def grafico_B_k_fold_BLUE1(parametro, opcao, Matriz_Dados_K_Fold_OC_0, Matriz_Da
     # Caso opcao seja 2.
     elif opcao == 2:
         
-        # Caso a variável parametro seja a igual a "fase".
-        if parametro == "fase":
+        # Caso a variável parametro seja a igual a "fase_amplitude_estimada" ou "fase_amplitude_referencia".
+        if parametro == "fase_amplitude_estimada" or parametro == "fase_amplitude_referencia":
             
             # Comando para o nome do eixo das ordenadas.
             plt.ylabel(f"Var. pelo K-Fold do erro de estimação (ns)", fontsize = 18)
@@ -277,8 +277,8 @@ def grafico_B_k_fold_BLUE1(parametro, opcao, Matriz_Dados_K_Fold_OC_0, Matriz_Da
     # Caso opcao seja 3.
     elif opcao == 3:
         
-        # Caso a variável parametro seja a igual a "fase".
-        if parametro == "fase":
+        # Caso a variável parametro seja a igual a "fase_amplitude_estimada" ou "fase_amplitude_referencia".
+        if parametro == "fase_amplitude_estimada" or parametro == "fase_amplitude_referencia":
             
             # Comando para o nome do eixo das ordenadas.
             plt.ylabel(f"DP. pelo K-Fold do erro de estimação (ns)", fontsize = 18)
@@ -346,24 +346,24 @@ def grafico_B_k_fold_BLUE1(parametro, opcao, Matriz_Dados_K_Fold_OC_0, Matriz_Da
     
 ### -------------------------------------------------------------------------------------------------------------------------------------------- ###
 
-### ---------------------------------------------------- 4) INSTRUÇÃO PRINCIPAL DO CÓDIGO (MAIN) ----------------------------------------------- ###
+### ---------------------------------------------------- 4) INSTRUÇÃO PRINCIPAL DO CÓDIGO ------------------------------------------------------ ###
 
 # Definição da instrução principal (main) do código.
 def principal_grafico_k_fold_BLUE1():
     
     # Impressão de mensagem no terminal.
-    print("Opções de parâmetros:\nAmplitude: 1\nFase: 2\nPedestal: 3\n")
+    print("Opções de parâmetros:\nAmplitude: 1\nFase pela amplitude estimada: 2\nFase pela amplitude de referência: 3\nPedestal: 4\n")
     
     # A variável parametro armazena o número do tipo inteiro digitado pelo usuário via terminal.
-    opcao_parametro = int(input("Digite o número do parâmetro desejado: "))
+    parametro = int(input("Digite o número do parâmetro desejado: "))
     
-    # A variável valores_parametro é uma lista com os valores aceitáveis para opcao.
-    lista_valores_parametro = list(range(1,4,1))
-
-    # Caso o valor digitado armazenado na variável opcao_parametro não estiver presente na lista lista_valores_parametro.
-    if opcao_parametro not in lista_valores_parametro:
+    # A variável lista_valores_parametros armazena os valroes válidos para parametro.
+    lista_valores_parametro = list(range(1,5,1))
     
-        # Exibição de uma mensagem de alerta de que a opcao solicitada é inválida.
+    # Caso o valor digitado armazenado na variável parametro não estiver presente na lista lista_valores_parametro.
+    if parametro not in lista_valores_parametro:
+    
+        # Exibição de uma mensagem de alerta de que a opção solicitada é inválida.
         print("Essa opção é inválida!")
         print("---------------------------------------------------------------------------------------------------------------------------------------")
         # A execução do programa é interrompida.
@@ -406,19 +406,25 @@ def principal_grafico_k_fold_BLUE1():
         exit(1)
         
     # Caso a variável opcao_parametro seja igual a 1.
-    if opcao_parametro == 1:
+    if parametro == 1:
         
         # A variável parametro recebe a string "amplitude".
         parametro = "amplitude"
         
     # Caso a variável opcao_parametro seja igual a 2.
-    elif opcao_parametro == 2:
+    elif parametro == 2:
     
-        # A variável parametro recebe a string "fase".
-        parametro = "fase"
+        # A variável parametro recebe a string "fase_amplitude_estimada".
+        parametro = "fase_amplitude_estimada"
         
     # Caso a variável opcao_parametro seja igual a 3.
-    elif opcao_parametro == 3:
+    elif parametro == 3:
+    
+        # A variável parametro recebe a string "fase_amplitude_referencia".
+        parametro = "fase_amplitude_referencia"
+        
+    # Caso a variável opcao_parametro seja igual a 4.
+    elif parametro == 4:
         
         # A variável parametro recebe a string "pedestal".
         parametro = "pedestal" 

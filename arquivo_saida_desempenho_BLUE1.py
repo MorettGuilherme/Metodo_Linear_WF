@@ -1,6 +1,6 @@
 # EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 28 de julho de 2024.
+# Data: 23 de agosto de 2024.
 
 # Objetivo do código: cálculo do desempenho do método BLUE1 para a estimação da amplitude, fase ou pedestal pela validação cruzada K-Fold.
 
@@ -61,14 +61,14 @@ print("\n-----------------------------------------------------------------------
 # Título do programa.
 
 # A variável titulo_programa armazena o título em negrito.
-titulo_programa = colored("Geração de arquivos de saída pela técnica de validação cruzada K-Fold para a estimação da amplitude, fase ou pedestal pelo método Best Linear Unbiased Estimator (BLUE 1):\n", attrs=["bold"])
+titulo_programa = colored("Geração de arquivos de saída pela técnica de validação cruzada K-Fold para a estimação da amplitude, fase ou pedestal pelo método Best Linear Unbiased Estimator (BLUE1):\n", attrs=["bold"])
 
 # Impressão do título do programa.
 print(titulo_programa)
 
 ### ------------------------------ 1) INSTRUÇÃO PARA SALVAR OS DADOS ESTATÍSTICOS DO K-FOLD PELO MÉTODO BLUE1 ---------------------------------- ###
 
-# Definição da instrução para salvar os dados estatísticos do desempenho do método BLUE 1 em arquivo de saída.
+# Definição da instrução para salvar os dados estatísticos do desempenho do método BLUE1 em arquivo de saída.
 def arquivo_saida_dados_desempenho_BLUE1(parametro, n_ocupacao, n_janelamento_ideal, media_dado_desempenho, var_dado_desempenho, DP_dado_desempenho, mecanismo_desempenho):
 
     # Definição do título presente no arquivo de saída.
@@ -197,8 +197,8 @@ def DP(numero_elementos_bloco, bloco_erro_estimacao):
 
 ### ----------- 7) INSTRUÇÃO PARA A VALIDAÇÃO CRUZADA K-FOLD ADAPTADA PARA O CÁLCULO DO DESEMPENHO DO MÉTODO BLUE 1------------------- --------- ###
 
-# Definição da instrução da técnica de validação cruzada K-Fold para o cálculo do desempenho do método BLUE 1.
-def K_fold_desempenho_BLUE1(parametro, n_ocupacao, n_janelamento_ideal, opcao_avaliacao_desempenho, Matriz_Pulsos_Sinais, vetor_parametro_referencia):
+# Definição da instrução da técnica de validação cruzada K-Fold para o cálculo do desempenho do método BLUE1.
+def K_fold_desempenho_BLUE1(parametro, n_ocupacao, n_janelamento_ideal, opcao_avaliacao_desempenho, Matriz_Pulsos_Sinais_Janelado, vetor_parametro_referencia_janelado, valor_minimo_amplitude_processo_fase,  vetor_amplitude_referencia_janelado):
     
     # Caso a variável opcao_avaliacao_desempenho seja igual a 1.
     if opcao_avaliacao_desempenho == 1:
@@ -235,25 +235,36 @@ def K_fold_desempenho_BLUE1(parametro, n_ocupacao, n_janelamento_ideal, opcao_av
 
     # Criação da lista vazia blocos_parametro_referencia.
     blocos_parametro_referencia = []
+    
+    # Criação da lista vazia blocos_amplitude_referencia.
+    blocos_amplitude_referencia = []
 
     # Criação da variável quantidade_blocos que armazena a quantidade de blocos.
     quantidade_blocos = 100
 
     # Definição da quantidade de elementos de cada bloco.
-    quantidade_elementos_bloco = len(Matriz_Pulsos_Sinais) // quantidade_blocos
+    quantidade_elementos_bloco = len(Matriz_Pulsos_Sinais_Janelado) // quantidade_blocos
     
     # Para i de início em zero até a quantidade de elementos de amostras com incremento igual a quantidade_elementos_bloco.
-    for i in range(0, len(Matriz_Pulsos_Sinais), quantidade_elementos_bloco):
+    for i in range(0, len(Matriz_Pulsos_Sinais_Janelado), quantidade_elementos_bloco):
     
         # Definição do bloco de pulsos de sinais.
-        bloco_pulsos_sinais = Matriz_Pulsos_Sinais[i:i+quantidade_elementos_bloco]
+        bloco_pulsos_sinais = Matriz_Pulsos_Sinais_Janelado[i:i+quantidade_elementos_bloco]
         # O bloco dos pulsos de sinais é acrescentado a lista dos blocos dos pulsos de sinais.
         blocos_pulsos_sinais.append(bloco_pulsos_sinais)
     
         # Definição do bloco dos dados do parâmetro de referência.
-        bloco_parametro_referencia = vetor_parametro_referencia[i:i+quantidade_elementos_bloco]
+        bloco_parametro_referencia = vetor_parametro_referencia_janelado[i:i+quantidade_elementos_bloco]
         # O bloco do parâmetro de referência é acrescentado a lista dos blocos do parâmetro de referência.
         blocos_parametro_referencia.append(bloco_parametro_referencia)
+        
+        # Caso a variável vetor_amplitude_referencia_janelado não é igual a None.
+        if vetor_amplitude_referencia_janelado is not None:
+        
+            # Definição do bloco dos dados da amplitude de referência.
+            bloco_amplitude_referencia = vetor_amplitude_referencia_janelado[i:i+quantidade_elementos_bloco]
+            # O bloco da amplitude de referência é acrescentado a lista dos blocos da amplitude de referência.
+            blocos_amplitude_referencia.append(bloco_amplitude_referencia)
     
     # Definição da lista vazia lista_blocos_valores_desempenho.
     lista_blocos_valores_desempenho = []
@@ -279,8 +290,23 @@ def K_fold_desempenho_BLUE1(parametro, n_ocupacao, n_janelamento_ideal, opcao_av
         # Reescreve os elementos bloco_treino_parametro_referencia em sequência, uma lista unidimensional.
         bloco_treino_parametro_referencia = [elemento for sublista in bloco_treino_parametro_referencia for elemento in sublista]
         
+        # A variável bloco_treino_amplitude_referencia recebe o valor inicial de None.
+        bloco_treino_amplitude_referencia = None
+        
+        # Caso a variável vetor_amplitude_referencia_janelado não é igual a None.
+        if vetor_amplitude_referencia_janelado is not None:
+        
+            # Definição do bloco_teste_amplitude_referencia como sendo aquele de índice igual ao indice_teste.
+            bloco_teste_amplitude_referencia = blocos_amplitude_referencia[indice_teste]
+        
+            # Definição do bloco_treino_amplitude_referencia como sendo aqueles de índices diferentes do indice_teste.
+            bloco_treino_amplitude_referencia = blocos_amplitude_referencia[:indice_teste]+blocos_amplitude_referencia[indice_teste+1:]
+        
+            # Reescreve os elementos bloco_treino_amplitude_referencia em sequência, uma lista unidimensional.
+            bloco_treino_amplitude_referencia = [elemento for sublista in bloco_treino_amplitude_referencia for elemento in sublista]
+        
         # A variável bloco_lista_erro_parametro recebe o valor de retorno da função metodo_BLUE1.
-        bloco_lista_erro_parametro = metodo_BLUE1(parametro, n_janelamento_ideal, bloco_treino_pulsos_sinais, bloco_teste_pulsos_sinais, bloco_teste_parametro_referencia)
+        bloco_lista_erro_parametro = metodo_BLUE1(parametro, n_janelamento_ideal, bloco_treino_pulsos_sinais, bloco_teste_pulsos_sinais, bloco_teste_parametro_referencia, valor_minimo_amplitude_processo_fase, bloco_treino_amplitude_referencia)
         
         # Caso a variável opcao_avaliacao_desempenho seja igual a 1.
         if opcao_avaliacao_desempenho == 1:
@@ -327,7 +353,7 @@ def K_fold_desempenho_BLUE1(parametro, n_ocupacao, n_janelamento_ideal, opcao_av
     var_desempenho = np.var(lista_blocos_valores_desempenho)
     DP_desempenho = np.std(lista_blocos_valores_desempenho)
      
-    # Salva as informações dos dados estatísticos da análise do desempenho do método BLUE 1.
+    # Salva as informações dos dados estatísticos da análise do desempenho do método BLUE1.
     arquivo_saida_dados_desempenho_BLUE1(parametro, n_ocupacao, n_janelamento_ideal, media_desempenho, var_desempenho, DP_desempenho, mecanismo_desempenho)   
     
 ### -------------------------------------------------------------------------------------------------------------------------------------------- ### 
@@ -338,13 +364,13 @@ def K_fold_desempenho_BLUE1(parametro, n_ocupacao, n_janelamento_ideal, opcao_av
 def principal_desempenho_BLUE1():
     
     # Impressão de mensagem no terminal.
-    print("Opções de parâmetros:\nAmplitude: 1\nFase: 2\nPedestal: 3\n")
+    print("Opções de parâmetros:\nAmplitude: 1\nFase com processo de estimação pela amplitude estimada: 2\nFase com processo de estimação pela amplitude de referência: 3\nPedestal: 4\n")
     
     # A variável opcao_parametro armazena o número do tipo inteiro digitado pelo usuário via terminal.
     opcao_parametro = int(input("Digite o número do parâmetro desejado: "))
     
     # A variável lista_opcoes_valores_parametro é uma lista com os valores aceitáveis para opcao_parametro.
-    lista_opcoes_valores_parametro = list(range(1,4,1))
+    lista_opcoes_valores_parametro = list(range(1,5,1))
 
     # Caso o valor digitado armazenado na variável opcao_parametro não estiver presente na lista lista_opcoes_valores_parametro.
     if opcao_parametro not in lista_opcoes_valores_parametro:
@@ -381,12 +407,15 @@ def principal_desempenho_BLUE1():
     # A variável incremento_ocupacao armazena o valor de incremento entre as ocupações que é 10.
     incremento_ocupacao = 10
     
-    # A variável n_janelamento_ideal recebe o valor do janelamento ideal do método BLUE 1.
+    # A variável n_janelamento_ideal recebe o valor do janelamento ideal do método BLUE1.
     # Obs.: essa análise deve ser realizada previamento pela interpretação dos gráficos gerados pelo K-Fold (grafico_k_fold_BLUE1).
     n_janelamento_ideal = 19
     
     # Definição da variável valor_pedestal_referencia.
     valor_pedestal_referencia = 30
+    
+    # A variável valor_minimo_amplitude_processo_fase recebe o valor mínimo para a amplitude que é de cerca de 4,5 ADC Count (três vezes o valor do desvio padrão do ruído eletrônico).
+    valor_minimo_amplitude_processo_fase = 4.5
     
     # Definição do tempo inicial.
     tempo_inicial = time.time()
@@ -411,15 +440,27 @@ def principal_desempenho_BLUE1():
         
             Matriz_Pulsos_Sinais_Janelado, vetor_parametro_referencia_janelado = amostras_janelamento(vetor_amostras_pulsos, vetor_amplitude_referencia, n_janelamento_ideal)
         
+            vetor_amplitude_referencia_janelado = None
+        
         # Caso a variável parametro seja igual a 2.
         elif opcao_parametro == 2:
     
-            parametro = "fase"
+            parametro = "fase_amplitude_estimada"
         
             Matriz_Pulsos_Sinais_Janelado, vetor_parametro_referencia_janelado = amostras_janelamento(vetor_amostras_pulsos, vetor_fase_referencia, n_janelamento_ideal)
         
+            vetor_amplitude_referencia_janelado = None
+        
         # Caso a variável parametro seja igual a 3.
         elif opcao_parametro == 3:
+    
+            parametro = "fase_amplitude_referencia"
+        
+            Matriz_Pulsos_Sinais_Janelado, vetor_amplitude_referencia_janelado = amostras_janelamento(vetor_amostras_pulsos, vetor_amplitude_referencia, n_janelamento_ideal)
+            Matriz_Pulsos_Sinais_Janelado, vetor_parametro_referencia_janelado = amostras_janelamento(vetor_amostras_pulsos, vetor_fase_referencia, n_janelamento_ideal)
+        
+        # Caso a variável parametro seja igual a 4.
+        elif opcao_parametro == 4:
         
             parametro = "pedestal"
         
@@ -427,7 +468,9 @@ def principal_desempenho_BLUE1():
         
             Matriz_Pulsos_Sinais_Janelado, vetor_parametro_referencia_janelado = amostras_janelamento(vetor_amostras_pulsos, vetor_pedestal_referencia, n_janelamento_ideal)
     
-        K_fold_desempenho_BLUE1(parametro, n_ocupacao, n_janelamento_ideal, opcao_avaliacao_desempenho, Matriz_Pulsos_Sinais_Janelado, vetor_parametro_referencia_janelado)
+            vetor_amplitude_referencia_janelado = None
+    
+        K_fold_desempenho_BLUE1(parametro, n_ocupacao, n_janelamento_ideal, opcao_avaliacao_desempenho, Matriz_Pulsos_Sinais_Janelado, vetor_parametro_referencia_janelado, valor_minimo_amplitude_processo_fase, vetor_amplitude_referencia_janelado)
     
     # Definição do tempo final.
     tempo_final = time.time()

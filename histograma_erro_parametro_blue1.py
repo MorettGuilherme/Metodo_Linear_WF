@@ -1,6 +1,6 @@
 # EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 28 de julho de 2024.
+# Data: 23 de agosto de 2024.
 
 # Objetivo do código: análise do erro de estimação do parâmetro da amplitude, fase ou pedestal pelo método BLUE1.
 
@@ -84,7 +84,7 @@ def histograma_A_erro_estimacao_parametro_BLUE1(n_ocupacao, parametro, lista_err
     if parametro == "amplitude":
         
         # Nomeação do eixo x de acordo com a amplitude.
-        plt.xlabel(f'Erro de estimação da {parametro} (ADC Count)', fontsize = 18)
+        plt.xlabel(f'Erro de estimação da amplitude (ADC Count)', fontsize = 18)
         
         # A variável x_inf recebe o valor inferior do eixo das abscissas para a amplitude.
         x_inf = -300
@@ -92,23 +92,23 @@ def histograma_A_erro_estimacao_parametro_BLUE1(n_ocupacao, parametro, lista_err
         # A variável x_sup recebe o valor superior do eixo das abscissas para a amplitude.
         x_sup = 300
 
-    # Se a variável parametro for igual a string "fase".
-    if parametro == "fase":
+    # Caso a variável parametro seja a igual a "fase_amplitude_estimada" ou "fase_amplitude_referencia".
+    elif parametro == "fase_amplitude_estimada" or parametro == "fase_amplitude_referencia":
         
         # Nomeação do eixo x de acordo com o parâmetro da fase.
-        plt.xlabel(f'Erro de estimação da {parametro} (ns)', fontsize = 18)
+        plt.xlabel(f'Erro de estimação da fase (ns)', fontsize = 18)
         
         # A variável x_inf recebe o valor inferior do eixo das abscissas para a fase.
-        x_inf = -10000
+        x_inf = -300
     
         # A variável x_sup recebe o valor superior do eixo das abscissas para a fase.
-        x_sup = 10000
+        x_sup = 300
     
     # Se a variável parametro for igual a string "pedestal".
     elif parametro == "pedestal":
         
         # Nomeação do eixo x de acordo com o parâmetro do pedestal.
-        plt.xlabel(f'Erro de estimação do {parametro} (ADC Count)', fontsize = 18)
+        plt.xlabel(f'Erro de estimação do pedestal (ADC Count)', fontsize = 18)
         
         # A variável x_inf recebe o valor inferior do eixo das abscissas para o pedestal.
         x_inf = -500
@@ -127,9 +127,20 @@ def histograma_A_erro_estimacao_parametro_BLUE1(n_ocupacao, parametro, lista_err
     
     # A variável n_bins recebe a quantidade de bins presente no histograma.
     n_bins = 100
+    
+    # Conversão das variáveis para strings adaptadas para o sistema numérico brasileiro.
+
+    media_erro_estimacao_parametro = round(media_erro_estimacao_parametro, 6)
+    media_erro_estimacao_parametro = str(media_erro_estimacao_parametro).replace('.', ',')
+    
+    var_erro_estimacao_parametro = round(var_erro_estimacao_parametro, 6)
+    var_erro_estimacao_parametro = str(var_erro_estimacao_parametro).replace('.', ',')
+    
+    desvio_padrao_erro_estimacao_parametro = round(desvio_padrao_erro_estimacao_parametro, 6)
+    desvio_padrao_erro_estimacao_parametro = str(desvio_padrao_erro_estimacao_parametro).replace('.', ',')
 
     # A variável texto recebe uma string com as informações de interesse.
-    texto = f"Média: {round(media_erro_estimacao_parametro, 6)} \n Variância: {round(var_erro_estimacao_parametro, 6)} \n Desvio padrão: {round(desvio_padrao_erro_estimacao_parametro, 6)}"
+    texto = f"Média: {media_erro_estimacao_parametro} \n Variância: {var_erro_estimacao_parametro} \n Desvio padrão: {desvio_padrao_erro_estimacao_parametro}"
 
     # Impressão do título do gráfico (recomendável para a apresentação de slides).
     # plt.title(f"Ocupação {n_ocupacao}", fontsize = 18)
@@ -170,7 +181,7 @@ def histograma_B_erro_estimacao_parametro_BLUE1(n_ocupacao, parametro, lista_err
     if parametro == "amplitude":
         
         # Nomeação do eixo x de acordo com o parâmetro da amplitude.
-        plt.xlabel(f'Erro de estimação da {parametro} (ADC Count)', fontsize = 18)
+        plt.xlabel(f'Erro de estimação da amplitude (ADC Count)', fontsize = 18)
         
         # A variável x_inf recebe o valor inferior do eixo das abscissas para a amplitude.
         x_inf = -300
@@ -178,23 +189,23 @@ def histograma_B_erro_estimacao_parametro_BLUE1(n_ocupacao, parametro, lista_err
         # A variável x_sup recebe o valor superior do eixo das abscissas para a amplitude.
         x_sup = 300
 
-    # Se a variável parametro for igual a string "fase".
-    elif parametro == "fase":
+    # Caso a variável parametro seja igual a "fase_amplitude_estimada" ou "fase_amplitude_referencia".
+    elif parametro == "fase_amplitude_estimada" or parametro == "fase_amplitude_referencia":
         
         # Nomeação do eixo x de acordo com o parâmetro da fase.
-        plt.xlabel(f'Erro de estimação da {parametro} (ns)', fontsize = 18)
+        plt.xlabel(f'Erro de estimação da fase (ns)', fontsize = 18)
         
         # A variável x_inf recebe o valor inferior do eixo das abscissas.
-        x_inf = -10000
+        x_inf = -200
     
         # A variável x_sup recebe o valor superior do eixo das abscissas.
-        x_sup = 10000
+        x_sup = 200
      
     # Se a variável parametro for igual a string "pedestal".   
     elif parametro == "pedestal":
         
         # Nomeação do eixo x de acordo com o parâmetro do pedestal.
-        plt.xlabel(f'Erro de estimação do {parametro} (ADC Count)', fontsize = 18)
+        plt.xlabel(f'Erro de estimação do pedestal (ADC Count)', fontsize = 18)
         
         # A variável x_inf recebe o valor inferior do eixo das abscissas.
         x_inf = -500
@@ -214,14 +225,43 @@ def histograma_B_erro_estimacao_parametro_BLUE1(n_ocupacao, parametro, lista_err
     # A variável n_bins recebe a quantidade de bins presente no histograma.
     n_bins = 100
     
+    # Conversão das variáveis para strings adaptadas para o sistema numérico brasileiro.
+    
+    media_erro_estimacao_parametro_J7 = round(media_erro_estimacao_parametro_J7, 6)
+    media_erro_estimacao_parametro_J7 = str(media_erro_estimacao_parametro_J7).replace('.', ',')
+    
+    var_erro_estimacao_parametro_J7 = round(var_erro_estimacao_parametro_J7, 6)
+    var_erro_estimacao_parametro_J7 = str(var_erro_estimacao_parametro_J7).replace('.', ',')
+    
+    desvio_padrao_erro_estimacao_parametro_J7 = round(desvio_padrao_erro_estimacao_parametro_J7, 6)
+    desvio_padrao_erro_estimacao_parametro_J7 = str(desvio_padrao_erro_estimacao_parametro_J7).replace('.', ',')
+    
+    media_erro_estimacao_parametro_J15 = round(media_erro_estimacao_parametro_J15, 6)
+    media_erro_estimacao_parametro_J15 = str(media_erro_estimacao_parametro_J15).replace('.', ',')
+    
+    var_erro_estimacao_parametro_J15 = round(var_erro_estimacao_parametro_J15, 6)
+    var_erro_estimacao_parametro_J15 = str(var_erro_estimacao_parametro_J15).replace('.', ',')
+    
+    desvio_padrao_erro_estimacao_parametro_J15 = round(desvio_padrao_erro_estimacao_parametro_J15, 6)
+    desvio_padrao_erro_estimacao_parametro_J15 = str(desvio_padrao_erro_estimacao_parametro_J15).replace('.', ',')
+    
+    media_erro_estimacao_parametro_J19 = round(media_erro_estimacao_parametro_J19, 6)
+    media_erro_estimacao_parametro_J19 = str(media_erro_estimacao_parametro_J19).replace('.', ',')
+    
+    var_erro_estimacao_parametro_J19 = round(var_erro_estimacao_parametro_J19, 6)
+    var_erro_estimacao_parametro_J19 = str(var_erro_estimacao_parametro_J19).replace('.', ',')
+    
+    desvio_padrao_erro_estimacao_parametro_J19 = round(desvio_padrao_erro_estimacao_parametro_J19, 6)
+    desvio_padrao_erro_estimacao_parametro_J19 = str(desvio_padrao_erro_estimacao_parametro_J19).replace('.', ',')
+      
     # A variável legenda_J7 recebe a legenda do histograma para o janelamento 7.
-    legenda_J7 = f'Janelamento 7\nMédia: {round(media_erro_estimacao_parametro_J7, 6)}\nVariância: {round(var_erro_estimacao_parametro_J7,6)}\nDesvio Padrão: {round(desvio_padrao_erro_estimacao_parametro_J7, 6)}'
+    legenda_J7 = f'Janelamento 7\nMédia: {media_erro_estimacao_parametro_J7}\nVariância: {var_erro_estimacao_parametro_J7}\nDesvio Padrão: {desvio_padrao_erro_estimacao_parametro_J7}'
     
     # A variável legenda_J15 recebe a legenda do histograma para o janelamento 15.
-    legenda_J15 = f'Janelamento 15\nMédia: {round(media_erro_estimacao_parametro_J15, 6)}\nVariância: {round(var_erro_estimacao_parametro_J15,6)}\nDesvio Padrão: {round(desvio_padrao_erro_estimacao_parametro_J15, 6)}'
+    legenda_J15 = f'Janelamento 15\nMédia: {media_erro_estimacao_parametro_J15}\nVariância: {var_erro_estimacao_parametro_J15}\nDesvio Padrão: {desvio_padrao_erro_estimacao_parametro_J15}'
     
     # A variável legenda_J19 recebe a legenda do histograma para o janelamento 19.
-    legenda_J19 = f'Janelamento 19\nMédia: {round(media_erro_estimacao_parametro_J19, 6)}\nVariância: {round(var_erro_estimacao_parametro_J19,6)}\nDesvio Padrão: {round(desvio_padrao_erro_estimacao_parametro_J19, 6)}'
+    legenda_J19 = f'Janelamento 19\nMédia: {media_erro_estimacao_parametro_J19}\nVariância: {var_erro_estimacao_parametro_J19}\nDesvio Padrão: {desvio_padrao_erro_estimacao_parametro_J19}'
     
     # Definição dos histogramas para diferentes janelamentos e uma dada ocupação.
     plt.hist(vetor_erro_estimacao_parametro_J7, bins = n_bins, color='blue', range = [x_inf, x_sup], histtype = 'step', label = legenda_J7)
@@ -247,17 +287,20 @@ def histograma_B_erro_estimacao_parametro_BLUE1(n_ocupacao, parametro, lista_err
 # Definição da instrução principal (main) do código.
 def principal_histograma_erro_estimacao_parametro_BLUE1():
     
+    # A variável valor_minimo_amplitude_estimada_processo_fase recebe o valor mínimo para a amplitude que é de cerca de 4,5 ADC Count (três vezes o valor do desvio padrão do ruído eletrônico).
+    valor_minimo_amplitude_estimada_processo_fase = 4.5
+    
     # Impressão de mensagem no terminal.
-    print("Opções de parâmetros:\nAmplitude: 1\nFase: 2\nPedestal: 3\n")
+    print("Opções de parâmetros:\nAmplitude: 1\nFase pela amplitude estimada: 2\nFase pela amplitude de referência: 3\nPedestal: 4\n")
     
     # A variável parametro armazena o número do tipo inteiro digitado pelo usuário via terminal.
     parametro = int(input("Digite o número do parâmetro desejado: "))
     
-    # A variável valores_parametro é uma lista com os valores aceitáveis para o parametro.
-    valores_parametro = list(range(1,4,1))
-
-    # Caso o valor digitado armazenado na variável parametro não estiver presente na lista valores_parametro.
-    if parametro not in valores_parametro:
+    # A variável lista_valores_parametros armazena os valores válidos para parametro.
+    lista_valores_parametro = list(range(1,5,1))
+    
+    # Caso o valor digitado armazenado na variável parametro não estiver presente na lista lista_valores_parametro.
+    if parametro not in lista_valores_parametro and isinstance(parametro, str):
     
         # Exibição de uma mensagem de alerta de que a opção solicitada é inválida.
         print("Essa opção é inválida!")
@@ -266,13 +309,13 @@ def principal_histograma_erro_estimacao_parametro_BLUE1():
         exit(1)
     
     # A variável n_ocupacao armazena o valor digitado da ocupação desejada no terminal pelo usuário.
-    n_ocupacao = float(input("Digite o valor da ocupação desejada: "))
+    n_ocupacao = int(input("Digite o valor da ocupação desejada: "))
 
     # A variável valores_ocupacao é uma lista com os valores aceitáveis de ocupação de 0 até 100.
     valores_ocupacao = list(range(0,101,10))
 
     # Caso o valor digitado armazenado na variável n_ocupacao não estiver presente na lista valores_ocupacao.
-    if n_ocupacao not in valores_ocupacao:
+    if n_ocupacao not in valores_ocupacao and isinstance(parametro, str):
     
         # Exibição de uma mensagem de alerta de que a ocupação solicitada é inválida.
         print("\nNúmero de ocupação inválida!\n")
@@ -335,16 +378,32 @@ def principal_histograma_erro_estimacao_parametro_BLUE1():
         
             Matriz_Pulsos_Sinais_Janelado, vetor_parametro_referencia_janelado = amostras_janelamento(vetor_amostras_pulsos, vetor_amplitude_referencia, n_janelamento)
         
+            vetor_amplitude_referencia_treino_janelado = None
+        
         # Caso a variável parametro seja igual a 2.
         elif parametro == 2:
     
-            # A variável parametro recebe a string "fase".
-            parametro = "fase"
+            # A variável parametro recebe a string "fase_amplitude_estimada".
+            parametro = "fase_amplitude_estimada"
         
             Matriz_Pulsos_Sinais_Janelado, vetor_parametro_referencia_janelado = amostras_janelamento(vetor_amostras_pulsos, vetor_fase_referencia, n_janelamento)
         
+            vetor_amplitude_referencia_treino_janelado = None
+        
         # Caso a variável parametro seja igual a 3.
         elif parametro == 3:
+    
+            # A variável parametro recebe a string "fase_amplitude_referencia".
+            parametro = "fase_amplitude_referencia"
+        
+            Matriz_Pulsos_Sinais_Janelado, vetor_parametro_referencia_janelado = amostras_janelamento(vetor_amostras_pulsos, vetor_fase_referencia, n_janelamento)
+        
+            Matriz_Pulsos_Sinais_Janelado, vetor_amplitude_referencia_janelado = amostras_janelamento(vetor_amostras_pulsos, vetor_amplitude_referencia, n_janelamento)
+        
+            Matriz_Pulsos_Sinais_Treino_Janelado, Matriz_Pulsos_Sinais_Teste_Janelado, vetor_amplitude_referencia_treino_janelado, vetor_amplitude_referencia_teste_janelado = dados_treino_teste_histograma(Matriz_Pulsos_Sinais_Janelado, vetor_amplitude_referencia_janelado)
+        
+        # Caso a variável parametro seja igual a 4.
+        elif parametro == 4:
         
             # A variável parametro recebe a string "pedestal".
             parametro = "pedestal"
@@ -355,11 +414,13 @@ def principal_histograma_erro_estimacao_parametro_BLUE1():
         
             Matriz_Pulsos_Sinais_Janelado, vetor_parametro_referencia_janelado = amostras_janelamento(vetor_amostras_pulsos, vetor_pedestal_referencia, n_janelamento)
 
+            vetor_amplitude_referencia_treino_janelado = None
+
         # Chamada ordenada das funções.
         
         Matriz_Pulsos_Sinais_Treino_Janelado, Matriz_Pulsos_Sinais_Teste_Janelado, vetor_parametro_referencia_treino_janelado, vetor_parametro_referencia_teste_janelado = dados_treino_teste_histograma(Matriz_Pulsos_Sinais_Janelado, vetor_parametro_referencia_janelado)
     
-        lista_erro_estimacao_parametro = metodo_BLUE1(parametro, n_janelamento, Matriz_Pulsos_Sinais_Treino_Janelado, Matriz_Pulsos_Sinais_Teste_Janelado, vetor_parametro_referencia_teste_janelado)
+        lista_erro_estimacao_parametro = metodo_BLUE1(parametro, n_janelamento, Matriz_Pulsos_Sinais_Treino_Janelado, Matriz_Pulsos_Sinais_Teste_Janelado, vetor_parametro_referencia_teste_janelado, valor_minimo_amplitude_estimada_processo_fase, vetor_amplitude_referencia_treino_janelado)
 
         media_erro_estimacao_parametro, var_erro_estimacao_parametro, desvio_padrao_erro_estimacao_parametro = dados_estatisticos_erro_estimacao_parametro_BLUE1(lista_erro_estimacao_parametro)
     
@@ -393,18 +454,44 @@ def principal_histograma_erro_estimacao_parametro_BLUE1():
             Matriz_Pulsos_Sinais_Janelado_J15, vetor_parametro_referencia_janelado_J15 = amostras_janelamento(vetor_amostras_pulsos, vetor_amplitude_referencia, n_janelamento_J15)
             Matriz_Pulsos_Sinais_Janelado_J19, vetor_parametro_referencia_janelado_J19 = amostras_janelamento(vetor_amostras_pulsos, vetor_amplitude_referencia, n_janelamento_J19)
         
+            vetor_amplitude_referencia_treino_janelado_J7 = None
+            vetor_amplitude_referencia_treino_janelado_J15 = None
+            vetor_amplitude_referencia_treino_janelado_J19 = None
+        
         # Caso a variável parametro seja igual a 2.
         elif parametro == 2:
     
-            # A variável parametro recebe a string "fase".
-            parametro = "fase"
+            # A variável parametro recebe a string "fase_amplitude_estimada".
+            parametro = "fase_amplitude_estimada"
         
             Matriz_Pulsos_Sinais_Janelado_J7, vetor_parametro_referencia_janelado_J7 = amostras_janelamento(vetor_amostras_pulsos, vetor_fase_referencia, n_janelamento_J7)   
             Matriz_Pulsos_Sinais_Janelado_J15, vetor_parametro_referencia_janelado_J15 = amostras_janelamento(vetor_amostras_pulsos, vetor_fase_referencia, n_janelamento_J15)
             Matriz_Pulsos_Sinais_Janelado_J19, vetor_parametro_referencia_janelado_J19 = amostras_janelamento(vetor_amostras_pulsos, vetor_fase_referencia, n_janelamento_J19)
         
+            vetor_amplitude_referencia_treino_janelado_J7 = None
+            vetor_amplitude_referencia_treino_janelado_J15 = None
+            vetor_amplitude_referencia_treino_janelado_J19 = None
+        
         # Caso a variável parametro seja igual a 3.
         elif parametro == 3:
+    
+            # A variável parametro recebe a string "fase_amplitude_referencia".
+            parametro = "fase_amplitude_referencia"
+        
+            Matriz_Pulsos_Sinais_Janelado_J7, vetor_parametro_referencia_janelado_J7 = amostras_janelamento(vetor_amostras_pulsos, vetor_fase_referencia, n_janelamento_J7)   
+            Matriz_Pulsos_Sinais_Janelado_J15, vetor_parametro_referencia_janelado_J15 = amostras_janelamento(vetor_amostras_pulsos, vetor_fase_referencia, n_janelamento_J15)
+            Matriz_Pulsos_Sinais_Janelado_J19, vetor_parametro_referencia_janelado_J19 = amostras_janelamento(vetor_amostras_pulsos, vetor_fase_referencia, n_janelamento_J19)
+        
+            Matriz_Pulsos_Sinais_Janelado_J7, vetor_amplitude_referencia_janelado_J7 = amostras_janelamento(vetor_amostras_pulsos, vetor_amplitude_referencia, n_janelamento_J7)   
+            Matriz_Pulsos_Sinais_Janelado_J15, vetor_amplitude_referencia_janelado_J15 = amostras_janelamento(vetor_amostras_pulsos, vetor_amplitude_referencia, n_janelamento_J15)
+            Matriz_Pulsos_Sinais_Janelado_J19, vetor_amplitude_referencia_janelado_J19 = amostras_janelamento(vetor_amostras_pulsos, vetor_amplitude_referencia, n_janelamento_J19)
+        
+            Matriz_Pulsos_Sinais_Treino_Janelado_J7, Matriz_Pulsos_Sinais_Teste_Janelado_J7, vetor_amplitude_referencia_treino_janelado_J7, vetor_amplitude_referencia_teste_janelado_J7 = dados_treino_teste_histograma(Matriz_Pulsos_Sinais_Janelado_J7, vetor_amplitude_referencia_janelado_J7)
+            Matriz_Pulsos_Sinais_Treino_Janelado_J15, Matriz_Pulsos_Sinais_Teste_Janelado_J15, vetor_amplitude_referencia_treino_janelado_J15, vetor_amplitude_referencia_teste_janelado_J15 = dados_treino_teste_histograma(Matriz_Pulsos_Sinais_Janelado_J15, vetor_amplitude_referencia_janelado_J15)
+            Matriz_Pulsos_Sinais_Treino_Janelado_J19, Matriz_Pulsos_Sinais_Teste_Janelado_J19, vetor_amplitude_referencia_treino_janelado_J19, vetor_amplitude_referencia_teste_janelado_J19 = dados_treino_teste_histograma(Matriz_Pulsos_Sinais_Janelado_J19, vetor_amplitude_referencia_janelado_J19)
+        
+        # Caso a variável parametro seja igual a 4.
+        elif parametro == 4:
         
             # A variável parametro recebe a string "pedestal".
             parametro = "pedestal"
@@ -417,19 +504,23 @@ def principal_histograma_erro_estimacao_parametro_BLUE1():
             Matriz_Pulsos_Sinais_Janelado_J15, vetor_parametro_referencia_janelado_J15 = amostras_janelamento(vetor_amostras_pulsos, vetor_pedestal_referencia, n_janelamento_J15)
             Matriz_Pulsos_Sinais_Janelado_J19, vetor_parametro_referencia_janelado_J19 = amostras_janelamento(vetor_amostras_pulsos, vetor_pedestal_referencia, n_janelamento_J19)
         
+            vetor_amplitude_referencia_treino_janelado_J7 = None
+            vetor_amplitude_referencia_treino_janelado_J15 = None
+            vetor_amplitude_referencia_treino_janelado_J19 = None
+        
         # Chamada ordenada das funções.
     
         Matriz_Pulsos_Sinais_Treino_Janelado_J7, Matriz_Pulsos_Sinais_Teste_Janelado_J7, vetor_parametro_referencia_treino_janelado_J7, vetor_parametro_referencia_teste_janelado_J7 = dados_treino_teste_histograma(Matriz_Pulsos_Sinais_Janelado_J7, vetor_parametro_referencia_janelado_J7)
         Matriz_Pulsos_Sinais_Treino_Janelado_J15, Matriz_Pulsos_Sinais_Teste_Janelado_J15, vetor_parametro_referencia_treino_janelado_J15, vetor_parametro_referencia_teste_janelado_J15 = dados_treino_teste_histograma(Matriz_Pulsos_Sinais_Janelado_J15, vetor_parametro_referencia_janelado_J15)
         Matriz_Pulsos_Sinais_Treino_Janelado_J19, Matriz_Pulsos_Sinais_Teste_Janelado_J19, vetor_parametro_referencia_treino_janelado_J19, vetor_parametro_referencia_teste_janelado_J19 = dados_treino_teste_histograma(Matriz_Pulsos_Sinais_Janelado_J19, vetor_parametro_referencia_janelado_J19)
         
-        lista_erro_estimacao_parametro_J7 = metodo_BLUE1(parametro, n_janelamento_J7, Matriz_Pulsos_Sinais_Treino_Janelado_J7, Matriz_Pulsos_Sinais_Teste_Janelado_J7, vetor_parametro_referencia_teste_janelado_J7)
+        lista_erro_estimacao_parametro_J7 = metodo_BLUE1(parametro, n_janelamento_J7, Matriz_Pulsos_Sinais_Treino_Janelado_J7, Matriz_Pulsos_Sinais_Teste_Janelado_J7, vetor_parametro_referencia_teste_janelado_J7,  valor_minimo_amplitude_estimada_processo_fase, vetor_amplitude_referencia_treino_janelado_J7)
         media_erro_estimacao_parametro_J7, var_erro_estimacao_parametro_J7, desvio_padrao_erro_estimacao_parametro_J7 = dados_estatisticos_erro_estimacao_parametro_BLUE1(lista_erro_estimacao_parametro_J7)
     
-        lista_erro_estimacao_parametro_J15 = metodo_BLUE1(parametro, n_janelamento_J15, Matriz_Pulsos_Sinais_Treino_Janelado_J15, Matriz_Pulsos_Sinais_Teste_Janelado_J15, vetor_parametro_referencia_teste_janelado_J15)
+        lista_erro_estimacao_parametro_J15 = metodo_BLUE1(parametro, n_janelamento_J15, Matriz_Pulsos_Sinais_Treino_Janelado_J15, Matriz_Pulsos_Sinais_Teste_Janelado_J15, vetor_parametro_referencia_teste_janelado_J15,  valor_minimo_amplitude_estimada_processo_fase, vetor_amplitude_referencia_treino_janelado_J15)
         media_erro_estimacao_parametro_J15, var_erro_estimacao_parametro_J15, desvio_padrao_erro_estimacao_parametro_J15 = dados_estatisticos_erro_estimacao_parametro_BLUE1(lista_erro_estimacao_parametro_J15)
     
-        lista_erro_estimacao_parametro_J19 = metodo_BLUE1(parametro, n_janelamento_J19, Matriz_Pulsos_Sinais_Treino_Janelado_J19, Matriz_Pulsos_Sinais_Teste_Janelado_J19, vetor_parametro_referencia_teste_janelado_J19)
+        lista_erro_estimacao_parametro_J19 = metodo_BLUE1(parametro, n_janelamento_J19, Matriz_Pulsos_Sinais_Treino_Janelado_J19, Matriz_Pulsos_Sinais_Teste_Janelado_J19, vetor_parametro_referencia_teste_janelado_J19,  valor_minimo_amplitude_estimada_processo_fase, vetor_amplitude_referencia_treino_janelado_J19)
         media_erro_estimacao_parametro_J19, var_erro_estimacao_parametro_J19, desvio_padrao_erro_estimacao_parametro_J19 = dados_estatisticos_erro_estimacao_parametro_BLUE1(lista_erro_estimacao_parametro_J19)
     
         histograma_B_erro_estimacao_parametro_BLUE1(n_ocupacao, parametro, lista_erro_estimacao_parametro_J7, media_erro_estimacao_parametro_J7, var_erro_estimacao_parametro_J7, desvio_padrao_erro_estimacao_parametro_J7, lista_erro_estimacao_parametro_J15, media_erro_estimacao_parametro_J15, var_erro_estimacao_parametro_J15, desvio_padrao_erro_estimacao_parametro_J15, lista_erro_estimacao_parametro_J19, media_erro_estimacao_parametro_J19, var_erro_estimacao_parametro_J19, desvio_padrao_erro_estimacao_parametro_J19)

@@ -1,6 +1,6 @@
 # EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 28 de julho de 2024.
+# Data: 23 de agosto de 2024.
 
 # Objetivo do código: gráfico do desempenho (EME, MSE, MAE, SNR E DP) ao longo das ocupações de acordo com o janelamento ideal para o método BLUE1 para a estimação da amplitude, fase ou pedestal.
 
@@ -70,7 +70,7 @@ def leitura_dados_estatisticos_desempenho_BLUE1(parametro, n_janelamento_ideal, 
         # Impressão de mensagem que o arquivo de entrada não existe.
         print(f"O arquivo {arquivo_dados_estatisticos_desempenho} não existe na pasta {pasta_dados_estatisticos_desempenho}.")
 
-    # Obs.: da forma que o programa está escrito, os arquivos de entrada devem estar em uma pasta em que está o código do programa.
+    # Obs.: da forma que o programa está escrito, os arquivos de entrada devem estar na mesma pasta em que está o código do programa.
     # Caso deseja-se alterar isso basta mudar o endereço do arquivo.
     
     # A função retorna a matriz Matriz_Dados_Desempenho.
@@ -78,7 +78,7 @@ def leitura_dados_estatisticos_desempenho_BLUE1(parametro, n_janelamento_ideal, 
 
 ### ---------------------------------------------------------------------------------------------------------------------------------------------- ###
 
-### ---- 2) INSTRUÇÃO PARA O PLOTE DO GRÁFICO DO DADO ESTATÍSTICO DO DESEMPENHO AO LONGO DAS OCUPAÇÕES PARA O JANELAMENTO IDEAL PELO MÉTODO BLUE1 --- ###
+### --- 2) INSTRUÇÃO PARA O PLOTE DO GRÁFICO DO DADO ESTATÍSTICO DO DESEMPENHO AO LONGO DAS OCUPAÇÕES PARA O JANELAMENTO IDEAL PELO MÉTODO BLUE1 -- ###
 
 # Definição da instrução para o plote do gráfico do dado estatístico do desempenho ao longo das ocupações para o janelamento ideal pelo método BLUE1.
 def grafico_dado_estatistico_desempenho_BLUE1(parametro, opcao_avaliacao_desempenho, Matriz_Dados_Desempenho):
@@ -114,8 +114,8 @@ def grafico_dado_estatistico_desempenho_BLUE1(parametro, opcao_avaliacao_desempe
         # Comando para o nome do eixo das ordenadas de acordo com o erro médio de estimação.
         plt.ylabel("Média do erro médio de estimação (ADC Count)", fontsize = 18)
         
-        # Caso o parâmetro seja a fase.
-        if parametro == "fase":
+        # Caso a variável parametro seja a igual a "fase_amplitude_estimada" ou "fase_amplitude_referencia".
+        if parametro == "fase_amplitude_estimada" or parametro == "fase_amplitude_referencia":
            
            # Comando para o nome do eixo das ordenadas de acordo com o erro médio de estimação para a fase.
            plt.ylabel("Média do erro médio de estimação (ns)", fontsize = 18) 
@@ -124,13 +124,13 @@ def grafico_dado_estatistico_desempenho_BLUE1(parametro, opcao_avaliacao_desempe
     if opcao_avaliacao_desempenho == 2:
               
         # Comando para o nome do eixo das ordenadas de acordo com o erro médio quadrático.
-        plt.ylabel("Média do erro médio quadrático (ADC Count)^2", fontsize = 18)
+        plt.ylabel(r"Média do erro médio quadrático (ADC Count)$^2$", fontsize = 18)
         
-        # Caso o parâmetro seja a fase.
-        if parametro == "fase":
+        # Caso a variável parametro seja a igual a "fase_amplitude_estimada" ou "fase_amplitude_referencia".
+        if parametro == "fase_amplitude_estimada" or parametro == "fase_amplitude_referencia":
            
            # Comando para o nome do eixo das ordenadas de acordo com o erro médio quadrático para a fase.
-           plt.ylabel("Média do erro médio quadrático (ns)^2", fontsize = 18) 
+           plt.ylabel(r"Média do erro médio quadrático (ns)$^2$", fontsize = 18) 
               
     # Caso a variável opcao_avaliacao_desempenho seja 3.
     elif opcao_avaliacao_desempenho == 3:
@@ -138,8 +138,8 @@ def grafico_dado_estatistico_desempenho_BLUE1(parametro, opcao_avaliacao_desempe
         # Comando para o nome do eixo das ordenadas de acordo com o erro médio absoluto.
         plt.ylabel("Média do erro médio absoluto (ADC Count)", fontsize = 18)
         
-        # Caso o parâmetro seja a fase.
-        if parametro == "fase":
+        # Caso a variável parametro seja a igual a "fase_amplitude_estimada" ou "fase_amplitude_referencia".
+        if parametro == "fase_amplitude_estimada" or parametro == "fase_amplitude_referencia":
            
            # Comando para o nome do eixo das ordenadas de acordo com o erro médio absoluto para a fase.
            plt.ylabel("Média do erro médio absoluto (ns)", fontsize = 18) 
@@ -156,8 +156,8 @@ def grafico_dado_estatistico_desempenho_BLUE1(parametro, opcao_avaliacao_desempe
         # Comando para o nome do eixo das ordenadas de acordo com a média do desvio padrão.
         plt.ylabel("Média do desvio padrão (ADC Count)", fontsize = 18)
         
-        # Caso o parâmetro seja a fase.
-        if parametro == "fase":
+        # Caso a variável parametro seja a igual a "fase_amplitude_estimada" ou "fase_amplitude_referencia".
+        if parametro == "fase_amplitude_estimada" or parametro == "fase_amplitude_referencia":
            
            # Comando para o nome do eixo das ordenadas de acordo com a média do desvio padrão para a fase.
            plt.ylabel("Média do desvio padrão (ns)", fontsize = 18)
@@ -176,22 +176,22 @@ def grafico_dado_estatistico_desempenho_BLUE1(parametro, opcao_avaliacao_desempe
         
 ### -------------------------------------------------------------------------------------------------------------------------------------------- ###        
         
-### ---------------------------------------------------- 3) INSTRUÇÃO PRINCIPAL DO CÓDIGO (MAIN) -------------------------------------------------- ###
+### ---------------------------------------------------- 3) INSTRUÇÃO PRINCIPAL DO CÓDIGO ------------------------------------------------------ ###
 
 # Definição da instrução principal (main) do código.
 def principal_grafico_dado_estatistico_desempenho_BLUE1():
     
     # Impressão de mensagem no terminal.
-    print("Opções de parâmetros:\nAmplitude: 1\nFase: 2\nPedestal: 3\n")
+    print("Opções de parâmetros:\nAmplitude: 1\nFase pela amplitude estimada: 2\nFase pela amplitude de referência: 3\nPedestal: 4\n")
     
-    # A variável opcao_parametro armazena o número do tipo inteiro digitado pelo usuário via terminal.
-    opcao_parametro = int(input("Digite o número do parâmetro desejado: "))
-
-    # A variável lista_valores_dados é uma lista com os valores aceitáveis para opcao.
-    lista_valores_dados = list(range(1,4,1))
-
-    # Caso o valor digitado armazenado na variável opcao_parametro não estiver presente na lista lista_valores_dados.
-    if opcao_parametro not in lista_valores_dados:
+    # A variável parametro armazena o número do tipo inteiro digitado pelo usuário via terminal.
+    parametro = int(input("Digite o número do parâmetro desejado: "))
+    
+    # A variável lista_valores_parametros armazena os valroes válidos para parametro.
+    lista_valores_parametro = list(range(1,5,1))
+    
+    # Caso o valor digitado armazenado na variável parametro não estiver presente na lista lista_valores_parametro.
+    if parametro not in lista_valores_parametro:
     
         # Exibição de uma mensagem de alerta de que a opção solicitada é inválida.
         print("Essa opção é inválida!")
@@ -207,6 +207,15 @@ def principal_grafico_dado_estatistico_desempenho_BLUE1():
 
     # A variável valores_avaliacoes_desempenho é uma lista com os valores aceitáveis para opcao_avaliacao_desempenho.
     valores_avaliacoes_desempenho = list(range(1,6,1))
+    
+    # Caso o valor digitado armazenado na variável opcao_avaliacao_desempenho não estiver presente na lista valores_avaliacoes_desempenho.
+    if opcao_avaliacao_desempenho not in valores_avaliacoes_desempenho:
+    
+        # Exibição de uma mensagem de alerta de que a opção solicitada é inválida.
+        print("Essa opção é inválida!")
+        print("---------------------------------------------------------------------------------------------------------------------------------------")
+        # A execução do programa é interrompida.
+        exit(1)
     
     # Caso a variável opcao_avaliacao_desempenho seja igual a 1.
     if opcao_avaliacao_desempenho == 1:
@@ -237,30 +246,27 @@ def principal_grafico_dado_estatistico_desempenho_BLUE1():
            
         # A variável mecanismo_desempenho recebe a string "DP".
         mecanismo_desempenho = "DP"
-
-    # Caso o valor digitado armazenado na variável opcao_avaliacao_desempenho não estiver presente na lista valores_avaliacoes_desempenho.
-    if opcao_avaliacao_desempenho not in valores_avaliacoes_desempenho:
-    
-        # Exibição de uma mensagem de alerta de que a opção solicitada é inválida.
-        print("Essa opção é inválida!")
-        print("---------------------------------------------------------------------------------------------------------------------------------------")
-        # A execução do programa é interrompida.
-        exit(1)
           
-    # Caso a variável opcao_parametro seja igual a 1.
-    if opcao_parametro == 1:
+    # Caso a variável parametro seja igual a 1.
+    if parametro == 1:
         
         # A variável parametro recebe a string "amplitude".
         parametro = "amplitude"
         
-    # Caso a variável opcao_parametro seja igual a 2.
-    elif opcao_parametro == 2:
+    # Caso a variável parametro seja igual a 2.
+    elif parametro == 2:
     
-        # A variável parametro recebe a string "fase".
-        parametro = "fase"
+        # A variável parametro recebe a string "fase_amplitude_estimada".
+        parametro = "fase_amplitude_estimada"
         
-    # Caso a variável opcao_parametro seja igual a 3.
-    elif opcao_parametro == 3:
+    # Caso a variável parametro seja igual a 3.
+    elif parametro == 3:
+        
+        # A variável parametro recebe a string "fase_amplitude_referencia".
+        parametro = "fase_amplitude_referencia"
+        
+    # Caso a variável parametro seja igual a 4.
+    elif parametro == 4:
         
         # A variável parametro recebe a string "pedestal".
         parametro = "pedestal"

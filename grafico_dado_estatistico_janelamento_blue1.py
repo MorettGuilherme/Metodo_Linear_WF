@@ -1,6 +1,6 @@
 # EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 28 de julho de 2024.
+# Data: 23 de agosto de 2024.
 
 # Objetivo do código: gráfico dos dados estatísticos ao longo das ocupações de acordo com o janelamento para o método BLUE1.
 
@@ -13,7 +13,7 @@ Funções presentes:
 
 1) Função para a leitura dos dados estatísticos de todas as ocupações para um determinado janelamento.
 Entrada: número do janelamento.
-Saída: Matriz com os dados de entrada organizados de acordo com a coluna (número da ocupação, média, variância e desvio padrão do erro de estimação do parâmetro de interesse).
+Saída: matriz com os dados de entrada organizados de acordo com a coluna (número da ocupação, média, variância e desvio padrão do erro de estimação do parâmetro de interesse).
 
 2) Instrução para o plote do gráfico do dado estatístico ao longo das ocupações para um determinado janelamento.
 Entrada: dado estatístico desejado (média, variância ou desvio padrão) e a matriz dos dados.
@@ -43,14 +43,14 @@ print(titulo_programa)
 
 ### -------- 1) FUNÇÃO PARA A LEITURA DOS DADOS ESTATÍSTICOS DE TODAS AS OCUPAÇÕES PARA UM DETERMINADO JANELAMENTO PELO MÉTODO BLUE1 ----------- ###
 
-# Definição da função para a leitura dos dados estatísticos de todas as ocupações para um determinado janelamento pelo método BLUE 1.
+# Definição da função para a leitura dos dados estatísticos de todas as ocupações para um determinado janelamento pelo método BLUE1.
 def leitura_dados_estatisticos_janelamento_BLUE1(parametro, n_janelamento):
 
-    # Nome da pasta em que se encontra o arquivo de entrada dos dados estatísticos de acordo com o janelamento.
+    # Nome da pasta em que se encontra o arquivo de entrada dos dados estatísticos de acordo com o parâmetro.
     pasta_dados_estatisticos_janelamento = f"Dados_Estatisticos_BLUE1_{parametro}_OC"
 
     # Nome do arquivo de entrada dos dados estatísticos de acordo com o janelamento.
-    arquivo_dados_estatisticos_janelamento = f"dados_estatisticos_BLUE1_janelamento_{n_janelamento}.txt"
+    arquivo_dados_estatisticos_janelamento = f"dados_estatisticos_BLUE1_{parametro}_janelamento_{n_janelamento}.txt"
 
     # O caminho para esse arquivo de entrada das ocupações.
     caminho_arquivo_dados_estatisticos_janelamento = os.path.join(pasta_dados_estatisticos_janelamento, arquivo_dados_estatisticos_janelamento)
@@ -70,7 +70,7 @@ def leitura_dados_estatisticos_janelamento_BLUE1(parametro, n_janelamento):
         # Impressão de mensagem que o arquivo de entrada não existe.
         print(f"O arquivo {arquivo_dados_estatisticos_janelamento} não existe na pasta {pasta_dados_estatisticos_janelamento}.")
 
-    # Obs.: da forma que o programa está escrito, os arquivos de entrada devem estar em uma pasta em que está o código do programa.
+    # Obs.: da forma que o programa está escrito, os arquivos de entrada devem estar na mesma pasta em que está o código do programa.
     # Caso deseja-se alterar isso basta mudar o endereço do arquivo.
     
     # A função retorna a matriz Matriz_Dados_Estatisticos_Janelamento.
@@ -92,7 +92,7 @@ def grafico_dado_estatistico_janelamento_BLUE1(parametro, dado_estatistico, Matr
     # Definição da variável indice_coluna_var que armazena o valor do índice da coluna das variâncias.
     indice_coluna_var = 2
     
-    # Definição da variável indice_coluna_DP que armazena o valor do índice da coluna dos desvios padrão.
+    # Definição da variável indice_coluna_DP que armazena o valor do índice da coluna dos desvio padrão.
     indice_coluna_DP = 3
     
     # Definição do eixo das abscissas.
@@ -108,11 +108,17 @@ def grafico_dado_estatistico_janelamento_BLUE1(parametro, dado_estatistico, Matr
         # Definição do vetor dos dados estatísticos.
         vetor_dados = Matriz_Dados_Estatisticos_Janelamento[: , indice_coluna_media]
         
-        # Caso a variável parametro seja "fase".
-        if parametro == "fase":
+        # Caso a variável parametro seja a igual a "fase_amplitude_estimada" ou "fase_amplitude_referencia".
+        if parametro == "fase_amplitude_estimada" or parametro == "fase_amplitude_referencia":
             
             # Comando para o nome do eixo das ordenadas de acordo com a fase.
-            plt.ylabel(f"Média do erro de estimação da {parametro} (ns)", fontsize = 18)
+            plt.ylabel(f"Média do erro de estimação da fase (ns)", fontsize = 18)
+        
+        # Caso a variável parametro seja igual ao "pedestal".
+        elif parametro == "pedestal":
+        
+            # Comando para o nome do eixo das ordenadas de acordo com o pedestal.
+            plt.ylabel(f"Média do erro de estimação do {parametro} (ADC Count)", fontsize = 18)
             
         else:
             
@@ -125,11 +131,17 @@ def grafico_dado_estatistico_janelamento_BLUE1(parametro, dado_estatistico, Matr
         # Definição do vetor dos dados estatísticos.
         vetor_dados = Matriz_Dados_Estatisticos_Janelamento[: , indice_coluna_var]
         
-        # Caso a variável parametro seja "fase".
-        if parametro == "fase":
+        # Caso a variável parametro seja a igual a "fase_amplitude_estimada" ou "fase_amplitude_referencia".
+        if parametro == "fase_amplitude_estimada" or parametro == "fase_amplitude_referencia":
             
             # Comando para o nome do eixo das ordenadas de acordo com a fase.
-            plt.ylabel(f"Var. do erro de estimação da {parametro} (ns)", fontsize = 18)
+            plt.ylabel(f"Var. do erro de estimação da fase (ns)", fontsize = 18)
+        
+        # Caso a variável parametro seja igual ao "pedestal".
+        elif parametro == "pedestal":
+        
+            # Comando para o nome do eixo das ordenadas de acordo com o pedestal.
+            plt.ylabel(f"Var. do erro de estimação do {parametro} (ADC Count)", fontsize = 18)
             
         else:
             
@@ -142,11 +154,17 @@ def grafico_dado_estatistico_janelamento_BLUE1(parametro, dado_estatistico, Matr
         # Definição do vetor dos dados estatísticos.
         vetor_dados = Matriz_Dados_Estatisticos_Janelamento[: , indice_coluna_DP]
         
-        # Caso a variável parametro seja "fase".
-        if parametro == "fase":
+        # Caso a variável parametro seja a igual a "fase_amplitude_estimada" ou "fase_amplitude_referencia".
+        if parametro == "fase_amplitude_estimada" or parametro == "fase_amplitude_referencia":
             
             # Comando para o nome do eixo das ordenadas de acordo com a fase.
-            plt.ylabel(f"DP. do erro de estimação da {parametro} (ns)", fontsize = 18)
+            plt.ylabel(f"DP. do erro de estimação da fase (ns)", fontsize = 18)
+        
+        # Caso a variável parametro seja igual ao "pedestal".
+        elif parametro == "pedestal":
+        
+            # Comando para o nome do eixo das ordenadas de acordo com o pedestal.
+            plt.ylabel(f"DP. do erro de estimação do {parametro} (ADC Count)", fontsize = 18)
          
         # Caso contrário.   
         else:
@@ -168,16 +186,28 @@ def grafico_dado_estatistico_janelamento_BLUE1(parametro, dado_estatistico, Matr
         
 ### -------------------------------------------------------------------------------------------------------------------------------------------- ###        
         
-### ---------------------------------------------------- 3) INSTRUÇÃO PRINCIPAL DO CÓDIGO (MAIN) -------------------------------------------------- ###
+### ---------------------------------------------------- 3) INSTRUÇÃO PRINCIPAL DO CÓDIGO  ----------------------------------------------------- ###
 
 # Definição da instrução principal (main) do código.
 def principal_grafico_dado_estatistico_janelamento_BLUE1():
     
     # Impressão de mensagem no terminal.
-    print("Opções de parâmetros:\nAmplitude: 1\nFase: 2\nPedestal: 3\n")
+    print("Opções de parâmetros:\nAmplitude: 1\nFase pela amplitude estimada: 2\nFase pela amplitude de referência: 3\nPedestal: 4\n")
     
     # A variável parametro armazena o número do tipo inteiro digitado pelo usuário via terminal.
     parametro = int(input("Digite o número do parâmetro desejado: "))
+    
+    # A variável lista_valores_parametros armazena os valroes válidos para parametro.
+    lista_valores_parametro = list(range(1,5,1))
+    
+    # Caso o valor digitado armazenado na variável parametro não estiver presente na lista lista_valores_parametro.
+    if parametro not in lista_valores_parametro:
+    
+        # Exibição de uma mensagem de alerta de que a opção solicitada é inválida.
+        print("Essa opção é inválida!")
+        print("---------------------------------------------------------------------------------------------------------------------------------------")
+        # A execução do programa é interrompida.
+        exit(1)
     
     # Impressão de mensagem no terminal.
     print("Opções de análise:\nMédia: 1\nVariância: 2\nDesvio padrão: 3\n")
@@ -185,11 +215,11 @@ def principal_grafico_dado_estatistico_janelamento_BLUE1():
     # A variável dado_estatistico armazena o número do tipo inteiro digitado pelo usuário via terminal.
     dado_estatistico = int(input("Digite o número da opção desejada: "))
 
-    # A variável valores_dados é uma lista com os valores aceitáveis para opcao.
-    valores_dados = list(range(1,4,1))
+    # A variável valores_dados_estatisticos é uma lista com os valores aceitáveis para dado_estatistico.
+    lista_valores_dados_estatisticos = list(range(1,4,1))
 
-    # Caso o valor digitado armazenado na variável dado_estatistico e parametro não estiverem presente na lista valores_dados.
-    if dado_estatistico and parametro not in valores_dados:
+    # Caso o valor digitado armazenado na variável dado_estatistico não estiver presente na lista lista_valores_dados_estatisticos.
+    if dado_estatistico  not in lista_valores_dados_estatisticos:
     
         # Exibição de uma mensagem de alerta de que a opção solicitada é inválida.
         print("Essa opção é inválida!")
@@ -206,11 +236,17 @@ def principal_grafico_dado_estatistico_janelamento_BLUE1():
     # Caso a variável parametro seja igual a 2.
     elif parametro == 2:
     
-        # A variável parametro recebe a string "fase".
-        parametro = "fase"
+        # A variável parametro recebe a string "fase_amplitude_estimada".
+        parametro = "fase_amplitude_estimada"
         
     # Caso a variável parametro seja igual a 3.
     elif parametro == 3:
+    
+        # A variável parametro recebe a string "fase_amplitude_referencia".
+        parametro = "fase_amplitude_referencia"
+        
+    # Caso a variável parametro seja igual a 3.
+    elif parametro == 4:
         
         # A variável parametro recebe a string "pedestal".
         parametro = "pedestal"  

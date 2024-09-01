@@ -1,6 +1,6 @@
 # EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 28 de julho de 2024.
+# Data: 23 de agosto de 2024.
 
 # Objetivo do código: realização da leitura dos dados de ocupação no formato free running.
 
@@ -65,6 +65,9 @@ def leitura_dados_ocupacao(numero_ocupacao):
 
     # Obs.: da forma que o programa está escrito, os arquivos de entrada devem estar em uma pasta em que está o código do programa.
     # Caso deseja-se alterar isso basta mudar o endereço do arquivo.
+    
+    # A coluna que correponde a fase de referência é multiplicada por 0.5.
+    Matriz_Dados_OC[:, 3] = Matriz_Dados_OC[:, 3] * 0.5
     
     # A função retorna a matriz Matriz_Dados_OC.
     return Matriz_Dados_OC

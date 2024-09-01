@@ -1,6 +1,6 @@
 # EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 28 de julho de 2024.
+# Data: 15 de agosto de 2024.
 
 # Objetivo do código: Aplicação do método BLUE1 para a estimação da amplitude, fase ou pedestal.
 
@@ -22,9 +22,9 @@ Entrada: número de janelamento.
 Saída: vetor da derivada temporal do pulso de referência para cada instante de tempo de acordo com o janelamento.
 
 3) Função para o método BLUE1.
-Entrada: parâmetro, matriz com os pulsos de sinais da etapa de treino, matriz com os pulsos de sinais da etapa de teste, vetor do parâmetro de referência e o número de janelamento.
+Entrada: parâmetro, número de janelamento, matriz com os pulsos de sinais da etapa de treino janelados, matriz com os pulsos de sinais da etapa de teste janelados, vetor do parâmetro de referência da etapa de teste janelado, valor mínimo da amplitude estimada (somente para a fase) e vetor de amplitude de referência da etapa de treino janelado (somente para a fase).
 Saída: lista com o erro de estimação pelo método BLUE1
-
+parametro, n_janelamento, Matriz_Pulsos_Sinais_Treino_Janelado, Matriz_Pulsos_Sinais_Teste_Janelado, vetor_parametro_referencia_teste_janelado, valor_minimo_amplitude_estimada_processo_fase, vetor_amplitude_referencia_treino_janelado
 """
 
 # Importação das bibliotecas.
@@ -183,7 +183,7 @@ def derivada_pulso_referencia(n_janelamento):
 ### ----------------------------------------------- 3) FUNÇÃO PARA O MÉTODO BLUE1 ------------------------------------------------------------- ###
 
 # Definição da função para o método BLUE1.
-def metodo_BLUE1(parametro, n_janelamento, Matriz_Pulsos_Sinais_Treino_Janelado, Matriz_Pulsos_Sinais_Teste_Janelado, vetor_parametro_referencia_teste_janelado):
+def metodo_BLUE1(parametro, n_janelamento, Matriz_Pulsos_Sinais_Treino_Janelado, Matriz_Pulsos_Sinais_Teste_Janelado, vetor_parametro_referencia_teste_janelado, valor_minimo_amplitude_processo_fase, vetor_amplitude_referencia_treino_janelado):
 
     # Criação da lista vazia para armazenar os erros calculados para o parâmetro. 
     lista_erro_estimacao_parametro = []
@@ -249,19 +249,45 @@ def metodo_BLUE1(parametro, n_janelamento, Matriz_Pulsos_Sinais_Treino_Janelado,
             
             # A varável valor_parametro_estimado recebe o primeiro elemento do vetor vetor_parametro_estimado.
             valor_parametro_estimado = vetor_parametro_estimado[0]
-        
-        # Caso a variável parametro seja igual a string "fase".
-        elif parametro == "fase":
             
-            # A variável valor_amplitude_estimada recebe o primeiro elemento do vetor vetor_parametro_estimado.
-            valor_amplitude_estimada = vetor_parametro_estimado[0]
+        # Caso a variável parametro seja igual a string "fase_amplitude_estimada".
+        elif parametro == "fase_amplitude_estimada":
             
-            # A variável valor_amplitude_versus_fase_estimada recebe o segundo elemento do vetor vetor_parametro_estimado.
-            valor_amplitude_versus_fase_estimada = vetor_parametro_estimado[1]
+            # A variável valor_amplitude_processo_estimacao_fase recebe o primeiro elemento do vetor vetor_parametro_estimado.
+            valor_amplitude_processo_estimacao_fase = vetor_parametro_estimado[0]
             
-            # A variável valor_parametro_estimado é calculada pela divisão entre os valores da amplitude_fase_estimada pela amplitude_estimada.
-            valor_parametro_estimado = valor_amplitude_versus_fase_estimada / valor_amplitude_estimada
-        
+            # caso o valor de valor_amplitude_processo_estimacao_fase for maior que o valor valor_minimo_amplitude_processo_fase.
+            if valor_amplitude_processo_estimacao_fase >= valor_minimo_amplitude_processo_fase:
+                
+                # A variável valor_amplitude_versus_fase_estimada recebe o segundo elemento do vetor vetor_parametro_estimado.
+                valor_amplitude_versus_fase_estimada = vetor_parametro_estimado[1]
+            
+                # A variável valor_parametro_estimado é calculada pela divisão entre os valores do valor_amplitude_versus_fase_estimada pelo valor_amplitude_processo_estimacao_fase.
+                valor_parametro_estimado = valor_amplitude_versus_fase_estimada / valor_amplitude_processo_estimacao_fase
+                
+            else:
+                
+                continue
+            
+        # Caso a variável parâmetro seja igual a string "fase_amplitude_referencia".
+        elif parametro == "fase_amplitude_referencia":
+            
+            # A variável valor_amplitude_processo_estimacao_fase recebe o elemento de índice indice_linha do vetor vetor_amplitude_referencia_treino_janelado.
+            valor_amplitude_processo_estimacao_fase = vetor_amplitude_referencia_treino_janelado[indice_linha]
+            
+            # caso o valor de valor_amplitude_processo_estimacao_fase for maior que o valor valor_minimo_amplitude_processo_fase.
+            if valor_amplitude_processo_estimacao_fase >= valor_minimo_amplitude_processo_fase:
+                
+                # A variável valor_amplitude_versus_fase_estimada recebe o segundo elemento do vetor vetor_parametro_estimado.
+                valor_amplitude_versus_fase_estimada = vetor_parametro_estimado[1]
+            
+                # A variável valor_parametro_estimado é calculada pela divisão entre os valores do valor_amplitude_versus_fase_estimada pelo valor_amplitude_processo_estimacao_fase.
+                valor_parametro_estimado = valor_amplitude_versus_fase_estimada / valor_amplitude_processo_estimacao_fase
+                
+            else:
+                
+                continue
+            
         # Caso a variável parametro seja igual a string "pedestal".
         elif parametro == "pedestal":
             

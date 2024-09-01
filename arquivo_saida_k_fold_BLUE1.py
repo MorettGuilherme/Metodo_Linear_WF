@@ -1,6 +1,6 @@
 # EXPERIMENTO ATLAS - Reconstrução de sinal - Melhor Estimador Linear Não Enviesado - Best Linear Unbiased Estimator (BLUE1) - Estimação da amplitude, fase ou pedestal.
 # Autor: Guilherme Barroso Morett.
-# Data: 28 de julho de 2024.
+# Data: 23 de agosto de 2024.
 
 # Objetivo do código: implementação da validação cruzada K-Fold para o método BLUE1 para a estimação da amplitude, fase ou pedestal.
 
@@ -17,7 +17,7 @@ Entrada: número de ocupação, número do janelamento, média do dado estatíst
 Saída: nada.
 
 2) Instrução da validação cruzada K-Fold.
-Entrada: matriz com os pulsos de sinais e o vetor da amplitude, fase ou pedestal de referência.
+Entrada: parâmetro, número de ocupação, número e janelamento, matriz de pulsos de sinais janelada, vetor do parâmetro de referência e o valor mínimo da amplitude.
 Saída: nada.
 
 3) Instrução principal do código.
@@ -97,33 +97,44 @@ def arquivo_saida_dados_estatisticos_k_fold_erro_BLUE1(parametro, n_ocupacao, n_
 
 ### ----------------------------------- 2) INSTRUÇÃO PARA A VALIDAÇÃO CRUZADA K-FOLD PELO MÉTODO BLUE1 ----------------------------------------- ###
 
-# Definição da instrução da técnica de validação cruzada K-Fold para o método BLUE 1.
-def K_fold_BLUE1(parametro, n_ocupacao, n_janelamento, Matriz_pulsos_sinais, vetor_parametro_referencia):
+# Definição da instrução da técnica de validação cruzada K-Fold para o método BLUE1.
+def K_fold_BLUE1(parametro, n_ocupacao, n_janelamento, Matriz_Pulsos_Sinais_Janelado, vetor_parametro_referencia_janelado, valor_minimo_amplitude_estimada_processo_fase, vetor_amplitude_referencia_janelado):
     
     # Criação da lista vazia blocos_pulsos_sinais.
     blocos_pulsos_sinais = []
 
     # Criação da lista vazia blocos_parametro_referencia.
     blocos_parametro_referencia = []
+    
+    # Criação da lista vazia blocos_amplitude_referencia.
+    blocos_amplitude_referencia = []
 
     # Criação da variável quantidade_blocos que armazena a quantidade de blocos.
     quantidade_blocos = 100
 
     # Definição da quantidade de elementos de cada bloco.
-    quantidade_elementos_bloco = len(Matriz_pulsos_sinais) // quantidade_blocos
+    quantidade_elementos_bloco = len(Matriz_Pulsos_Sinais_Janelado) // quantidade_blocos
     
     # Para i de início em zero até a quantidade de elementos de amostras com incremento igual a quantidade_elementos_bloco.
-    for i in range(0, len(Matriz_pulsos_sinais), quantidade_elementos_bloco):
+    for i in range(0, len(Matriz_Pulsos_Sinais_Janelado), quantidade_elementos_bloco):
     
         # Definição do bloco de pulsos de sinais.
-        bloco_pulsos_sinais = Matriz_pulsos_sinais[i:i+quantidade_elementos_bloco]
+        bloco_pulsos_sinais = Matriz_Pulsos_Sinais_Janelado[i:i+quantidade_elementos_bloco]
         # O bloco dos pulsos de sinais é acrescentado a lista dos blocos dos pulsos de sinais.
         blocos_pulsos_sinais.append(bloco_pulsos_sinais)
     
         # Definição do bloco dos dados do parâmetro de referência.
-        bloco_parametro_referencia = vetor_parametro_referencia[i:i+quantidade_elementos_bloco]
+        bloco_parametro_referencia = vetor_parametro_referencia_janelado[i:i+quantidade_elementos_bloco]
         # O bloco do parâmetro de referência é acrescentado a lista dos blocos dos parâmetros de referência.
         blocos_parametro_referencia.append(bloco_parametro_referencia)
+        
+        # Caso a variável vetor_amplitude_referencia_janelado não é igual a None.
+        if vetor_amplitude_referencia_janelado is not None:
+        
+            # Definição do bloco dos dados da amplitude de referência.
+            bloco_amplitude_referencia = vetor_amplitude_referencia_janelado[i:i+quantidade_elementos_bloco]
+            # O bloco da amplitude de referência é acrescentado a lista dos blocos da amplitude de referência.
+            blocos_amplitude_referencia.append(bloco_amplitude_referencia)
     
     # Definição da lista vazia lista_bloco_media_erro_estimacao.
     lista_blocos_media_erro_estimacao = []
@@ -155,8 +166,23 @@ def K_fold_BLUE1(parametro, n_ocupacao, n_janelamento, Matriz_pulsos_sinais, vet
         # Reescreve os elementos bloco_treino_parametro_referencia em sequência, uma lista unidimensional.
         bloco_treino_parametro_referencia = [elemento for sublista in bloco_treino_parametro_referencia for elemento in sublista]
         
+        # A variável bloco_treino_amplitude_referencia recebe o valor inicial de None.
+        bloco_treino_amplitude_referencia = None
+        
+        # Caso a variável vetor_amplitude_referencia_janelado não é igual a None.
+        if vetor_amplitude_referencia_janelado is not None:
+        
+            # Definição do bloco_teste_amplitude_referencia como sendo aquele de índice igual ao indice_teste.
+            bloco_teste_amplitude_referencia = blocos_amplitude_referencia[indice_teste]
+        
+            # Definição do bloco_treino_amplitude_referencia como sendo aqueles de índices diferentes do indice_teste.
+            bloco_treino_amplitude_referencia = blocos_amplitude_referencia[:indice_teste]+blocos_amplitude_referencia[indice_teste+1:]
+        
+            # Reescreve os elementos bloco_treino_amplitude_referencia em sequência, uma lista unidimensional.
+            bloco_treino_amplitude_referencia = [elemento for sublista in bloco_treino_amplitude_referencia for elemento in sublista]
+        
         # A variável bloco_lista_erro_estimacao_parametro recebe o valor de retorno da função metodo_BLUE1.
-        Bloco_lista_erro_estimacao_parametro = metodo_BLUE1(parametro, bloco_treino_pulsos_sinais, bloco_teste_pulsos_sinais, bloco_teste_parametro_referencia, n_janelamento)
+        Bloco_lista_erro_estimacao_parametro = metodo_BLUE1(parametro, n_janelamento, bloco_treino_pulsos_sinais, bloco_teste_pulsos_sinais, bloco_teste_parametro_referencia, valor_minimo_amplitude_estimada_processo_fase, bloco_treino_amplitude_referencia)
 
         # Cálculo dos dados estatísticos de cada bloco.
         bloco_media_erro_estimacao = np.mean(Bloco_lista_erro_estimacao_parametro)
@@ -202,8 +228,11 @@ def principal_K_fold_BLUE1():
     # A variável parametro_amplitude armazena a string "amplitude".
     parametro_amplitude = "amplitude"
     
-    # A variável parametro_fase armazena a string "fase".
-    parametro_fase = "fase"
+    # A variável parametro_fase_amplitude_estimada armazena a string "fase_amplitude_estimada".
+    parametro_fase_amplitude_estimada = "fase_amplitude_estimada"
+    
+    # A variável parametro_fase_amplitude_referencia armazena a string "fase_amplitude_referencia".
+    parametro_fase_amplitude_referencia = "fase_amplitude_referencia"
     
     # A variável parametro_pedestal armazena a string "pedestal".
     parametro_pedestal = "pedestal"
@@ -229,6 +258,9 @@ def principal_K_fold_BLUE1():
     # A variável incremento_janelamento armazena o valor do incremento entre os janelamentos.
     incremento_janelamento = 2
     
+    # A variável valor_minimo_amplitude_estimada_fase recebe o valor mínimo para a amplitude que é de cerca de 4,5 ADC Count (três vezes o valor do desvio padrão do ruído eletrônico).
+    valor_minimo_amplitude_processo_fase = 4.5
+    
     # Para o número de ocupações de 0 até 100 com incremento de 10. 
     for n_ocupacao in tqdm(range(ocupacao_inicial, ocupacao_final+1, incremento_ocupacao)):
     
@@ -251,11 +283,13 @@ def principal_K_fold_BLUE1():
             
             Matriz_Pulsos_Sinais_Pedestal_Janelado, vetor_pedestal_referencia_janelado = amostras_janelamento(vetor_amostras_pulsos, vetor_pedestal_referencia, n_janelamento)
     
-            K_fold_BLUE1(parametro_amplitude, n_ocupacao, n_janelamento, Matriz_Pulsos_Sinais_Amplitude_Janelado, vetor_amplitude_referencia_janelado)
+            K_fold_BLUE1(parametro_amplitude, n_ocupacao, n_janelamento, Matriz_Pulsos_Sinais_Amplitude_Janelado, vetor_amplitude_referencia_janelado, valor_minimo_amplitude_processo_fase = None, vetor_amplitude_referencia_janelado = None)
             
-            K_fold_BLUE1(parametro_fase, n_ocupacao, n_janelamento, Matriz_Pulsos_Sinais_Fase_Janelado, vetor_fase_referencia_janelado)
+            K_fold_BLUE1(parametro_fase_amplitude_estimada, n_ocupacao, n_janelamento, Matriz_Pulsos_Sinais_Fase_Janelado, vetor_fase_referencia_janelado, valor_minimo_amplitude_processo_fase, vetor_amplitude_referencia_janelado = None)
             
-            K_fold_BLUE1(parametro_pedestal, n_ocupacao, n_janelamento, Matriz_Pulsos_Sinais_Pedestal_Janelado, vetor_pedestal_referencia_janelado)
+            K_fold_BLUE1(parametro_fase_amplitude_referencia, n_ocupacao, n_janelamento, Matriz_Pulsos_Sinais_Fase_Janelado, vetor_fase_referencia_janelado, valor_minimo_amplitude_processo_fase, vetor_amplitude_referencia_janelado)
+            
+            K_fold_BLUE1(parametro_pedestal, n_ocupacao, n_janelamento, Matriz_Pulsos_Sinais_Pedestal_Janelado, vetor_pedestal_referencia_janelado, valor_minimo_amplitude_processo_fase = None, vetor_amplitude_referencia_janelado = None)
      
 # Chamada da instrução principal do código.
 principal_K_fold_BLUE1()       
