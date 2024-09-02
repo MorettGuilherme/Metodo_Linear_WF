@@ -55,7 +55,7 @@ def arquivo_saida_dados_estatisticos_erro_estimacao_fase_BLUE1(n_ocupacao, n_jan
     # Definição do título presente no arquivo de saída.
     titulo_arquivo_saida = f"valor_minimo_amplitude,media_erro,var_erro,desvio_padrao_erro,tamanho_vetor_estimacao\n"
 
-    # Definição da pasta em que contém o arquivo de saída.
+    # Definição da pasta que contém o arquivo de saída.
     pasta_saida = f"K_Fold_{tipo_fase}_{dado_estatistico}_J_{n_janelamento_ideal_amplitude_estimada}"
 
     # Caso a pasta não exista.

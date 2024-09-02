@@ -210,6 +210,9 @@ def grafico_A_k_fold_BLUE1(parametro, opcao, Matriz_Dados_K_Fold_OC_0, Matriz_Da
     plt.errorbar(janelamento, Matriz_Dados_Medias_K_Fold_OC_90, yerr = Matriz_Dados_Erros_K_Fold_OC_90, color = 'orange', linestyle = '--', marker = 'o', markersize = 3, label = '90')
     plt.errorbar(janelamento, Matriz_Dados_Medias_K_Fold_OC_100, yerr = Matriz_Dados_Erros_K_Fold_OC_100, color = 'red', linestyle = '--', marker = 'o', markersize = 3, label = '100')
     
+    # Ajuste esse limite do eixo vertical de forma que a legenda se encaixe corretamente no gráfico.
+    #plt.ylim(-100, 7800)
+    
     # Comando para o grid do gráfico.
     plt.grid()
 
@@ -334,6 +337,9 @@ def grafico_B_k_fold_BLUE1(parametro, opcao, Matriz_Dados_K_Fold_OC_0, Matriz_Da
     plt.errorbar(ocupacoes, Matriz_Dados_K_Fold_J15_OC, yerr = Matriz_Dados_K_Fold_Erros_J15_OC, color = 'yellow', linestyle = '--', marker = 'o', markersize=3, label = '15')
     plt.errorbar(ocupacoes, Matriz_Dados_K_Fold_J17_OC, yerr = Matriz_Dados_K_Fold_Erros_J17_OC, color = 'orange', linestyle = '--', marker = 'o', markersize=3, label = '17')
     plt.errorbar(ocupacoes, Matriz_Dados_K_Fold_J19_OC, yerr = Matriz_Dados_K_Fold_Erros_J19_OC, color = 'red', linestyle = '--', marker = 'o', markersize=3, label = '19')
+    
+    # Ajuste esse limite do eixo vertical de forma que a legenda se encaixe corretamente no gráfico.
+    plt.ylim(-5, 100)
     
     # Comando para o grid do gráfico.
     plt.grid()
