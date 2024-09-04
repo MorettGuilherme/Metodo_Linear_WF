@@ -41,14 +41,14 @@ print("\n-----------------------------------------------------------------------
 # Título do programa.
 
 # A variável titulo_programa armazena o título em negrito.
-titulo_programa = colored("Geração de arquivos de saída pela técnica de validação cruzada K-Fold para o método Best Linear Unbiased Estimator (BLUE 1):\n", attrs=["bold"])
+titulo_programa = colored("Geração de arquivos de saída pela técnica de validação cruzada K-Fold para o método Best Linear Unbiased Estimator (BLUE1):\n", attrs=["bold"])
 
 # Impressão do título do programa.
 print(titulo_programa)
 
 ### ------------------------------ 1) INSTRUÇÃO PARA SALVAR OS DADOS ESTATÍSTICOS DO K-FOLD PELO MÉTODO BLUE1 ---------------------------------- ###
 
-# Definição da instrução para salvar as médias dos dados estatísticos da validação cruzada K-Fold em arquivo de saída para o método BLUE 1.
+# Definição da instrução para salvar as médias dos dados estatísticos da validação cruzada K-Fold em arquivo de saída para o método BLUE1.
 def arquivo_saida_dados_estatisticos_k_fold_erro_BLUE1(parametro, n_ocupacao, n_janelamento, media_dado_erro, var_dado_erro, DP_dado_erro, dado):
 
     # Definição do título presente no arquivo de saída.
