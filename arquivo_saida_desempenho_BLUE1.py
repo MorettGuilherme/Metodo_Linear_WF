@@ -195,7 +195,7 @@ def DP(numero_elementos_bloco, bloco_erro_estimacao):
 
 ## --------------------------------------------------------------------------------------------------------------------------------------------- ###
 
-### ----------- 7) INSTRUÇÃO PARA A VALIDAÇÃO CRUZADA K-FOLD ADAPTADA PARA O CÁLCULO DO DESEMPENHO DO MÉTODO BLUE 1------------------- --------- ###
+### ----------- 7) INSTRUÇÃO PARA A VALIDAÇÃO CRUZADA K-FOLD ADAPTADA PARA O CÁLCULO DO DESEMPENHO DO MÉTODO BLUE1------------------------------ ###
 
 # Definição da instrução da técnica de validação cruzada K-Fold para o cálculo do desempenho do método BLUE1.
 def K_fold_desempenho_BLUE1(parametro, n_ocupacao, n_janelamento_ideal, opcao_avaliacao_desempenho, Matriz_Pulsos_Sinais_Janelado, vetor_parametro_referencia_janelado, valor_minimo_amplitude_processo_fase,  vetor_amplitude_referencia_janelado):
@@ -409,7 +409,7 @@ def principal_desempenho_BLUE1():
     
     # A variável n_janelamento_ideal recebe o valor do janelamento ideal do método BLUE1.
     # Obs.: essa análise deve ser realizada previamento pela interpretação dos gráficos gerados pelo K-Fold (grafico_k_fold_BLUE1).
-    n_janelamento_ideal = 19
+    n_janelamento_ideal = int(input("Digite o número do janelamento ideal para o parâmetro estimado desejado: "))
     
     # Definição da variável valor_pedestal_referencia.
     valor_pedestal_referencia = 30

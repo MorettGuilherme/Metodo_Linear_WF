@@ -273,7 +273,7 @@ def principal_grafico_dado_estatistico_desempenho_BLUE1():
     
     # A variável n_janelamento_ideal recebe o valor do janelamento ideal do método BLUE 1.
     # Obs.: essa análise deve ser realizada previamento pela interpretação dos gráficos gerados pelo K-Fold (grafico_k_fold_BLUE1).
-    n_janelamento_ideal = 19
+    n_janelamento_ideal = int(input("Digite o número do janelamento ideal para o parâmetro estimado desejado: "))
         
     # Chamada ordenada das funções.
     
