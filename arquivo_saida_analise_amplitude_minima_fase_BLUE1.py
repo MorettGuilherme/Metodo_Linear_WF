@@ -235,7 +235,7 @@ def K_fold_BLUE1_analise_fase(parametro, n_ocupacao, n_janelamento_ideal_amplitu
 def principal_K_fold_analise_fase_BLUE1():
     
     # A variável n_janelamento_ideal_amplitude_estimada recebe o valor ideal para a amplitude estimada obtido pela análise gráfica do K-Fold.
-    int(input("Digite o número do janelamento ideal para o parâmetro estimado desejado: "))
+    n_janelamento_ideal_amplitude_estimada = int(input("Digite o número do janelamento ideal para o parâmetro estimado desejado: "))
     
     # A variável ocupacao_inicial armazena o valor inicial da ocupação que é 10.
     # Obs.: ao considerar um valor mínimo para a amplitude, a estimação da fase para a ocupação 0 fica impossiblitada.
