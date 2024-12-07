@@ -211,7 +211,7 @@ def grafico_A_k_fold_WF(parametro, opcao, Matriz_Dados_K_Fold_OC_0, Matriz_Dados
     plt.errorbar(janelamento, Matriz_Dados_Medias_K_Fold_OC_100, yerr = Matriz_Dados_Erros_K_Fold_OC_100, color = 'red', linestyle = '--', marker = 'o', markersize = 3, label = '100')
     
     # Ajuste esse limite do eixo vertical de forma que a legenda se encaixe corretamente no gráfico.
-    #plt.ylim(-0.5, 3.0)
+    #plt.ylim(-1, 40)
     
     # Comando para o grid do gráfico.
     plt.grid()
@@ -339,7 +339,7 @@ def grafico_B_k_fold_WF(parametro, opcao, Matriz_Dados_K_Fold_OC_0, Matriz_Dados
     plt.errorbar(ocupacoes, Matriz_Dados_K_Fold_J19_OC, yerr = Matriz_Dados_K_Fold_Erros_J19_OC, color = 'red', linestyle = '--', marker = 'o', markersize=3, label = '19')
     
     # Ajuste esse limite do eixo vertical de forma que a legenda se encaixe corretamente no gráfico.
-    #plt.ylim(-0.04, 2)
+    plt.ylim(-1, 40)
     
     # Comando para o grid do gráfico.
     plt.grid()
